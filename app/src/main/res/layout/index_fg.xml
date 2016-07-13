@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:id="@+id/daohan"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+   <ImageView
+       android:id="@+id/im1"
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:layout_height="50dp"
+    android:src="@mipmap/ic_launcher"/>
+    <ImageView
+        android:id="@+id/im2"
+        android:layout_marginLeft="30dp"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/ic_launcher"/>
+    <ImageView
+        android:id="@+id/im3"
+        android:layout_marginLeft="30dp"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/ic_launcher"/>
+    <ImageView
+        android:id="@+id/im4"
+        android:layout_marginLeft="30dp"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/ic_launcher"/>
+</LinearLayout>
+    <View
+        android:id="@+id/v1"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="#898181"
+        android:layout_below="@id/daohan"/>
+
+ <ListView
+     android:id="@+id/list_item"
+     android:layout_below="@+id/v1"
+     android:layout_marginTop="30dp"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"></ListView>
+</RelativeLayout>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.view.SlidingMenu
+        android:id="@+id/slidemenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/img_frame_background"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <!--这个是隐藏的菜单layout-->
+            <include layout="@layout/layout" />
+            <!--这个是内容conten布局-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF">
+                <RelativeLayout
+                    android:id="@+id/topbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#2073E1">
+
+                    <ImageView
+                        android:id="@+id/image"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:onClick="openmenu"
+                        android:src="@mipmap/photo" />
+
+                    <TextView
+                        android:id="@+id/toptext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+
+                        android:text="安徽中医药大学"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="6dp"
+                        android:background="#00000000"
+                        android:text="筛选"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+                <!-- 这里是底部的导航菜单-->
+                <LinearLayout
+                    android:id="@+id/bottombar"
+                    android:orientation="horizontal"
+                    android:layout_alignParentBottom="true"
+                    android:layout_width="match_parent"
+                    android:background="#FFFFFF"
+                    android:layout_height="56dp">
+                    <TextView
+                        android:id="@+id/txt_dongtai"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/tab_menu_bg"
+                        android:drawablePadding="3dp"
+                        android:drawableTop="@drawable/tab_menu_dongtai"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="动态"
+                        android:textColor="@drawable/tab_menu_text"
+                        android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/txt_faxian"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/tab_menu_bg"
+                        android:drawablePadding="3dp"
+                        android:drawableTop="@drawable/tab_menu_faxian"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="发现"
+                        android:textColor="@drawable/tab_menu_text"
+                        android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/txt_friend"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/tab_menu_bg"
+                        android:drawablePadding="3dp"
+                        android:drawableTop="@drawable/tab_menu_friend"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="好友"
+                        android:textColor="@drawable/tab_menu_text"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/txt_fankui"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/tab_menu_bg"
+                        android:drawablePadding="3dp"
+                        android:drawableTop="@drawable/tab_menu_setting"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="反馈"
+                        android:textColor="@drawable/tab_menu_text"
+                        android:textSize="16sp"/>
+
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/div_tab_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="#898181"
+                    android:layout_above="@id/bottombar"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/topbar"
+                    android:layout_above="@id/div_tab_bar"
+                    android:id="@+id/ly_content">
+
+                </FrameLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </com.view.SlidingMenu>
+
+</RelativeLayout>

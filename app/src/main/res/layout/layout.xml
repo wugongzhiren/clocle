@@ -21,6 +21,7 @@
             android:gravity="center_vertical"
             android:text="登录/注册"
             android:textSize="18sp"
+            android:onClick="reg"
             android:textColor="@color/white"/>
     </LinearLayout>
 <LinearLayout
@@ -42,6 +43,7 @@
             android:layout_centerVertical="true"
             android:id="@+id/img1"/>
         <TextView
+            android:id="@+id/self_center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="我的个人中心"

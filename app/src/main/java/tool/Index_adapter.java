@@ -22,7 +22,7 @@ public class Index_adapter extends BaseAdapter {
 
     public Index_adapter(List<Message> messeageList, Context context) {
         this.messeageList = messeageList;
-        this.context=context;
+        this.context = context;
     }
 
     @Override
@@ -43,6 +43,7 @@ public class Index_adapter extends BaseAdapter {
 
     /**
      * 此方法还可以优化
+     *
      * @param position
      * @param convertView
      * @param parent
@@ -52,16 +53,29 @@ public class Index_adapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
 
-          //此方法是将listview的item项的布局转化为缓冲视图，并且将它和父视图关联
-          convertView= LayoutInflater.from(context).inflate(R.layout.messege_layout,parent,false);
-          //实例化Item的布局控件
-          ImageView photo=(ImageView)convertView.findViewById(R.id.photo);
-          TextView name=(TextView)convertView.findViewById(R.id.name);
-          TextView messagecontext=(TextView)convertView.findViewById(R.id.text);
-          photo.setImageResource(R.mipmap.ic_launcher);
-          name.setText(getItem(position).getName());
-          messagecontext.setText(getItem(position).getMessage());
-          return convertView;
-
+        //此方法是将listview的item项的布局转化为缓冲视图
+        convertView= LayoutInflater.from(context).inflate(R.layout.messege_layout,parent,false);
+        //实例化Item的布局控件
+         ImageView photo=(ImageView)convertView.findViewById(R.id.photodongtai);
+        TextView name=(TextView)convertView.findViewById(R.id.namedongtai);
+        TextView messagecontext=(TextView)convertView.findViewById(R.id.contextdongtai);
+        TextView datetime=(TextView)convertView.findViewById(R.id.timetext) ;
+        ImageView qiangdan=(ImageView)convertView.findViewById(R.id.qiangdan) ;
+         photo.setImageResource(getItem(position).getPic());
+        datetime.setText(getItem(position).getDatetime());
+        qiangdan.setImageResource(R.mipmap.qiangdan);
+         name.setText(getItem(position).getName());
+         messagecontext.setText(getItem(position).getMessage());
+         //return convertView;
+       // ViewHolder holder = ViewHolder.get(context, convertView, parent, R.layout.messege_layout, position);
+       // Message message = getItem(position);
+       // ((ImageView) holder.getView(R.id.photodongtai)).setImageResource(message.getPic());//头像
+       // ((TextView) holder.getView(R.id.namedongtai)).setText(message.getName());//昵称
+       // ((TextView) holder.getView(R.id.timetext)).setText(message.getDatetime());//时间
+       // ((ImageView) holder.getView(R.id.qiangdan)).setImageResource(message.getQiangdan());//抢单图片
+       // ((TextView) holder.getView(R.id.contextdongtai)).setText(message.getMessage());//正文
+        //((ImageView) holder.getView(R.id.photodongtai)).setImageResource(message.getPic());//评论
+       // ((ImageView) holder.getView(R.id.photodongtai)).setImageResource(message.getPic());//点赞
+    return convertView;
     }
 }

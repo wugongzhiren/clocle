@@ -41,9 +41,22 @@ public class GetuserInfo {
         editor=share.edit();
         SharedPreferences share=mcontext.getSharedPreferences("userinfo",Context.MODE_PRIVATE);
         //share.getString 第二个参数是默认值
-        infomap.put("user_name",share.getString("username",""));
-        infomap.put("user_password",share.getString("password",""));
+        infomap.put("user_name",share.getString("username",null));
+        infomap.put("user_password",share.getString("password",null));
         return infomap;
+    }
+    /**
+     * 判断用户有没有登录
+     */
+    public  Boolean isLogin(){
+        Map<String,String> infomap=getUserinfo();
+        if((infomap.get("user_name")!=null)||(infomap.get("password")!=null)){
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 
 }

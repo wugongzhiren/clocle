@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -146,16 +147,26 @@ public class SlidingMenu extends HorizontalScrollView {
         float rightscale = 0.7f + 0.3f * scale;
         float leftscale = 1.0f - scale * 0.3f;
         float leftAlpha = 0.6f + 0.4f * (1 - scale);
-        ViewHelper.setTranslationX(mMenu, menuwidth * scale*0.7f);
+        ViewHelper.setTranslationX(mMenu, menuwidth * scale * 0.7f);
         ViewHelper.setScaleX(mMenu, leftscale);
         ViewHelper.setScaleY(mMenu, leftscale);
-        ViewHelper.setAlpha(mMenu,leftAlpha);
+        ViewHelper.setAlpha(mMenu, leftAlpha);
         //  设置content的缩放的中心点
-        ViewHelper.setPivotX(mContent,0);
-        ViewHelper.setPivotY(mContent,mContent.getHeight()/2);
-        ViewHelper.setScaleX(mContent,rightscale);
-        ViewHelper.setScaleY(mContent,rightscale);
+        ViewHelper.setPivotX(mContent, 0);
+        ViewHelper.setPivotY(mContent, mContent.getHeight() / 2);
+        ViewHelper.setScaleX(mContent, rightscale);
+        ViewHelper.setScaleY(mContent, rightscale);
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (isopen) {
+closeMenu();
+                return true;
+            }
+        }
+        return true;
 
+    }
 }

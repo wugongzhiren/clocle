@@ -61,76 +61,15 @@
                         android:textSize="14sp" />
                 </RelativeLayout>
                 <!-- 这里是底部的导航菜单-->
-                <LinearLayout
-                    android:id="@+id/bottombar"
-                    android:orientation="horizontal"
-                    android:layout_alignParentBottom="true"
-                    android:layout_width="match_parent"
-                    android:background="#FFFFFF"
-                    android:layout_height="56dp">
-                    <TextView
-                        android:id="@+id/txt_dongtai"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/tab_menu_bg"
-                        android:drawablePadding="3dp"
-                        android:drawableTop="@drawable/tab_menu_dongtai"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        android:text="动态"
-                        android:textColor="@drawable/tab_menu_text"
-                        android:textSize="16sp" />
-                    <TextView
-                        android:id="@+id/txt_faxian"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/tab_menu_bg"
-                        android:drawablePadding="3dp"
-                        android:drawableTop="@drawable/tab_menu_faxian"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        android:text="发现"
-                        android:textColor="@drawable/tab_menu_text"
-                        android:textSize="16sp" />
-                    <TextView
-                        android:id="@+id/txt_friend"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/tab_menu_bg"
-                        android:drawablePadding="3dp"
-                        android:drawableTop="@drawable/tab_menu_friend"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        android:text="好友"
-                        android:textColor="@drawable/tab_menu_text"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/txt_fankui"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/tab_menu_bg"
-                        android:drawablePadding="3dp"
-                        android:drawableTop="@drawable/tab_menu_setting"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        android:text="反馈"
-                        android:textColor="@drawable/tab_menu_text"
-                        android:textSize="16sp"/>
-
-
-                </LinearLayout>
-
+                <include
+                    android:id="@+id/bottombar1"
+                    layout="@layout/index_bottom" />
                 <View
                     android:id="@+id/div_tab_bar"
                     android:layout_width="match_parent"
                     android:layout_height="2px"
                     android:background="#898181"
-                    android:layout_above="@id/bottombar"/>
+                    android:layout_above="@+id/bottombar1"/>
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

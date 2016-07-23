@@ -1,5 +1,6 @@
 package com.clocle.huxiang.clocle;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,7 @@ import android.widget.Toast;
 
 import tool.GetuserInfo;
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
+public class Login extends Activity implements View.OnClickListener {
     private Button loginbutton;
     private TextView username;
     private TextView password;
@@ -22,11 +23,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         username= (TextView) findViewById(R.id.username);
         password= (TextView) findViewById(R.id.password);
         loginbutton.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
-        GetuserInfo getuserInfo =new GetuserInfo(this);
+        GetuserInfo getuserInfo =new GetuserInfo(this);//获取保存用户登录信息的类
        // Map map=getuserInfo.getUserinfo();
         //map.get("username");
         //username.setText();
@@ -54,6 +56,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             //Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
             //intent.setClass(Login.this,MainActivity.class);
             startActivity(intent);
+this.finish();
         }
     }
 }

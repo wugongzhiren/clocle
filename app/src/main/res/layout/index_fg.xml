@@ -44,7 +44,7 @@
         android:layout_below="@id/daohan"/>
 
  <ListView
-     android:id="@+id/list_item"
+     android:id="@+id/list_item_index"
      android:layout_below="@+id/v1"
      android:layout_marginTop="30dp"
      android:layout_width="match_parent"

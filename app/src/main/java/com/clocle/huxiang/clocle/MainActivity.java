@@ -1,17 +1,22 @@
 package com.clocle.huxiang.clocle;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.view.SlidingMenu;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import org.apache.http.client.HttpClient;
+
+public class MainActivity extends Activity implements View.OnClickListener {
     private SlidingMenu slidingMenu;
     private TextView toptext;
     private TextView tapdongtai;
@@ -24,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Friend_fg fg3;
     private fankui_fg fg4;
     private Button toptag;
+    private TextView img1;
 private Context mcontext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,7 @@ mcontext=this;
         tabfriend = (TextView) findViewById(R.id.txt_friend);
         tabfaxian = (TextView) findViewById(R.id.txt_faxian);
         tabfankui = (TextView) findViewById(R.id.txt_fankui);
+        img1= (TextView) findViewById(R.id.self_center);
         toptext = (TextView)findViewById(R.id.toptext);//这是顶部的学校名字的实例化对象
         toptag=(Button)findViewById(R.id.tag);
         //设置监听器
@@ -57,6 +64,14 @@ mcontext=this;
         tabfriend.setOnClickListener(this);
         tabfaxian.setOnClickListener(this);
         tabfankui.setOnClickListener(this);
+        //用户点击我的个人中心时触发
+        img1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,Self_manager.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
@@ -133,4 +148,12 @@ mcontext=this;
         }
         fTransaction.commit();
     }
+    //用户点击注册按钮跳转到注册页面
+    public void reg(View view){
+        Intent intent =new Intent(this,Reg.class);
+        startActivity(intent);
+
+    }
+
+
 }

@@ -2,24 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 <EditText
     android:id="@+id/name"
-    android:hint="用户名"
+    android:hint="昵称"
+    android:textCursorDrawable="@drawable/cusor_style"
+    android:textColorHint="#E1D5D5"
     android:layout_width="match_parent"
-    android:layout_height="80dp" />
+    android:layout_height="80dp"
+    />
     <EditText
+        android:textColorHint="#E1D5D5"
         android:id="@+id/password"
         android:hint="密码"
         android:layout_marginTop="14dp"
         android:layout_width="match_parent"
         android:layout_height="80dp" />
     <Button
-        android:id="@+id/reg_bt"
+        android:id="@+id/login_bt"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:background="#F7DC0F"
         android:text="登录"
         android:textSize="18sp"
         android:textColor="@color/white"/>
+    <Button
+        android:id="@+id/reg_bt"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#F7DC0F"
+        android:text="注册"
+        android:textSize="18sp"
+        android:textColor="@color/white"/>
+    <TextView
+        android:layout_marginTop="20dp"
+        android:id="@+id/phone_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="使用手机号码注册"/>
 </LinearLayout>

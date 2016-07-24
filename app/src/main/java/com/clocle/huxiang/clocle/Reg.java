@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ import cn.smssdk.SMSSDK;
 import cn.smssdk.gui.RegisterPage;
 
 /**
- * 用户注册
+ * 用户注册与登录
  * Created by Administrator on 2016/7/12.
  */
 public class Reg extends Activity implements View.OnClickListener {
@@ -37,6 +38,8 @@ public class Reg extends Activity implements View.OnClickListener {
     private Button reg;
     private TextView phonereg;
     private Button login;
+    private ProgressBar progress;
+    private OkHttpClient okHttpClient = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +67,12 @@ public class Reg extends Activity implements View.OnClickListener {
     }
 
     private void bindView() {
+        progress= (ProgressBar) findViewById(R.id.reg_progress);
         name = (EditText) findViewById(R.id.name);
         password = (EditText) findViewById(R.id.password);
         reg = (Button) findViewById(R.id.reg_bt);
         phonereg = (TextView) findViewById(R.id.phone_reg);
-        login= (Button) findViewById(R.id.login_bt);
+        login = (Button) findViewById(R.id.login_bt);
         name.setOnClickListener(this);
         login.setOnClickListener(this);
         password.setOnClickListener(this);
@@ -78,57 +82,77 @@ public class Reg extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-          switch (v.getId()){
-              case R.id.phone_reg:
-                 Intent regintent =new Intent(this,Reg_login.class);
-               startActivity(regintent);
-                  break;
-              case R.id.reg_bt:
+        switch (v.getId()) {
+            case R.id.phone_reg:
+                Intent regintent = new Intent(this, Reg_login.class);
+                startActivity(regintent);
+                break;
+            case R.id.reg_bt:
+                if (name.getText().toString() == null|name.getText().toString().equals("")) {
+                    Toast.makeText(this, "请输入昵称！", Toast.LENGTH_SHORT);
+                    return;
+                }
+                if (password.getText().toString() == null|password.getText().toString().equals("")) {
+                    Toast.makeText(this, "请输入密码！", Toast.LENGTH_SHORT);
+                    return;
+                }
+                progress.setVisibility(View.VISIBLE);
+                httpGetreg();
 
-                  OkHttpClient okHttpClient=new OkHttpClient();
-                  if(name.getText().toString().equals("")){
-                      Toast.makeText(this,"请输入昵称！",Toast.LENGTH_SHORT);
-                      return;
-                  }
-                  if(password.getText().toString().equals("")){
-                      Toast.makeText(this,"请输入密码！",Toast.LENGTH_SHORT);
-                      return;
-                  }
-                  final Request request=new Request.Builder().url("http://192.168.1.111:8080/clocle/servlet/Login_servlet?user_name="+name.getText().toString()+"&user_password="+password.getText().toString()).build();
-                  Call call = okHttpClient.newCall(request);
-                  call.enqueue(new Callback() {
-                      @Override
-                      public void onFailure(Request request, IOException e) {
-
-                      }
-
-                      @Override
-                      public void onResponse(Response response) throws IOException {
-if(response.isSuccessful()){
-    runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-            Toast.makeText(Reg.this,"登录成功",Toast.LENGTH_SHORT);
-            Intent intent=new Intent(Reg.this,MainActivity.class);
-            startActivity(intent);
+                break;
+            case R.id.login_bt:
+                if (name.getText().toString() == null|name.getText().toString().equals("")) {
+                    Toast.makeText(this, "请输入昵称！", Toast.LENGTH_SHORT);
+                    return;
+                }
+                if (password.getText().toString() == null|password.getText().toString().equals("")) {
+                    Toast.makeText(this, "请输入密码！", Toast.LENGTH_SHORT);
+                    return;
+                }
+                progress.setVisibility(View.VISIBLE);
+                httpgetlogin();
         }
-    });
-}
-                      }
-                  });
-                  break;
-              case R.id.login_bt:
-                  httpGet();
+    }
 
-                  //final Request request1=new Request.Builder().url("http://192.168.1.111:8080/clocle/servlet/Reg_servlet?user_name="+name.getText().toString()+"&user_password="+password.getText().toString()).build();
+    public void httpgetlogin() {
 
-                  }}
-public void httpGet(){
-    OkHttpClient okHttpClient1=new OkHttpClient();
-    final Request request1=new Request.Builder().url("http://192.168.1.111:8080/clocle/NewFile.jsp").build();
-    Call call1 = okHttpClient1.newCall(request1);
+        final Request request = new Request.Builder().url("http://192.168.1.111:8080/clocle/servlet/Login_servlet?user_name=" + name.getText().toString() + "&user_password=" + password.getText().toString()).build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            Intent intent = new Intent(Reg.this, MainActivity.class);
+                            progress.setVisibility(View.GONE);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }
+                else{
+                    progress.setVisibility(View.GONE);
+
+                    Toast.makeText(Reg.this, "登录失败", Toast.LENGTH_SHORT);
+
+                }
+            }
+        });
+    }
+
+    public void httpGetreg() {
 
 
+        final Request request1 = new Request.Builder().url("http://192.168.1.111:8080/clocle/servlet/Reg_servlet?user_name=" + name.getText().toString() + "&user_password=" + password.getText().toString()).build();
+        Call call1 = okHttpClient.newCall(request1);
         call1.enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
@@ -137,14 +161,15 @@ public void httpGet(){
 
             @Override
             public void onResponse(Response response) throws IOException {
-final String result=response.body().string();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        name.setText(result);
-                        Toast.makeText(Reg.this,"注册成功",Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (response.isSuccessful()) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progress.setVisibility(View.GONE);
+                            finish();
+                        }
+                    });
+                }
             }
         });
 
@@ -203,4 +228,5 @@ final String result=response.body().string();
         }).start();
 
     }*/
-}}
+    }
+}

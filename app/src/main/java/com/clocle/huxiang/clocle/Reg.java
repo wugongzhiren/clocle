@@ -13,11 +13,6 @@ import android.widget.Toast;
 
 import com.constant.Constant;
 import com.httpThread.Reg_http;
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -27,6 +22,11 @@ import java.util.logging.LogRecord;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 import cn.smssdk.gui.RegisterPage;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * 用户注册与登录
@@ -119,10 +119,7 @@ public class Reg extends Activity implements View.OnClickListener {
         final Request request = new Request.Builder().url("http://192.168.1.111:8080/clocle/servlet/Login_servlet?user_name=" + name.getText().toString() + "&user_password=" + password.getText().toString()).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Request request, IOException e) {
 
-            }
 
             @Override
             public void onResponse(Response response) throws IOException {

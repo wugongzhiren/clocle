@@ -58,12 +58,19 @@ mcontext=this;
         tabfankui = (TextView) findViewById(R.id.txt_fankui);
         img1= (TextView) findViewById(R.id.self_center);
         toptext = (TextView)findViewById(R.id.toptext);//这是顶部的学校名字的实例化对象
-        toptag=(Button)findViewById(R.id.tag);
+        toptag=(Button)findViewById(R.id.tag);//首页发表按钮
         //设置监听器
         tapdongtai.setOnClickListener(this);
         tabfriend.setOnClickListener(this);
         tabfaxian.setOnClickListener(this);
         tabfankui.setOnClickListener(this);
+        toptag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,Self_manager.class);
+                startActivity(intent);
+            }
+        });
         //用户点击我的个人中心时触发
         img1.setOnClickListener(new View.OnClickListener() {
             @Override

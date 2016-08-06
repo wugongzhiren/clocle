@@ -11,31 +11,25 @@ public class Message {
     private String message;//消息内容
     private int pic;//头像
 
-    public String getDatetime() {
-        return datetime;
+
+    private String self_info;//时间+学校
+
+
+    public String getSelf_info() {
+        return self_info;
     }
 
-    public void setDatetime(String datetime) {
-        this.datetime = datetime;
+    public void setSelf_info(String self_info) {
+        this.self_info = self_info;
     }
 
-    public int getQiangdan() {
-        return qiangdan;
-    }
 
-    public void setQiangdan(int qiangdan) {
-        this.qiangdan = qiangdan;
-    }
-
-    private  String datetime;//时间
-    private int qiangdan;//抢单图片
-
-    public Message(String name, String message, int pic,String datetime,int qiangdan) {
+    public Message(String name, String message, int pic, String self_info) {
         this.name = name;
         this.message = message;
         this.pic = pic;
-        this.datetime=datetime;
-        this.qiangdan=qiangdan;
+        this.self_info = self_info;
+
     }
 
     public String getName() {

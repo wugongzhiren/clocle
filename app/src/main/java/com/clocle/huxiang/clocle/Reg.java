@@ -97,7 +97,7 @@ public class Reg extends Activity implements View.OnClickListener {
                     return;
                 }
                 progress.setVisibility(View.VISIBLE);
-                httpGetreg();
+                //httpGetreg();
 
                 break;
             case R.id.login_bt:
@@ -110,11 +110,11 @@ public class Reg extends Activity implements View.OnClickListener {
                     return;
                 }
                 progress.setVisibility(View.VISIBLE);
-                httpgetlogin();
+                //httpgetlogin();
         }
     }
 
-    public void httpgetlogin() {
+    /*public void httpgetlogin() {
 
         final Request request = new Request.Builder().url("http://192.168.1.111:8080/clocle/servlet/Login_servlet?user_name=" + name.getText().toString() + "&user_password=" + password.getText().toString()).build();
         Call call = okHttpClient.newCall(request);
@@ -144,8 +144,8 @@ public class Reg extends Activity implements View.OnClickListener {
             }
         });
     }
-
-    public void httpGetreg() {
+*/
+    /*public void httpGetreg() {
 
 
         final Request request1 = new Request.Builder().url("http://192.168.1.111:8080/clocle/servlet/Reg_servlet?user_name=" + name.getText().toString() + "&user_password=" + password.getText().toString()).build();
@@ -170,7 +170,7 @@ public class Reg extends Activity implements View.OnClickListener {
             }
         });
 
-
+*/
 
 
 
@@ -226,4 +226,3 @@ public class Reg extends Activity implements View.OnClickListener {
 
     }*/
     }
-}

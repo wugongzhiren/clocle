@@ -3,7 +3,7 @@
     package="com.clocle.huxiang.clocle">
 
     <application
-android:name="com.application.Http_Application"
+        android:name="com.application.Http_Application"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
@@ -15,9 +15,7 @@ android:name="com.application.Http_Application"
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <!--<intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+
         </activity>
         <activity android:name=".Login">
 
@@ -29,28 +27,72 @@ android:name="com.application.Http_Application"
 
 
         </activity>
-        <activity android:name="com.toolview.Edit_Activity"
+        <activity
+            android:name="com.toolview.Edit_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             >
 
         </activity>
         <activity android:name=".Self_Info"></activity>
-        <activity android:name=".Self_manager"></activity>
-        <activity
+        <activity android:name=".Self_manager">
+
+        </activity>
+        <!--<activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />-->
         <activity android:name=".Reg_login">
 
         </activity>
-<activity android:name="tool.Pop_activity"
+        <activity
+            android:name="tool.Pop_activity"
 
-   android:theme="@style/MyDialogStyle">
+            android:theme="@style/MyDialogStyle">
 
-</activity>
+        </activity>
         <activity android:name=".Publish">
+
+        </activity>
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <!-- QQ和QQ空间分享 QQ登录的回调必须要配置的 -->
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!-- 新浪微博客户端分享回调必须配置 -->
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--微信分享回调 -->
+        <activity
+            android:name="com.clocle.huxiang.clocle.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name="test.Test_activity">
+
+        </activity>
+        <activity android:name="test.Test1">
+
+        </activity>
+        <activity android:name="test.Test2">
+
+        </activity>
+        <activity android:name="test.Test3">
 
         </activity>
     </application>
@@ -66,4 +108,16 @@ android:name="com.application.Http_Application"
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.REAL_GET_TASKS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- 蓝牙分享所需的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 </manifest>

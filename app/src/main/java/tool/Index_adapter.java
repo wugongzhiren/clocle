@@ -60,10 +60,10 @@ public class Index_adapter extends BaseAdapter {
         TextView name=(TextView)convertView.findViewById(R.id.namedongtai);
         TextView messagecontext=(TextView)convertView.findViewById(R.id.contextdongtai);
         TextView datetime=(TextView)convertView.findViewById(R.id.timetext) ;
-        ImageView qiangdan=(ImageView)convertView.findViewById(R.id.qiangdan) ;
+
          photo.setImageResource(getItem(position).getPic());
-        datetime.setText(getItem(position).getDatetime());
-        qiangdan.setImageResource(R.mipmap.qiangdan);
+        //datetime.setText(getItem(position).getDatetime());
+
          name.setText(getItem(position).getName());
          messagecontext.setText(getItem(position).getMessage());
          //return convertView;

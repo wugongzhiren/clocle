@@ -7,7 +7,7 @@
         android:id="@+id/slidemenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/img_frame_background"
+        android:background="@mipmap/background"
         android:scrollbars="none">
 
         <LinearLayout
@@ -17,6 +17,7 @@
             <include layout="@layout/layout" />
             <!--这个是内容conten布局-->
             <RelativeLayout
+                android:elevation="3dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#FFFFFF">

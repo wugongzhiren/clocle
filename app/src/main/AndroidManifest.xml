@@ -46,6 +46,10 @@
         <activity android:name=".Reg_login">
 
         </activity>
+        <activity android:name="tool.Progress_Activity"
+            android:theme="@style/MyDialogStyle">
+
+        </activity>
         <activity
             android:name="tool.Pop_activity"
 

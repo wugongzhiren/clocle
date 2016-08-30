@@ -59,7 +59,7 @@ public class Myadpter extends BaseAdapter {
         simple.name = (TextView) convertView.findViewById(R.id.namedongtai);
         simple.contexttext = (TextView) convertView.findViewById(R.id.contextdongtai);
         simple.self_info = (TextView) convertView.findViewById(R.id.timetext);
-        simple.photo = (ImageView) convertView.findViewById(R.id.photodongtai);
+       // simple.photo = (ImageView) convertView.findViewById(R.id.photodongtai);
 
         convertView.setTag(simple);
 
@@ -70,7 +70,7 @@ public class Myadpter extends BaseAdapter {
            }
         simple.name.setText(((Messages) getItem(position)).getName());
         simple.contexttext.setText(((Messages) getItem(position)).getMessage());
-        simple.self_info.setText(((Messages) getItem(position)).getSelf_info());
+       // simple.self_info.setText(((Messages) getItem(position)).getSelf_info());
         //simple.photo.setImageResource(((Message) getItem(position)).getPic());
         String imageUrl=((Messages) getItem(position)).getPic();//获取头像地址
 Log.i("tag" ,imageUrl);

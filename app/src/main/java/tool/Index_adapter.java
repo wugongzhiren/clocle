@@ -56,12 +56,12 @@ public class Index_adapter extends BaseAdapter {
         //此方法是将listview的item项的布局转化为缓冲视图
         convertView= LayoutInflater.from(context).inflate(R.layout.messege_layout,parent,false);
         //实例化Item的布局控件
-         ImageView photo=(ImageView)convertView.findViewById(R.id.photodongtai);
+        // ImageView photo=(ImageView)convertView.findViewById(R.id.photodongtai);
         TextView name=(TextView)convertView.findViewById(R.id.namedongtai);
         TextView messagecontext=(TextView)convertView.findViewById(R.id.contextdongtai);
         TextView datetime=(TextView)convertView.findViewById(R.id.timetext) ;
 
-         photo.setImageResource(getItem(position).getPic());
+        // photo.setImageResource(getItem(position).getPic());
         //datetime.setText(getItem(position).getDatetime());
 
          name.setText(getItem(position).getName());

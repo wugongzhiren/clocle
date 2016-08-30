@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
@@ -16,11 +17,11 @@
         android:layout_margin="5dp"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/photodongtai"
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/help_userphoto3"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src="@mipmap/ic_launcher" />
+            fresco:roundAsCircle="true" />
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -35,6 +36,14 @@
                 android:layout_height="wrap_content"
                 android:text="无功至人"
                 android:textSize="14sp" />
+            <ImageView
+                android:id="@+id/help_sex"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/namedongtai"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@mipmap/man"/>
 
             <TextView
                 android:id="@+id/timetext"
@@ -44,7 +53,20 @@
                 android:layout_marginTop="3dp"
 
 
-                android:text="28分钟前  安徽中医药大学"
+                android:text="28分钟前"
+                android:textColor="#A39E9E"
+                android:textSize="8sp" />
+            <TextView
+                android:layout_toRightOf="@+id/timetext"
+                android:id="@+id/school"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/namedongtai"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="10dp"
+
+
+                android:text="安徽中医药大学"
                 android:textColor="#A39E9E"
                 android:textSize="8sp" />
 
@@ -57,12 +79,13 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <!--<View
+    <View
         android:id="@+id/hr"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_below="@+id/photodongtai"
-        android:background="#686161" />-->
+
+        android:background="#686161" />
+
 
 
     <TextView
@@ -74,6 +97,32 @@
         android:layout_margin="5dp"
         android:text="111111111111111111111111111111111111111111111111111111" />
 
+
+    <LinearLayout
+        android:id="@+id/help_muti_images"
+    android:layout_marginTop="5dp"
+    android:visibility="visible"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/help_imgs1"
+        fresco:actualImageScaleType="fitCenter"
+        android:layout_width="120dp"
+        android:layout_height="120dp"/>
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/help_imgs2"
+            fresco:actualImageScaleType="fitCenter"
+            android:layout_width="120dp"
+            android:layout_height="120dp" />
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/help_imgs3"
+            fresco:actualImageScaleType="fitCenter"
+            android:layout_width="120dp"
+            android:layout_height="20dp" />
+</LinearLayout>
+
     <LinearLayout
         android:id="@+id/pinglun"
         android:layout_width="match_parent"
@@ -83,6 +132,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/help_comment"
             android:drawableLeft="@mipmap/information"
 
             android:drawablePadding="10dp"
@@ -91,28 +141,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="评论" />
-        <View
-            android:layout_weight="0"
-            android:layout_width="1dp"
-            android:background="#D2D3D4"
-            android:layout_height="wrap_content">
 
-            </View>
+
+
 
         <TextView
-            android:drawablePadding="10dp"
-            android:drawableLeft="@mipmap/like_2_shape"
-            android:gravity="left|center_vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="赞" />
-        <View
-            android:layout_weight="0"
-            android:layout_width="1dp"
-            android:background="#D2D3D4"
-            android:layout_height="wrap_content"/>
-        <TextView
+            android:id="@+id/help_order"
             android:drawablePadding="10dp"
             android:gravity="left|center_vertical"
             android:drawableLeft="@mipmap/shape_shopping"

@@ -11,16 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.bean.Message;
 import com.bean.Messages;
 import com.constant.Constant;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.httpThread.Index_AsyncTask;
 
-import tool.Index_adapter;
 import tool.Myadpter;
 
 import java.io.BufferedReader;
@@ -75,7 +72,7 @@ public class Index_fg extends Fragment {
 
     }
     public void getJsonlistview(){
-        new Index_AsyncTask().execute(Constant.GET_INDEX_JSON);
+        new Index_AsyncTask().execute(Constant.GET_HELP_JSON);
 
 
     }

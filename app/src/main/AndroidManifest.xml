@@ -101,18 +101,18 @@
 
         </activity>
         <activity android:name="com.function.Clocle_help">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity android:name="com.function.Clocle_help_details">
 
         </activity>
         <activity android:name=".Other_Self_infos">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name="com.webapp.Present_center">
 

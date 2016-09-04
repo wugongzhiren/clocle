@@ -101,12 +101,12 @@
 
         </activity>
         <activity android:name="com.function.Clocle_help">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name="com.function.Clocle_help_details">
 
@@ -117,6 +117,18 @@
         <activity android:name="com.webapp.Present_center">
 
         </activity>
+        <activity android:name="test.TestShareSDK">
+
+        </activity>
+        <activity android:name="test.Test_Fresco">
+
+        </activity>
+
+<activity android:name="test.Test_Bmob">
+
+</activity>
+
+
     </application>
 
 
@@ -143,4 +155,9 @@
     <!-- 蓝牙分享所需的权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+
+    <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
 </manifest>

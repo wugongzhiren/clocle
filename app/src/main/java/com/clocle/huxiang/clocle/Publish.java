@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,11 +19,13 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.adapter.Picked_photo_adapter;
 import com.bean.Pulish_bean;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +58,7 @@ public class Publish extends Activity implements View.OnClickListener {
     private String img2url;
     private String img3url;
     private int imgCount;
-
+private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +73,10 @@ public class Publish extends Activity implements View.OnClickListener {
         chooseimgs = (Button) findViewById(R.id.chooseimgs);
         money_text = (EditText) findViewById(R.id.money_text);
         publish_button = (Button) findViewById(R.id.publish_button);
-        img1 = (ImageView) findViewById(R.id.help_img1);
+        /*img1 = (ImageView) findViewById(R.id.help_img1);
         img2 = (ImageView) findViewById(R.id.help_img2);
-        img3 = (ImageView) findViewById(R.id.help_img3);
+        img3 = (ImageView) findViewById(R.id.help_img3);*/
+        recyclerView= (RecyclerView) findViewById(R.id.picked_photo);
         publish_text.setOnClickListener(this);
         money_text.setOnClickListener(this);
         publish_button.setOnClickListener(this);
@@ -293,8 +298,16 @@ public class Publish extends Activity implements View.OnClickListener {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        ArrayList<String> url;
+        if (requestCode == 401 && resultCode == 401) {
+             url=data.getStringArrayListExtra("url");
+            Toast.makeText(this,url.size()+"2",Toast.LENGTH_SHORT).show();
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(new Picked_photo_adapter(this,url));
+        }
 
-        DecodeSampleBitmapFromUrl dsbf = new DecodeSampleBitmapFromUrl();
+
+       /* DecodeSampleBitmapFromUrl dsbf = new DecodeSampleBitmapFromUrl();
 
         if (requestCode == 401 && resultCode == 401) {
             img1url = data.getStringExtra("img1");
@@ -361,7 +374,7 @@ public class Publish extends Activity implements View.OnClickListener {
                 e.printStackTrace();
             }
 
-        }
+        }*/
     }
 }
 

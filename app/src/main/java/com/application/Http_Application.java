@@ -42,8 +42,8 @@ public class Http_Application extends Application {
         //其他配置
         OkHttpUtils.initClient(okHttpClient);
         //ImageLoad配置
-        ImageLoaderConfiguration config = ImageLoaderConfiguration.createDefault(this);
-        ImageLoader.getInstance().init(config);
+      /*  ImageLoaderConfiguration config = ImageLoaderConfiguration.createDefault(this);
+        ImageLoader.getInstance().init(config);*/
 /*//阿里云旺配置
         final String APP_KEY = "23441577";
 //必须首先执行这部分代码, 如果在":TCMSSevice"进程中，无需进行云旺（OpenIM）和app业务的初始化，以节省内存;

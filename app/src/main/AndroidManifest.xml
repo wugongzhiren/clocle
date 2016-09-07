@@ -58,7 +58,11 @@
 
         </activity>
         <activity android:name=".Publish">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -102,11 +106,7 @@
         </activity>
         <activity android:name="com.function.Clocle_help">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name="com.function.Clocle_help_details">
 
@@ -127,8 +127,18 @@
 <activity android:name="test.Test_Bmob">
 
 </activity>
+<activity android:name="test.Test_PhotoView">
 
+</activity>
+<activity android:name="test.Test_pohotopicker">
 
+</activity>
+        <activity android:name="me.iwf.photopicker.PhotoPickerActivity"
+            android:theme="@style/customTheme"
+            />
+
+        <activity android:name="me.iwf.photopicker.PhotoPagerActivity"
+            android:theme="@style/customTheme"/>
     </application>
 
 

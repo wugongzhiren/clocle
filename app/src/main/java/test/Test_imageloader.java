@@ -66,7 +66,7 @@ public class Test_imageloader extends Activity implements View.OnClickListener {
     private Popwindow mpopwindow;
 
 
-    private List<String> imgsurl=new ArrayList<String>();
+    private ArrayList<String> imgsurl=new ArrayList<String>();
     private Intent intent;
     private Handler mhandler = new Handler() {
         @Override
@@ -106,7 +106,13 @@ intent=getIntent();
                 if (imgsurl.isEmpty()) {
                     Toast.makeText(this, "当前没有选择一张图片", Toast.LENGTH_SHORT).show();
                     return;}
-switch (imgsurl.size()){
+                if(imgsurl.size()>3){
+                    Toast.makeText(getApplicationContext(),"只能选择三张图片哦",Toast.LENGTH_SHORT).show();
+                    return;}
+                intent.putStringArrayListExtra("url",imgsurl);
+                setResult(401,intent);
+                this.finish();
+/*switch (imgsurl.size()){
     case 1:
         intent.putExtra("img1",imgsurl.get(0));
         setResult(401,intent);
@@ -127,7 +133,7 @@ switch (imgsurl.size()){
         break;
     default:
         Toast.makeText(this,"只能选择3张图片哦！！",Toast.LENGTH_SHORT).show();
-        break;
+        break;*/
 }
                     /*myMap.setMap(map);
                     Bundle bundle = new Bundle();
@@ -136,8 +142,8 @@ switch (imgsurl.size()){
                 startActivity(intent);*/
                     //setResult(401, intent);
                     //Test_imageloader.this.finish();
-                    break;
-                }
+
+
         }
 
 

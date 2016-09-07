@@ -15,23 +15,15 @@
     <LinearLayout
         android:id="@+id/imgs"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/publish_text">
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/picked_photo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/help_img1"
-            android:layout_width="90dp"
-            android:layout_height="110dp" />
+</android.support.v7.widget.RecyclerView>
 
-        <ImageView
-            android:id="@+id/help_img2"
-            android:layout_width="90dp"
-            android:layout_height="110dp" />
-
-        <ImageView
-            android:id="@+id/help_img3"
-            android:layout_width="90dp"
-            android:layout_height="110dp" />
     </LinearLayout>
 
     <LinearLayout

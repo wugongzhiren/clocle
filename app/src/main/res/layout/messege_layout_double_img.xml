@@ -18,7 +18,7 @@
         android:orientation="horizontal">
 
         <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/help_userphoto1"
+            android:id="@+id/help_userphoto_double"
             android:layout_width="45dp"
             android:layout_height="45dp"
             fresco:roundAsCircle="true"
@@ -32,7 +32,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/namedongtai"
+                android:id="@+id/namedongtai_double"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="无功至人"
@@ -41,7 +41,7 @@
                 android:id="@+id/help_sex"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="3dp"
-                android:layout_toRightOf="@+id/namedongtai"
+                android:layout_toRightOf="@+id/namedongtai_double"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:src="@mipmap/man"/>
@@ -50,7 +50,7 @@
                 android:id="@+id/timetext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/namedongtai"
+                android:layout_below="@+id/namedongtai_double"
                 android:layout_marginTop="3dp"
 
 
@@ -62,7 +62,7 @@
                 android:id="@+id/school"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/namedongtai"
+                android:layout_below="@+id/namedongtai_double"
                 android:layout_marginTop="3dp"
                 android:layout_marginLeft="10dp"
 
@@ -91,7 +91,7 @@
 
     <TextView
 
-        android:id="@+id/contextdongtai"
+        android:id="@+id/contextdongtai_double"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -111,6 +111,7 @@
         android:layout_weight="1"
         android:layout_height="180dp" />
     <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_marginLeft="5dp"
         android:visibility="visible"
         fresco:actualImageScaleType="centerCrop"
         android:id="@+id/second_image"

@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -58,14 +62,24 @@ public class Publish extends Activity implements View.OnClickListener {
     private String img2url;
     private String img3url;
     private int imgCount;
+    private int deviceW;
+    private int deviceH;
+    private static final String addphotourl= "res://com.clocle.huxiang.clocle/"+Uri.parse(R.mipmap.addphoto+"");
 private RecyclerView recyclerView;
+    private Picked_photo_adapter picked_photo_adapter;
+    private ArrayList<String> url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.publish_layout);
+        Toast.makeText(this,"测试2",Toast.LENGTH_SHORT).show();
+        url=new ArrayList<>();
+       url.add(addphotourl);
+        picked_photo_adapter=new Picked_photo_adapter(this,url);
         initviews();
-
+        //获取屏幕的宽高
+        getDeviceWH();
     }
 
     private void initviews() {
@@ -77,6 +91,8 @@ private RecyclerView recyclerView;
         img2 = (ImageView) findViewById(R.id.help_img2);
         img3 = (ImageView) findViewById(R.id.help_img3);*/
         recyclerView= (RecyclerView) findViewById(R.id.picked_photo);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,4));
+        recyclerView.setAdapter(picked_photo_adapter);
         publish_text.setOnClickListener(this);
         money_text.setOnClickListener(this);
         publish_button.setOnClickListener(this);
@@ -298,12 +314,21 @@ private RecyclerView recyclerView;
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ArrayList<String> url;
+        ArrayList<String> pickedurl;
+
         if (requestCode == 401 && resultCode == 401) {
-             url=data.getStringArrayListExtra("url");
+            pickedurl=data.getStringArrayListExtra("url");
+            url.clear();
+for(int i=0;i<pickedurl.size();i++){
+
+    url.add("file://"+Uri.parse(pickedurl.get(i)));
+}
+            url.add(addphotourl);
+        //   url.add("file://"+Uri.parse(pickedurl.get(1)));
             Toast.makeText(this,url.size()+"2",Toast.LENGTH_SHORT).show();
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(new Picked_photo_adapter(this,url));
+
+picked_photo_adapter.notifyDataSetChanged();
+            //recyclerView.setAdapter(new Picked_photo_adapter(this,url));
         }
 
 
@@ -375,6 +400,13 @@ private RecyclerView recyclerView;
             }
 
         }*/
+    }
+    public void getDeviceWH() {
+        Display display = getWindow().getWindowManager().getDefaultDisplay();
+        DisplayMetrics dm = new DisplayMetrics();
+        display.getMetrics(dm);
+        deviceW = dm.widthPixels;
+        deviceH = dm.heightPixels;
     }
 }
 

@@ -42,6 +42,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private final static int NO_IMAGE = 0;
     private final static int SINGLE_IMAGE = 1;
     private final static int MUTI_IMAGE = 2;
+    private final static int DOUBLE_IMAGE=3;
     private int deviceWidth;
     private int deviceHeight;
     private int marginleft;
@@ -69,12 +70,6 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.datas = datas;
         this.inflater = LayoutInflater.from(context);
         this.mcontext = context;
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.t9)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
     }
 
 
@@ -101,9 +96,13 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             view = inflater.inflate(R.layout.messege_layout_noimage, parent, false);
 
             return new ViewHolderwithoutImg(view);
-        } else {
+        } else if(viewType==SINGLE_IMAGE){
             view = inflater.inflate(R.layout.messege_layout_single_img, parent, false);
             return new ViewHolderwithSingleImg(view);
+        }
+        else {
+            view=inflater.inflate(R.layout.messege_layout_double_img,parent,false);
+            return new ViewHolderwithDoubleImg(view);
         }
         // Log.d("tag","创建Viewholder1");
         // RecycleviewViewHolder viewHolder = new RecycleviewViewHolder(view);
@@ -118,13 +117,17 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         String img1url = datas.get(position).getImg1();
 
         String img2url = datas.get(position).getImg2();
-
+        String img3url = datas.get(position).getImg3();
         if (img1url == null) {
             return NO_IMAGE;
         }
         if (img2url == null) {
             return SINGLE_IMAGE;
-        } else {
+        }
+        if (img3url==null){
+            return DOUBLE_IMAGE;
+        }
+        else {
             return MUTI_IMAGE;
         }
 
@@ -185,12 +188,10 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             String img1 = datas.get(position).getImg1();
             String img2 = datas.get(position).getImg2();
             String img3 = datas.get(position).getImg3();
-            ImageLoader.getInstance().displayImage(img1, ((ViewHolderwithMutiImg) holder).help_imgs1, options);
-            ImageLoader.getInstance().displayImage(img2, ((ViewHolderwithMutiImg) holder).help_imgs2, options);
-            if (img3 != null) {
-                ImageLoader.getInstance().displayImage(datas.get(position).getImg3(), ((ViewHolderwithMutiImg) holder).help_imgs3, options);
-            }
 
+            ((ViewHolderwithMutiImg) holder).help_imgs1.setImageURI(Uri.parse(img1));
+            ((ViewHolderwithMutiImg) holder).help_imgs2.setImageURI(Uri.parse(img2));
+            ((ViewHolderwithMutiImg) holder).help_imgs3.setImageURI(Uri.parse(img3));
 
             //头像
             ((ViewHolderwithMutiImg) holder).photo.setImageURI(Uri.parse(datas.get(position).getPic()));
@@ -198,6 +199,23 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             //昵称，时间，学校
             ((ViewHolderwithMutiImg) holder).name.setText(datas.get(position).getName());//昵称
             ((ViewHolderwithMutiImg) holder).contexttext.setText(datas.get(position).getMessage());//正文内容
+        }
+        if(holder instanceof ViewHolderwithDoubleImg){
+            if (datas.get(position).getSex().equals("女")) {
+                ((ViewHolderwithDoubleImg) holder).sex.setImageResource(R.mipmap.woman);
+            } else {
+                ((ViewHolderwithDoubleImg) holder).sex.setImageResource(R.mipmap.man);
+            }
+            String img1 = datas.get(position).getImg1();
+            String img2 = datas.get(position).getImg2();
+            //头像
+            ((ViewHolderwithDoubleImg) holder).photo.setImageURI(Uri.parse(datas.get(position).getPic()));
+            // ImageLoader.getInstance().displayImage("http://sqimg.qq.com/qq_product_operations/im/2016/pc/ay/mb65_b.jpg", ((ViewHolderwithSingleImg) holder).photo, options);
+            //昵称，时间，学校
+            ((ViewHolderwithDoubleImg) holder).name.setText(datas.get(position).getName());//昵称
+            ((ViewHolderwithDoubleImg) holder).contexttext.setText(datas.get(position).getMessage());//正文内容
+            ((ViewHolderwithDoubleImg) holder).help_imgs1.setImageURI(Uri.parse(img1));
+            ((ViewHolderwithDoubleImg) holder).help_imgs2.setImageURI(Uri.parse(img2));
         }
 
         //之所以出现错乱，是因为holder复用了img1url为空的视图
@@ -337,6 +355,86 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
         }
 
+    }
+    class ViewHolderwithDoubleImg extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public TextView name;
+        public TextView time;
+        public TextView contexttext;//正文
+        public SimpleDraweeView photo;
+        public TextView school;
+        public TextView help_comment;
+        public TextView help_order;
+        public SimpleDraweeView help_imgs1;
+        public SimpleDraweeView help_imgs2;
+
+        public ImageView sex;
+
+        //private RecycleViewAdapter.OnItemClickListener monItemClickListener;
+
+        public ViewHolderwithDoubleImg(View itemView) {
+
+            super(itemView);
+
+
+            name = (TextView) itemView.findViewById(R.id.namedongtai_double);
+            contexttext = (TextView) itemView.findViewById(R.id.contextdongtai_double);
+            time = (TextView) itemView.findViewById(R.id.timetext);
+            photo = (SimpleDraweeView) itemView.findViewById(R.id.help_userphoto_double);
+            school = (TextView) itemView.findViewById(R.id.school);
+            help_comment = (TextView) itemView.findViewById(R.id.help_comment);
+            help_imgs1 = (SimpleDraweeView) itemView.findViewById(R.id.first_image);
+            //help_imgs1.getLayoutParams().height= help_imgs1.getLayoutParams().width;
+            //获取view的宽高像素
+            //  ViewGroup.LayoutParams lp1 = help_imgs1.getLayoutParams();
+            //  lp1.height = img1height;
+            //  lp1.width = img1width;
+
+            help_imgs2 = (SimpleDraweeView) itemView.findViewById(R.id.second_image);
+           // help_imgs2.getLayoutParams().height= help_imgs2.getLayoutParams().width;
+            //   ViewGroup.LayoutParams lp2 = help_imgs2.getLayoutParams();
+            //   lp2.height = img1height;
+            //    lp2.width = img1width;
+
+            //    ViewGroup.LayoutParams lp3 = help_imgs3.getLayoutParams();
+            //    lp3.height = img1height;
+            //    lp3.width = img1width;
+
+            sex = (ImageView) itemView.findViewById(R.id.help_sex);
+            help_order = (TextView) itemView.findViewById(R.id.help_order);
+            help_order.setOnClickListener(this);
+            photo.setOnClickListener(this);
+            help_comment.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = null;
+            String itemid = (String) itemView.getTag();
+            switch (v.getId()) {
+                case R.id.help_userphoto3:
+                    //跳转到查看个人信息的页面
+
+                    intent = new Intent(Http_Application.getContext(), Other_Self_infos.class);
+                    intent.putExtra("itemtag", itemid);
+                    mcontext.startActivity(intent);
+
+
+                    break;
+                case R.id.help_comment:
+                    Log.i("tag2", "查看悬赏" + itemView.getTag());
+                    intent = new Intent(Http_Application.getContext(), Clocle_help_details.class);
+                    mcontext.startActivity(intent);
+                    break;
+
+
+                case R.id.help_order:
+                    new AlertDialog.Builder(mcontext).setTitle("确认帮助TA")
+                            .setMessage("帮助TA后您可获取300颗圈圈豆，请尽快帮TA完成").setNegativeButton("我能完成", null).setPositiveButton("点错了", null).show();
+                default:
+                    break;
+            }
+        }
     }
 
     /**

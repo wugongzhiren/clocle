@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 <com.facebook.drawee.view.SimpleDraweeView
+    android:layout_marginLeft="5dp"
     android:id="@+id/picked_photo_item"
     android:layout_width="150dp"
     android:layout_height="150dp" />

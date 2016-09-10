@@ -28,11 +28,14 @@ public class Test_Fresco extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 setContentView(R.layout.test_fresco);
+        Toast.makeText(this,"测试2",Toast.LENGTH_SHORT).show();
          view= (SimpleDraweeView) findViewById(R.id.my_image_view);
-        uri = Uri.parse("https://sqimg.qq.com/qq_product_operations/im/2015/bg3_1600.jpg");
+      // uri = Uri.parse("assets:///addphoto.png");
+      // uri = Uri.parse("res://com.clocle.huxiang.clocle/"+R.mipmap.addphoto);
        // SimpleDraweeView draweeView = (SimpleDraweeView) findViewById(R.id.my_image_view);
-       // view.setImageURI(uri);
-        ControllerListener listener=new BaseControllerListener(){
+      String url="res://com.clocle.huxiang.clocle/"+ Uri.parse(R.mipmap.addphoto+"");
+       view.setImageURI(url);
+       /* ControllerListener listener=new BaseControllerListener(){
             @Override
             public void onFailure(String id, Throwable throwable) {
                 super.onFailure(id, throwable);
@@ -46,7 +49,7 @@ setContentView(R.layout.test_fresco);
                 .build();
 
         view.setController(controller);
-        Toast.makeText(this,"完成了8",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"完成了8",Toast.LENGTH_SHORT).show();*/
     }
     public void show(View v){
       /*  Intent intent=new Intent(this,TestShareSDK.class);

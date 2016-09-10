@@ -58,11 +58,7 @@
 
         </activity>
         <activity android:name=".Publish">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -105,7 +101,11 @@
 
         </activity>
         <activity android:name="com.function.Clocle_help">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity android:name="com.function.Clocle_help_details">

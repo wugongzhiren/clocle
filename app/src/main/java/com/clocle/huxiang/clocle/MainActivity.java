@@ -37,7 +37,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mcontext = this;
         setContentView(R.layout.activity_main);
 
-        slidingMenu = (SlidingMenu) findViewById(R.id.slidemenu);
         manager = getFragmentManager();
 
         bindviews();
@@ -56,22 +55,22 @@ public class MainActivity extends Activity implements View.OnClickListener {
         tabfriend = (TextView) findViewById(R.id.txt_friend);
         tabfaxian = (TextView) findViewById(R.id.txt_faxian);
         tabfankui = (TextView) findViewById(R.id.txt_fankui);
-        img1 = (TextView) findViewById(R.id.self_center);
+       /* img1 = (TextView) findViewById(R.id.self_center);
         toptext = (TextView) findViewById(R.id.toptext);//这是顶部的学校名字的实例化对象
-        toptag = (Button) findViewById(R.id.tag);//首页发表按钮
+        toptag = (Button) findViewById(R.id.tag);//首页发表按钮*/
         //设置监听器
         tapdongtai.setOnClickListener(this);
         tabfriend.setOnClickListener(this);
         tabfaxian.setOnClickListener(this);
         tabfankui.setOnClickListener(this);
-        toptag.setOnClickListener(new View.OnClickListener() {//发表
+       /* toptag.setOnClickListener(new View.OnClickListener() {//发表
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Publish.class);
                 startActivityForResult(intent, 301);
             }
-        });
-        //用户点击我的个人中心时触发
+        });*/
+      /*  //用户点击我的个人中心时触发
         img1.setOnClickListener(new View.OnClickListener() {//我的个人中心
             @Override
             public void onClick(View v) {
@@ -79,7 +78,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 startActivity(intent);
             }
         });
-
+*/
 
     }
 

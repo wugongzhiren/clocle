@@ -1,87 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#FFF15656">
 
-    <com.view.SlidingMenu
-        android:id="@+id/slidemenu"
+    </android.support.v7.widget.Toolbar>
+
+    <include
+        android:id="@+id/bottombar1"
+        layout="@layout/index_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
+<!--
+    <View
+        android:id="@+id/div_tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_above="@+id/bottombar1"
+        android:background="#898181" />-->
+
+    <FrameLayout
+        android:id="@+id/ly_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/background"
-        android:scrollbars="none">
+       
+        android:layout_below="@id/topbar">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-            <!--这个是隐藏的菜单layout-->
-            <include layout="@layout/layout" />
-            <!--这个是内容conten布局-->
-            <RelativeLayout
-                android:elevation="3dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#FFFFFF">
-                <RelativeLayout
-                    android:id="@+id/topbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="#2073E1">
-
-                    <ImageView
-                        android:id="@+id/image"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
-                        android:onClick="openmenu"
-                        android:src="@mipmap/photo" />
-
-                    <TextView
-                        android:id="@+id/toptext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_centerVertical="true"
-
-                        android:text="安徽中医药大学"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp" />
-
-                    <Button
-                        android:id="@+id/tag"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="6dp"
-                        android:background="#00000000"
-                        android:text="发表"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp" />
-                </RelativeLayout>
-                <!-- 这里是底部的导航菜单-->
-                <include
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:id="@+id/bottombar1"
-                    layout="@layout/index_bottom" />
-                <View
-                    android:id="@+id/div_tab_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:background="#898181"
-                    android:layout_above="@+id/bottombar1"/>
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/topbar"
-                    android:layout_above="@id/div_tab_bar"
-                    android:id="@+id/ly_content">
-
-                </FrameLayout>
-            </RelativeLayout>
-        </LinearLayout>
-    </com.view.SlidingMenu>
-
-</RelativeLayout>
+    </FrameLayout>
+    </RelativeLayout>
+</FrameLayout>
+<ListView
+    android:id="@+id/left_drawer"
+    android:layout_width="240dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:choiceMode="singleChoice"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="0dp"
+    android:background="#111"></ListView>
+</android.support.v4.widget.DrawerLayout>

@@ -26,14 +26,16 @@ import com.function.Clocle_help;
 import com.function.Clocle_help_details;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.view.Preview_photo;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/15.
  */
-public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     private LayoutInflater inflater;
 
     private List<Messages> datas;
@@ -133,8 +135,21 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     }
 
+    /**
+     * 此方法需要大规模的优化
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        String img1 = datas.get(position).getImg1();
+        String img2 = datas.get(position).getImg2();
+        String img3 = datas.get(position).getImg3();
+        final ArrayList<String> urlList=new ArrayList<>();
+        urlList.add(img1);
+        urlList.add(img2);
+        urlList.add(img3);
+        String pic=datas.get(position).getPic();
         holder.itemView.setTag(datas.get(position).getHelp_id() + "_" + datas.get(position).getUser_id());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,13 +183,14 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((ViewHolderwithSingleImg) holder).sex.setImageResource(R.mipmap.man);
             }
             //头像
-            ((ViewHolderwithSingleImg) holder).photo.setImageURI(Uri.parse(datas.get(position).getPic()));
+            ((ViewHolderwithSingleImg) holder).photo.setImageURI(Uri.parse(pic));
             // ImageLoader.getInstance().displayImage("http://sqimg.qq.com/qq_product_operations/im/2016/pc/ay/mb65_b.jpg", ((ViewHolderwithSingleImg) holder).photo, options);
             //昵称，时间，学校
             ((ViewHolderwithSingleImg) holder).name.setText(datas.get(position).getName());//昵称
             ((ViewHolderwithSingleImg) holder).contexttext.setText(datas.get(position).getMessage());//正文内容
             //图片1
-            ((ViewHolderwithSingleImg) holder).only_one_image.setImageURI(Uri.parse(datas.get(position).getImg1()));
+           // ((ViewHolderwithSingleImg) holder).only_one_image.setImageURI(Uri.parse(datas.get(position).getImg1()));
+            ((ViewHolderwithSingleImg) holder).only_one_image.setImageURI(Uri.parse(img1));
             Log.i("img1url", "onBindViewHolder: "+datas.get(position).getImg1());
             // ImageLoader.getInstance().displayImage(datas.get(position).getImg1(), ((ViewHolderwithSingleImg) holder).only_one_image, options);
         }
@@ -185,14 +201,19 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             } else {
                 ((ViewHolderwithMutiImg) holder).sex.setImageResource(R.mipmap.man);
             }
-            String img1 = datas.get(position).getImg1();
-            String img2 = datas.get(position).getImg2();
-            String img3 = datas.get(position).getImg3();
 
+            //三张图片的设置
             ((ViewHolderwithMutiImg) holder).help_imgs1.setImageURI(Uri.parse(img1));
             ((ViewHolderwithMutiImg) holder).help_imgs2.setImageURI(Uri.parse(img2));
             ((ViewHolderwithMutiImg) holder).help_imgs3.setImageURI(Uri.parse(img3));
-
+            ((ViewHolderwithMutiImg) holder).help_imgs1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(Http_Application.getContext(), Preview_photo.class);
+                    intent.putStringArrayListExtra("urlList",urlList);
+                    mcontext.startActivity(intent);
+                }
+            });
             //头像
             ((ViewHolderwithMutiImg) holder).photo.setImageURI(Uri.parse(datas.get(position).getPic()));
             // ImageLoader.getInstance().displayImage(datas.get(position).getPic(), ((ViewHolderwithMutiImg) holder).photo, options);
@@ -206,8 +227,8 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             } else {
                 ((ViewHolderwithDoubleImg) holder).sex.setImageResource(R.mipmap.man);
             }
-            String img1 = datas.get(position).getImg1();
-            String img2 = datas.get(position).getImg2();
+            /*String img1 = datas.get(position).getImg1();
+            String img2 = datas.get(position).getImg2();*/
             //头像
             ((ViewHolderwithDoubleImg) holder).photo.setImageURI(Uri.parse(datas.get(position).getPic()));
             // ImageLoader.getInstance().displayImage("http://sqimg.qq.com/qq_product_operations/im/2016/pc/ay/mb65_b.jpg", ((ViewHolderwithSingleImg) holder).photo, options);

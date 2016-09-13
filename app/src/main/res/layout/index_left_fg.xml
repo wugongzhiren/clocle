@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:background="#FFB0E645"
+    android:layout_width="match_parent"
+    android:layout_height="120dp">
+    <ImageButton
+        android:id="@+id/index_photo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@mipmap/t7"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/index_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="糖糖没有国"
+            android:textSize="14sp"
+            android:textColor="#fff"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="积分：2785"
+            android:textSize="12sp"
+            android:textColor="#fff"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="个性签名：迷路的吃货"
+            android:textSize="12sp"
+            android:textColor="#FFD236B8"
+            />
+    </LinearLayout>
+</RelativeLayout>
+    <LinearLayout
+        android:background="#FF1CB2E9"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <ListView
+        android:id="@+id/index_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+    </LinearLayout>
+</LinearLayout>

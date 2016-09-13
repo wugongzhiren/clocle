@@ -7,16 +7,23 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bean.Message;
+import com.gesture.MygestureListener;
 import com.view.SlidingMenu;
 
 public class MainActivity extends Activity implements View.OnClickListener {
-    private SlidingMenu slidingMenu;
-    private TextView toptext;
+
+
     private TextView tapdongtai;
     private TextView tabfaxian;
     private TextView tabfriend;
@@ -26,17 +33,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private Faxian_fg fg2;
     private Friend_fg fg3;
     private fankui_fg fg4;
-    private Button toptag;
-    private TextView img1;
-    private Context mcontext;
+ private DrawerLayout index_drawer;
+    private MygestureListener gesture;
+    private GestureDetector detector;
+    private Boolean needOpenMenu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mcontext = this;
-        setContentView(R.layout.activity_main);
 
+        setContentView(R.layout.activity_main);
+        Toast.makeText(this,"测试",Toast.LENGTH_SHORT).show();
+        gesture=new MygestureListener();
+       detector=new GestureDetector(this,gesture);
         manager = getFragmentManager();
 
         bindviews();
@@ -44,12 +55,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         //Toast.makeText(this,"滑动",Toast.LENGTH_SHORT).show();
     }
 
-    //基于回调的click方法，布局中onclick属性关联的方法
-    public void openmenu(View view) {
-        slidingMenu.openMenu();
-    }
+
 
     private void bindviews() {
+        index_drawer= (DrawerLayout) findViewById(R.id.index_drawer);
+       // index_drawer.openDrawer(Gravity.LEFT);
         //初始化底部导航菜单
         tapdongtai = (TextView) findViewById(R.id.txt_dongtai);
         tabfriend = (TextView) findViewById(R.id.txt_friend);
@@ -116,8 +126,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.txt_faxian:
                 setSelected();
-                toptext.setText("发现更多精彩");
-                toptag.setText("礼品兑换中心");
+
                 tabfaxian.setSelected(true);
                 if (fg2 == null) {
                     fg2 = new Faxian_fg();
@@ -138,7 +147,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.txt_fankui:
                 setSelected();
-                toptext.setText("反馈");
+
                 tabfankui.setSelected(true);
                 if (fg4 == null) {
                     fg4 = new fankui_fg();
@@ -178,6 +187,28 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
 
     }
+/**
+ * 事件的处理
+ */
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        float x=0;
+        float y=0;
+        if(event.getAction()==MotionEvent.ACTION_DOWN){
+            x=event.getX();
+        }
+        if (event.getAction()==MotionEvent.ACTION_UP){
+            y=event.getY();
+        }
+        if (Math.abs(y-x)>10){
+            index_drawer.openDrawer(Gravity.LEFT);
+        }
+        Log.i("tag","开始事件处理");
+     /* if (!detector.onTouchEvent(event)){
+          needOpenMenu=true;
+          index_drawer.openDrawer(Gravity.LEFT);
+      }*/
+        return false;
 
-
+    }
 }

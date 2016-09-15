@@ -10,6 +10,8 @@ android {
         targetSdkVersion 17
         versionCode 1
         versionName "2.0"
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled true
       /*  multiDexEnabled true*/
     }
     /*packagingOptions {

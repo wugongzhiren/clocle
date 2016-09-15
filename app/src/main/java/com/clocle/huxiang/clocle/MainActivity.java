@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -21,7 +23,7 @@ import com.bean.Message;
 import com.gesture.MygestureListener;
 import com.view.SlidingMenu;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     private TextView tapdongtai;
@@ -33,7 +35,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private Faxian_fg fg2;
     private Friend_fg fg3;
     private fankui_fg fg4;
- private DrawerLayout index_drawer;
+ private SlidingPaneLayout paneLayout;
     private MygestureListener gesture;
     private GestureDetector detector;
     private Boolean needOpenMenu;
@@ -58,7 +60,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 
     private void bindviews() {
-        index_drawer= (DrawerLayout) findViewById(R.id.index_drawer);
+        paneLayout= (SlidingPaneLayout) findViewById(R.id.index_drawer);
+        paneLayout.setParallaxDistance(200);
        // index_drawer.openDrawer(Gravity.LEFT);
         //初始化底部导航菜单
         tapdongtai = (TextView) findViewById(R.id.txt_dongtai);
@@ -201,7 +204,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             y=event.getY();
         }
         if (Math.abs(y-x)>10){
-            index_drawer.openDrawer(Gravity.LEFT);
+          //  index_drawer.openDrawer(Gravity.LEFT);
         }
         Log.i("tag","开始事件处理");
      /* if (!detector.onTouchEvent(event)){

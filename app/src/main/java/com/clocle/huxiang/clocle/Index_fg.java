@@ -1,6 +1,6 @@
 package com.clocle.huxiang.clocle;
 
-import android.app.Fragment;
+
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/7/6.
  */
-public class Index_fg extends Fragment {
+public class Index_fg extends android.support.v4.app.Fragment {
     public   List<Message> messages= new ArrayList<Message>();;//动态的数据
     public ListView messageListview;
     public  Myadpter myadapter;
@@ -49,7 +49,7 @@ public class Index_fg extends Fragment {
 
         listcontext = getActivity();
 
-        getJsonlistview();
+        //getJsonlistview();
 
         /*messages.add(new Message("艾苏北郡的小铁匠", "万能baseadapter实验，成功了", R.mipmap.t1, "7月17日 17:25"));
         messages.add(new Message("落泪星辰", "最新的电影，谁看", R.mipmap.t2, "7月17日 17:25"));

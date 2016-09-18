@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SlidingPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/index_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <!-- 左侧侧滑菜单的容器-->
+
     <fragment
         android:id="@+id/id_left_menu"
         android:name="com.fragment.Index_Left_Fg"
@@ -11,44 +12,67 @@
         android:layout_height="match_parent"
 
         />
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/topbar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#FFF15656">
-
-    </android.support.v7.widget.Toolbar>
-
-    <include
-        android:id="@+id/bottombar1"
-        layout="@layout/index_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom" />
-<!--
-    <View
-        android:id="@+id/div_tab_bar"
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:layout_above="@+id/bottombar1"
-        android:background="#898181" />-->
-
-    <FrameLayout
-        android:id="@+id/ly_content"
+    <!--内容容器-->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       
-        android:layout_below="@id/topbar">
+        android:orientation="vertical">
 
-    </FrameLayout>
-    </RelativeLayout>
-</FrameLayout>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#FFF15656">
 
+        </android.support.v7.widget.Toolbar>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#FF5EDFED">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="图片轮播"
+                android:textSize="24sp" />
+        </RelativeLayout>
+        <!--fragment的容器 -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+        <FrameLayout
+            android:id="@+id/index_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#FF3035CA">
+
+        </FrameLayout>
+
+        <android.support.v4.app.FragmentTabHost
+            android:background="#FF3B8917"
+            android:id="@android:id/tabhost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+            <!--<TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="#FFB6A7A7" />-->
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0" />
+
+        </android.support.v4.app.FragmentTabHost>
+
+        </LinearLayout>
+    </LinearLayout>
 </android.support.v4.widget.SlidingPaneLayout>

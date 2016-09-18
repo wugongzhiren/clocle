@@ -1,13 +1,10 @@
 package com.clocle.huxiang.clocle;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,30 +14,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bean.Bmob_UserBean;
-import com.constant.Constant;
-import com.httpThread.Reg_http;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
-
 import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
-import cn.smssdk.gui.RegisterPage;
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import tool.Bg_blur;
 
 /**
@@ -57,6 +35,7 @@ public class Reg extends AppCompatActivity implements View.OnClickListener {
     private RelativeLayout relativeLayout;
     private Bitmap login_bg_bm;
     private ImageView imageView;
+    private Bitmap index_photo;
     private OkHttpClient okHttpClient = new OkHttpClient();
 
     @Override
@@ -64,8 +43,19 @@ public class Reg extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.mipmap.login_bg);
+        index_photo=BitmapFactory.decodeResource(getResources(),R.mipmap.reg);
         login_bg_bm=Bg_blur.blur(this,bitmap);
         setContentView(R.layout.reg_layout);
+        BmobUser bmobUser = BmobUser.getCurrentUser();
+        Bmob_UserBean bmob_userBean=  BmobUser.getCurrentUser(Bmob_UserBean.class);
+        if(bmobUser != null){
+            // 允许用户使用应用
+            Intent intent=new Intent(Reg.this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        }else{
+            //缓存用户对象为空时， 可打开用户注册界面…
+        }
         bindView();
          // 不存在设置默认图片
         imageView.setImageBitmap(login_bg_bm);
@@ -115,7 +105,7 @@ public class Reg extends AppCompatActivity implements View.OnClickListener {
             case R.id.reg_bt:
                 String nametem=name.getText().toString();
                 if (nametem.equals("")) {
-                    Toast.makeText(this, "请输入昵称！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "请输入用户名！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 String pstem=password.getText().toString();
@@ -130,8 +120,24 @@ public class Reg extends AppCompatActivity implements View.OnClickListener {
                 Bmob_UserBean user = new Bmob_UserBean();
 //注意：不能调用setObjectId("")方法
                 user.setUsername(nametem);
+                //user.setMobilePhoneNumber(nametem);
                 user.setPassword(pstem);
-                user.save(new SaveListener<String>() {
+                user.setphotoUrl("http://bmob-cdn-6342.b0.upaiyun.com/2016/09/18/1f9161722ebf447782924f10d7055d87.png");
+                user.signUp(new SaveListener<Bmob_UserBean>() {
+                    @Override
+                    public void done(Bmob_UserBean bmobUser, BmobException e) {
+                        if(e==null){
+                            Toast.makeText(Reg.this,"成功",Toast.LENGTH_SHORT).show();
+
+                            progress.setVisibility(View.GONE);
+                        }
+                        else {
+                            Toast.makeText(Reg.this,"用户名已经存在",Toast.LENGTH_SHORT).show();
+                            progress.setVisibility(View.GONE);
+                        }
+                    }
+                });
+              /*  user.save(new SaveListener<String>() {
 
                     @Override
                     public void done(String objectId, BmobException e) {
@@ -142,12 +148,12 @@ public class Reg extends AppCompatActivity implements View.OnClickListener {
                             Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
                         }
                     }
-                });
+                });*/
                 break;
             case R.id.login_bt:
                 String nametem1=name.getText().toString();
                 if (nametem1.equals("")) {
-                    Toast.makeText(this, "请输入昵称！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "请输入用户名！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 String pstem1=password.getText().toString();
@@ -155,10 +161,30 @@ public class Reg extends AppCompatActivity implements View.OnClickListener {
                     Toast.makeText(this, "请输入密码！", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                BmobQuery<Bmob_UserBean> query=new BmobQuery<Bmob_UserBean>();
-                query.getObject("b08f6bca4e", new QueryListener<Bmob_UserBean>() {
+                Bmob_UserBean bu2 = new Bmob_UserBean();
+                bu2.setUsername(nametem1);
+                bu2.setPassword(pstem1);
+                bu2.login(new SaveListener<Bmob_UserBean>() {
+
                     @Override
-                    public void done(Bmob_UserBean bmob_userBean, BmobException e) {
+                    public void done(Bmob_UserBean bmobUser, BmobException e) {
+                        if(e==null){
+                            progress.setVisibility(View.GONE);
+                            Intent intent=new Intent(Reg.this,MainActivity.class);
+                            startActivity(intent);
+                           finish();
+                            //通过BmobUser user = BmobUser.getCurrentUser()获取登录成功后的本地用户信息
+                            //如果是自定义用户对象MyUser，可通过MyUser user = BmobUser.getCurrentUser(MyUser.class)获取自定义用户信息
+                        }else{
+                            progress.setVisibility(View.GONE);
+                            Toast.makeText(Reg.this,"登录失败",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+               /* BmobQuery<BmobUser> query=new BmobQuery<BmobUser>();
+                query.getObject("b08f6bca4e", new QueryListener<BmobUser>() {
+                    @Override
+                    public void done(BmobUser BmobUser, BmobException e) {
                         if(e==null){
                             progress.setVisibility(View.GONE);
                             Intent intent=new Intent(Reg.this,MainActivity.class);
@@ -169,7 +195,7 @@ public class Reg extends AppCompatActivity implements View.OnClickListener {
                             Toast.makeText(Reg.this,"登录失败",Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
+                });*/
                 //查询多条数据
                /* query.addWhereEqualTo("username",nametem1);
                 query.addWhereEqualTo("password",pstem1);

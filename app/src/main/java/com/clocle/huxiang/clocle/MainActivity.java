@@ -1,29 +1,32 @@
 package com.clocle.huxiang.clocle;
 
-import android.app.Activity;
-import android.app.Fragment;
+
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTabHost;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bean.Message;
 import com.gesture.MygestureListener;
-import com.view.SlidingMenu;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+public class MainActivity extends AppCompatActivity  {
 
 
     private TextView tapdongtai;
@@ -39,21 +42,115 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MygestureListener gesture;
     private GestureDetector detector;
     private Boolean needOpenMenu;
+    private FragmentTabHost tabHost;
 
-
+private LayoutInflater inflater;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_main);
+       inflater=getLayoutInflater();
         Toast.makeText(this,"测试",Toast.LENGTH_SHORT).show();
-        gesture=new MygestureListener();
-       detector=new GestureDetector(this,gesture);
-        manager = getFragmentManager();
+       /* gesture=new MygestureListener();
+       detector=new GestureDetector(this,gesture);*/
+       // manager = getFragmentManager();
+        tabHost= (FragmentTabHost) findViewById(android.R.id.tabhost);
+        tabHost.setup(this, getSupportFragmentManager(),
+                R.id.index_fragment);
+        // 2. 新建TabSpec
+        TabHost.TabSpec spec1 = tabHost.newTabSpec("TAB1");
+View view1=inflater.inflate(R.layout.index_bottom,null);
+        TextView tabtext1= (TextView) view1.findViewById(R.id.tabtext);
+        ImageView tabimg1= (ImageView) view1.findViewById(R.id.tabimg);
+        tabimg1.setImageResource(R.mipmap.tab1);
+        tabtext1.setText("新鲜事");
+       //spec需要一个indicator,indic需要view
+        spec1.setIndicator(view1);
+        tabHost.addTab(spec1, Index_fg.class, null);
+        TabHost.TabSpec spec2 = tabHost.newTabSpec("TAB2");
+        View view2=inflater.inflate(R.layout.index_bottom,null);
+        TextView tabtext2= (TextView) view2.findViewById(R.id.tabtext);
+        ImageView tabimg2= (ImageView) view2.findViewById(R.id.tabimg);
+        tabimg2.setImageResource(R.mipmap.friend);
+        tabtext2.setText("好友");
+        //spec需要一个indicator,indic需要view
+        spec2.setIndicator(view2);
 
-        bindviews();
-        tapdongtai.performClick();//模仿一次点击，聚焦在index
+        // 3. 添加TabSpec
+
+        tabHost.addTab(spec2, Friend_fg.class, null);
+
+
+        TabHost.TabSpec spec3 = tabHost.newTabSpec("TAB3");
+        View view3=inflater.inflate(R.layout.index_bottom,null);
+        TextView tabtext3= (TextView) view3.findViewById(R.id.tabtext);
+        ImageView tabimg3= (ImageView) view3.findViewById(R.id.tabimg);
+        tabimg3.setImageResource(R.mipmap.faxian);
+        tabtext3.setText("发现");
+        //spec需要一个indicator,indic需要view
+        spec3.setIndicator(view3);
+        tabHost.addTab(spec3, Faxian_fg.class, null);
+
+
+        TabHost.TabSpec spec4 = tabHost.newTabSpec("TAB4");
+        View view4=inflater.inflate(R.layout.index_bottom,null);
+        TextView tabtext4= (TextView) view4.findViewById(R.id.tabtext);
+        ImageView tabimg4= (ImageView) view4.findViewById(R.id.tabimg);
+        tabimg4.setImageResource(R.mipmap.fankui);
+        tabtext4.setText("反馈");
+        //spec需要一个indicator,indic需要view
+        spec4.setIndicator(view4);
+
+        // 3. 添加TabSpec
+
+        tabHost.addTab(spec4, fankui_fg.class, null);
+
+       /* // 2. 新建TabSpec
+        spec = tabhost.newTabSpec(TAB_CONTACT);
+        contactIndicator = new TabIndicatorView(this);
+        contactIndicator.setTabIcon(R.drawable.tab_icon_contact_normal,
+                R.drawable.tab_icon_contact_focus);
+        contactIndicator.setTabTitle("通讯录");
+        contactIndicator.setTabUnreadCount(10);
+        spec.setIndicator(contactIndicator);
+        // 3. 添加TabSpec
+        tabhost.addTab(spec, ContactFra.class, null);
+
+        // 2. 新建TabSpec
+        spec = tabhost.newTabSpec(TAB_DISCOVER);
+        discoverIndicator = new TabIndicatorView(this);
+        discoverIndicator.setTabIcon(R.drawable.tab_icon_discover_normal,
+                R.drawable.tab_icon_discover_focus);
+        discoverIndicator.setTabTitle("发现");
+        discoverIndicator.setTabUnreadCount(10);
+        spec.setIndicator(discoverIndicator);
+        // 3. 添加TabSpec
+        tabhost.addTab(spec, DiscoverFra.class, null);
+
+        // 2. 新建TabSpec
+        spec = tabhost.newTabSpec(TAB_ME);
+        meIndicator = new TabIndicatorView(this);
+        meIndicator.setTabIcon(R.drawable.tab_icon_me_normal,
+                R.drawable.tab_icon_me_focus);
+        meIndicator.setTabTitle("我");
+        meIndicator.setTabUnreadCount(10);
+        spec.setIndicator(meIndicator);
+        // 3. 添加TabSpec
+        tabhost.addTab(spec, MeFra.class, null);
+
+        // 去掉分割线
+        tabhost.getTabWidget().setDividerDrawable(android.R.color.white);
+
+        // 初始化 tab选中
+        tabhost.setCurrentTabByTag(TAB_CHAT);
+        chatIndicator.setTabSelected(true);
+
+        // 设置tab切换的监听
+        tabhost.setOnTabChangedListener(this);*/
+         bindviews();
+       // tapdongtai.performClick();//模仿一次点击，聚焦在index
         //Toast.makeText(this,"滑动",Toast.LENGTH_SHORT).show();
     }
 
@@ -61,125 +158,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void bindviews() {
         paneLayout= (SlidingPaneLayout) findViewById(R.id.index_drawer);
-        paneLayout.setParallaxDistance(200);
-       // index_drawer.openDrawer(Gravity.LEFT);
-        //初始化底部导航菜单
-        tapdongtai = (TextView) findViewById(R.id.txt_dongtai);
-        tabfriend = (TextView) findViewById(R.id.txt_friend);
-        tabfaxian = (TextView) findViewById(R.id.txt_faxian);
-        tabfankui = (TextView) findViewById(R.id.txt_fankui);
-       /* img1 = (TextView) findViewById(R.id.self_center);
-        toptext = (TextView) findViewById(R.id.toptext);//这是顶部的学校名字的实例化对象
-        toptag = (Button) findViewById(R.id.tag);//首页发表按钮*/
-        //设置监听器
-        tapdongtai.setOnClickListener(this);
-        tabfriend.setOnClickListener(this);
-        tabfaxian.setOnClickListener(this);
-        tabfankui.setOnClickListener(this);
-       /* toptag.setOnClickListener(new View.OnClickListener() {//发表
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Publish.class);
-                startActivityForResult(intent, 301);
-            }
-        });*/
-      /*  //用户点击我的个人中心时触发
-        img1.setOnClickListener(new View.OnClickListener() {//我的个人中心
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Self_manager.class);
-                startActivity(intent);
-            }
-        });
-*/
+        paneLayout.setParallaxDistance(200);}
 
-    }
 
-    //重置所有文本的选中状态
-    private void setSelected() {
-        tabfankui.setSelected(false);
-        tabfaxian.setSelected(false);
-        tabfriend.setSelected(false);
-        tapdongtai.setSelected(false);
-    }
 
-    //隐藏所有的fragment
-    private void hideAllFragment(FragmentTransaction fragmentTransaction) {
-        if (fg1 != null) fragmentTransaction.hide(fg1);
-        if (fg2 != null) fragmentTransaction.hide(fg2);
-        if (fg3 != null) fragmentTransaction.hide(fg3);
-        if (fg4 != null) fragmentTransaction.hide(fg4);
-    }
-
-    @Override
-    public void onClick(View v) {
-        FragmentTransaction fTransaction = manager.beginTransaction();
-        hideAllFragment(fTransaction);
-        switch (v.getId()) {
-            case R.id.txt_dongtai:
-                setSelected();
-                tapdongtai.setSelected(true);
-                if (fg1 == null) {
-                    fg1 = new Index_fg();
-                    fTransaction.add(R.id.ly_content, fg1);//第一个参数是Fragmentayout布局文件
-                    //fg1实例化时便会调用Indexfg的oncreateview方法绘制第一个fg的用户界面
-                } else {
-                    fTransaction.show(fg1);
-                }
-                break;
-            case R.id.txt_faxian:
-                setSelected();
-
-                tabfaxian.setSelected(true);
-                if (fg2 == null) {
-                    fg2 = new Faxian_fg();
-                    fTransaction.add(R.id.ly_content, fg2);//ly_content是承载fg的
-                } else {
-                    fTransaction.show(fg2);
-                }
-                break;
-            case R.id.txt_friend:
-                setSelected();
-                tabfriend.setSelected(true);
-                if (fg3 == null) {
-                    fg3 = new Friend_fg();
-                    fTransaction.add(R.id.ly_content, fg3);
-                } else {
-                    fTransaction.show(fg3);
-                }
-                break;
-            case R.id.txt_fankui:
-                setSelected();
-
-                tabfankui.setSelected(true);
-                if (fg4 == null) {
-                    fg4 = new fankui_fg();
-                    fTransaction.add(R.id.ly_content, fg4);
-                } else {
-                    fTransaction.show(fg4);
-                }
-                break;
-
-        }
-        fTransaction.commit();
-    }
-
-    //用户点击注册按钮跳转到注册页面
-    public void reg(View view) {
-        Intent intent = new Intent(this, Reg.class);
-        startActivity(intent);
-
-    }
-
-    public Fragment getFg1() {
-        return this.fg1;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -190,28 +172,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
-/**
- * 事件的处理
- */
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        float x=0;
-        float y=0;
-        if(event.getAction()==MotionEvent.ACTION_DOWN){
-            x=event.getX();
-        }
-        if (event.getAction()==MotionEvent.ACTION_UP){
-            y=event.getY();
-        }
-        if (Math.abs(y-x)>10){
-          //  index_drawer.openDrawer(Gravity.LEFT);
-        }
-        Log.i("tag","开始事件处理");
-     /* if (!detector.onTouchEvent(event)){
-          needOpenMenu=true;
-          index_drawer.openDrawer(Gravity.LEFT);
-      }*/
-        return false;
 
-    }
 }

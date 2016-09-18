@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -38,7 +39,7 @@ import tool.RecycleViewAdapter;
  * 圈圈帮主页
  * Created by Administrator on 2016/8/13.
  */
-public class Clocle_help extends Activity {
+public class Clocle_help extends AppCompatActivity {
     private View viewpager1, viewpager2;
     private ViewPager viewPager;
     private List<View> viewList;//view数组
@@ -88,6 +89,8 @@ public class Clocle_help extends Activity {
                     case Menu.FIRST + 0:
                         Toast.makeText(Clocle_help.this, "悬赏",
                                 Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(Clocle_help.this, Publish.class);
+                        startActivityForResult(intent, 301);
                         break;
                     case Menu.FIRST + 1:
                         Toast.makeText(Clocle_help.this, "求悬赏",
@@ -185,10 +188,7 @@ public class Clocle_help extends Activity {
     }
 
 
-    public void help_publish(View view) {
-        Intent intent = new Intent(this, Publish.class);
-        startActivityForResult(intent, 301);
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

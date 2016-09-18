@@ -34,14 +34,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="二手市场" />
+            android:text="漂流瓶" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:height="30dp"
-            android:text="新鲜事" />
+            android:text="校园达人" />
     </LinearLayout>
 
     <LinearLayout
@@ -54,13 +54,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="高校集中营" />
+            android:text="一见钟情" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:height="30dp"
-            android:text="学霸在这里" />
+            android:text="这里有学霸" />
     </LinearLayout>
 </LinearLayout>

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.bean.Bmob_UserBean;
+import com.clocle.huxiang.clocle.Bmob_UserBean;
 import com.clocle.huxiang.clocle.R;
 
 import cn.bmob.v3.Bmob;
@@ -23,6 +23,7 @@ public class Test_Bmob extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_bmob);
         //第一：默认初始化
+
         Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
         Bmob_UserBean user = new Bmob_UserBean();
 //注意：不能调用gameScore.setObjectId("")方法

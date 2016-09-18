@@ -14,7 +14,7 @@
 
 <EditText
     android:id="@+id/name"
-    android:hint="昵称"
+    android:hint="用户名"
     android:textCursorDrawable="@drawable/cusor_style"
     android:textColorHint="#C6C0C0"
     android:layout_width="match_parent"
@@ -27,7 +27,8 @@
         android:hint="密码"
         android:layout_marginTop="14dp"
         android:layout_width="match_parent"
-        android:layout_height="80dp" />
+        android:layout_height="80dp"
+        android:inputType="textPassword"/>
     <Button
         android:layout_below="@+id/password"
         android:id="@+id/login_bt"

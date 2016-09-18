@@ -5,7 +5,7 @@
 <LinearLayout
     android:background="#ad74e6"
     android:id="@+id/progress"
-    android:layout_above="@+id/daohan"
+
     android:layout_width="match_parent"
     android:layout_height="20dp">
     <ProgressBar
@@ -13,50 +13,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>
-<LinearLayout
 
-    android:id="@+id/daohan"
-    android:layout_width="match_parent"
-    android:layout_height="60dp">
-
-   <ImageView
-       android:id="@+id/im1"
-    android:layout_weight="1"
-    android:layout_width="0dp"
-    android:layout_height="50dp"
-    android:src="@mipmap/ic_launcher"/>
-    <ImageView
-        android:id="@+id/im2"
-        android:layout_marginLeft="30dp"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/ic_launcher"/>
-    <ImageView
-        android:id="@+id/im3"
-        android:layout_marginLeft="30dp"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/ic_launcher"/>
-    <ImageView
-        android:id="@+id/im4"
-        android:layout_marginLeft="30dp"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/ic_launcher"/>
-</LinearLayout>
-    <View
-        android:id="@+id/v1"
-        android:layout_width="match_parent"
-        android:layout_height="2px"
-        android:background="#898181"
-        android:layout_below="@id/daohan"/>
 
  <ListView
      android:id="@+id/list_item_index"
-     android:layout_below="@+id/v1"
      android:layout_marginTop="30dp"
      android:layout_width="match_parent"
      android:divider="#E6E0E0"

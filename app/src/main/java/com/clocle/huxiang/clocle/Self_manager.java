@@ -12,28 +12,21 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
 import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 import tool.Utils;
 
 /**
@@ -44,11 +37,13 @@ public class Self_manager extends Activity implements View.OnClickListener {
     private TextView edit_text;//个人中心的编辑
     private ImageView change_photo;
     protected static Uri tempUri;
+    private String userPhotoUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.self_manager);
+        Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
         bindViews();
     }
 
@@ -125,6 +120,7 @@ public class Self_manager extends Activity implements View.OnClickListener {
 
     //裁剪图片
     protected void startPhotoZoom(Uri uri) {
+        Log.i("tag", "裁剪");
         if (uri == null) {
             Log.i("tag", "The uri is not exist.");
         }
@@ -149,13 +145,62 @@ public class Self_manager extends Activity implements View.OnClickListener {
      * @param
      */
     protected void setImageToView(Intent data) {
+        Log.i("tag", "保存裁剪");
         Bundle extras = data.getExtras();
         if (extras != null) {
 
-            final Bitmap  photo = Utils.toRoundBitmap((Bitmap) extras.getParcelable("data"), tempUri); // 这个时候的图片已经被处理成圆形的了
+            final Bitmap photo = Utils.toRoundBitmap((Bitmap) extras.getParcelable("data"), tempUri); // 这个时候的图片已经被处理成圆形的了
+            String imagePath = Utils.savePhoto(photo, Environment
+                    .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/myphoto/", "myphoto");
             change_photo.setImageBitmap(photo);
+          File file = new File(imagePath);
 
-            new Thread() {
+            final BmobFile bmobFile = new BmobFile(file);
+           final Bmob_UserBean newuser = new Bmob_UserBean();
+            bmobFile.uploadblock(new UploadFileListener() {
+                @Override
+                public void done(BmobException e) {
+                    if (e == null) {
+                        //返回上传成功后的图片URL
+                        userPhotoUrl = bmobFile.getFileUrl();
+                        newuser.setphotoUrl(userPhotoUrl);
+                        Log.i("shangchuangtag", userPhotoUrl);
+                        Bmob_UserBean userBean = BmobUser.getCurrentUser(Bmob_UserBean.class);
+                        newuser.update(userBean.getObjectId(), new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null) {
+                                    Toast.makeText(Self_manager.this, "头像更换成功", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(Self_manager.this, "失败", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    } else {
+                        Toast.makeText(Self_manager.this, "头像上传失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+//将上传成功后的图片url插入到user表
+
+
+/*
+            newuser.setUsername("糖糖没有果2");
+            newuser.setphotoUrl("http://bmob-cdn-6342.b0.upaiyun.com/2016/09/18/f7451a7915a94788bd73c68f8e7e4bc7.png");
+
+            Bmob_UserBean userBean = BmobUser.getCurrentUser(Bmob_UserBean.class);
+            newuser.update(userBean.getObjectId(), new UpdateListener() {
+                @Override
+                public void done(BmobException e) {
+                    if (e == null) {
+                        Toast.makeText(Self_manager.this, "头像更换成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Self_manager.this, "失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });*/
+
+          /*  new Thread() {
                 @Override
                 public void run() {
 
@@ -164,7 +209,7 @@ public class Self_manager extends Activity implements View.OnClickListener {
 
 
                 }
-            }.start();
+            }.start();*/
 
         }
     }
@@ -172,20 +217,21 @@ public class Self_manager extends Activity implements View.OnClickListener {
     /**
      * 保存png图片
      * 上传处理后的照片到服务器
+     *
      * @param bitmap
      */
 
     private void uploadPic(Bitmap bitmap) {
-        String url="http://192.168.1.110:8080/clocle/servlet/File_Upload";
+        String url = "http://192.168.1.110:8080/clocle/servlet/File_Upload";
         // 上传至服务器
         // ... 可以在这里把Bitmap转换成file，然后得到file的url，做文件上传操作
         // 注意这里得到的图片已经是圆形图片了
         // bitmap是没有做个圆形处理的，但已经被裁剪了
 
         String imagePath = Utils.savePhoto(bitmap, Environment
-                .getExternalStorageDirectory().getAbsolutePath().toString()+"/clocle_img/", String
+                .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle_img/", String
                 .valueOf(System.currentTimeMillis()));
-        File file=new File(imagePath);
+        File file = new File(imagePath);
         OkHttpUtils.post()//
                 .addFile("mFile", "messenger_01.png", file)//
                 .url(url)
@@ -260,10 +306,11 @@ public class Self_manager extends Activity implements View.OnClickListener {
 
                 }
             });
-        }*/}
-        /**
-         * 将bitmap转化为file文件
-         *//*
+        }*/
+    }
+    /**
+     * 将bitmap转化为file文件
+     *//*
         public File bitmapTo_File(Bitmap bm, String fileName) throws IOException {
             String path = getSDPath() +"/clocleImg/";
             File dirFile = new File(path);
@@ -291,5 +338,5 @@ public class Self_manager extends Activity implements View.OnClickListener {
         }
         return sdDir.toString();
     }*/
-    }
+}
 

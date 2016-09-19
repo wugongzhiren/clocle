@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -38,11 +40,13 @@ public class Self_manager extends Activity implements View.OnClickListener {
     private ImageView change_photo;
     protected static Uri tempUri;
     private String userPhotoUrl;
+    private Intent index_fg_intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.self_manager);
+        index_fg_intent=getIntent();
         Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
         bindViews();
     }
@@ -50,7 +54,13 @@ public class Self_manager extends Activity implements View.OnClickListener {
     private void bindViews() {
         edit_text = (TextView) findViewById(R.id.edit_text);
         change_photo = (ImageView) findViewById(R.id.self_photo);
+        Bitmap bm= BitmapFactory.decodeFile(Environment
+                .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/myphoto/myphoto.png");
+        change_photo.setImageBitmap(bm);
+
+
         edit_text.setOnClickListener(this);
+
         change_photo.setOnClickListener(this);
     }
 
@@ -171,6 +181,8 @@ public class Self_manager extends Activity implements View.OnClickListener {
                             public void done(BmobException e) {
                                 if (e == null) {
                                     Toast.makeText(Self_manager.this, "头像更换成功", Toast.LENGTH_SHORT).show();
+                                    index_fg_intent.putExtra("photo",true);
+                                    Self_manager.this.setResult(001,index_fg_intent);
                                 } else {
                                     Toast.makeText(Self_manager.this, "失败", Toast.LENGTH_SHORT).show();
                                 }

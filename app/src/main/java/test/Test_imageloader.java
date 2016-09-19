@@ -131,7 +131,7 @@ intent=getIntent();
         setResult(403,intent);
         this.finish();
         break;
-    default:
+    defaultphoto:
         Toast.makeText(this,"只能选择3张图片哦！！",Toast.LENGTH_SHORT).show();
         break;*/
 }

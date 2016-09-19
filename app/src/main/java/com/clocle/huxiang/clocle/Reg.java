@@ -122,7 +122,7 @@ public class Reg extends AppCompatActivity implements View.OnClickListener {
                 user.setUsername(nametem);
                 //user.setMobilePhoneNumber(nametem);
                 user.setPassword(pstem);
-                user.setphotoUrl("http://bmob-cdn-6342.b0.upaiyun.com/2016/09/18/1f9161722ebf447782924f10d7055d87.png");
+                user.setphotoUrl("http://bmob-cdn-6342.b0.upaiyun.com/2016/09/19/8a03ee4683184613b49b815346d0d918.png");
                 user.signUp(new SaveListener<Bmob_UserBean>() {
                     @Override
                     public void done(Bmob_UserBean bmobUser, BmobException e) {

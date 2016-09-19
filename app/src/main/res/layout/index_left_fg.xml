@@ -13,6 +13,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         fresco:roundAsCircle="true"
+        fresco:failureImage="@mipmap/default_photo"
        />
     <LinearLayout
         android:orientation="vertical"
@@ -35,6 +36,7 @@
             android:textColor="#fff"
             />
         <TextView
+            android:id="@+id/signature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="个性签名：迷路的吃货"

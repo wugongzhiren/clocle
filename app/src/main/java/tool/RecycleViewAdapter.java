@@ -3,7 +3,6 @@ package tool;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,15 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.application.Http_Application;
+import com.bean.Clocle_help;
 import com.bean.Messages;
 
 import com.clocle.huxiang.clocle.Other_Self_infos;
 import com.clocle.huxiang.clocle.R;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.function.Clocle_help;
 import com.function.Clocle_help_details;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.view.Preview_photo;
 
 
@@ -38,7 +36,7 @@ import java.util.List;
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
     private LayoutInflater inflater;
 
-    private List<Messages> datas;
+    private List<Clocle_help> datas;
     public static Context mcontext;
 
     private final static int NO_IMAGE = 0;
@@ -56,9 +54,9 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     DisplayImageOptions options;
 
-    public RecycleViewAdapter(Context context, List<Messages> datas) {
-        //deviceWidth = ((Clocle_help) context).deviceWidth;
-       // deviceHeight = ((Clocle_help) context).deviceHeight;
+    public RecycleViewAdapter(Context context, List<Clocle_help> datas) {
+        //deviceWidth = ((Clocle_help_activity) context).deviceWidth;
+       // deviceHeight = ((Clocle_help_activity) context).deviceHeight;
         //一张图片时的宽度
        // img0width = deviceWidth / 2;
       //  //一张图片时的高度
@@ -116,17 +114,17 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        String img1url = datas.get(position).getImg1();
+        List<String> urlsize=datas.get(position).getImgs();
 
-        String img2url = datas.get(position).getImg2();
-        String img3url = datas.get(position).getImg3();
-        if (img1url == null) {
+
+
+        if (urlsize.size()== 0) {
             return NO_IMAGE;
         }
-        if (img2url == null) {
+        if (urlsize.size() == 1) {
             return SINGLE_IMAGE;
         }
-        if (img3url==null){
+        if (urlsize.size()==2){
             return DOUBLE_IMAGE;
         }
         else {

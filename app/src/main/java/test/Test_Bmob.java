@@ -5,11 +5,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.bean.Clocle_help;
 import com.clocle.huxiang.clocle.Bmob_UserBean;
 import com.clocle.huxiang.clocle.R;
 
+import java.util.List;
+
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
 
@@ -23,21 +28,18 @@ public class Test_Bmob extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_bmob);
         //第一：默认初始化
-
+Toast.makeText(this,"ceshi",Toast.LENGTH_SHORT).show();
         Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
-        Bmob_UserBean user = new Bmob_UserBean();
-//注意：不能调用gameScore.setObjectId("")方法
-       user.setUsername("无功至人");
-        user.setPassword("123456");
-        user.save(new SaveListener<String>() {
-
+        BmobQuery<Clocle_help> query=new BmobQuery<Clocle_help>("Clocle_help");
+       // query.addWhereGreaterThan("peopleNum", 0);
+        query.setLimit(2);
+        query.findObjects(new FindListener<Clocle_help>() {
             @Override
-            public void done(String objectId, BmobException e) {
-                if(e==null){
-                    Toast.makeText(Test_Bmob.this,"成功",Toast.LENGTH_SHORT).show();
-                }else{
-                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                }
+            public void done(List<Clocle_help> list, BmobException e) {
+                //
+                Log.i("返回",list.size()+"");
+                Clocle_help clocle_help=list.get(0);
+                Log.i("返回",clocle_help.getContent());
             }
         });
         //第二：自v3.4.7版本开始,设置BmobConfig,允许设置请求超时时间、文件分片上传时每片的大小、文件的过期时间(单位为秒)，

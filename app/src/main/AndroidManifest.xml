@@ -21,11 +21,7 @@
         </activity>
         <activity android:name=".Reg">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
@@ -105,8 +101,12 @@
         <activity android:name="test.Test3">
 
         </activity>
-        <activity android:name="com.function.Clocle_help">
+        <activity android:name="com.function.Clocle_help_activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name="com.function.Clocle_help_details">
 

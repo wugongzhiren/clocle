@@ -3,10 +3,10 @@ package com.fragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +22,7 @@ import com.clocle.huxiang.clocle.Bmob_UserBean;
 import com.clocle.huxiang.clocle.R;
 import com.clocle.huxiang.clocle.Self_manager;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.function.Clocle_help;
+import com.function.Clocle_help_activity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -74,9 +74,28 @@ public class Index_Left_Fg extends Fragment implements AdapterView.OnItemClickLi
         if (photo.exists()) {
             index_photo.setImageURI("file://" + Environment
                     .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/myphoto/myphoto.png");
+            //本地没有从服务器下载,并且保存在本地
+            Log.i("服务器头像",currentuser.getphotoUrl());
+            BmobFile myphoto = new BmobFile("myphoto.png", "", currentuser.getphotoUrl());
+            File filephoto = new File(Environment
+                    .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/myphoto", myphoto.getFilename());
+            myphoto.download(filephoto, new DownloadFileListener() {
+                @Override
+                public void onProgress(Integer integer, long l) {
+
+                }
+
+                @Override
+                public void done(String s, BmobException e) {
+                    Toast.makeText(getActivity(), "头像从服务器下载成功，已经保存在/clocle/myphoto中", Toast.LENGTH_SHORT).show();
+                    index_photo.setImageURI("file://" + Environment
+                            .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/myphoto/myphoto.png");
+                }
+
+            });
         } else {
             //本地没有从服务器下载,并且保存在本地
-            BmobFile myphoto = new BmobFile("myphoto.png", "", "http://bmob-cdn-6342.b0.upaiyun.com/2016/09/19/8a03ee4683184613b49b815346d0d918.png");
+            BmobFile myphoto = new BmobFile("myphoto.png", "", currentuser.getphotoUrl());
             File filephoto = new File(Environment
                     .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/myphoto", myphoto.getFilename());
             myphoto.download(filephoto, new DownloadFileListener() {
@@ -119,7 +138,7 @@ public class Index_Left_Fg extends Fragment implements AdapterView.OnItemClickLi
                 break;
 
             case 2:
-                Intent intent = new Intent(getActivity(), Clocle_help.class);
+                Intent intent = new Intent(getActivity(), Clocle_help_activity.class);
                 startActivity(intent);
                 break;
 
@@ -191,8 +210,10 @@ public class Index_Left_Fg extends Fragment implements AdapterView.OnItemClickLi
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==001&resultCode==001){
-            //本地没有从服务器下载,并且保存在本地
-            BmobFile myphoto = new BmobFile("myphoto.png", "", "http://bmob-cdn-6342.b0.upaiyun.com/2016/09/19/8a03ee4683184613b49b815346d0d918.png");
+            //从服务器下载,并且保存在本地
+            Bmob_UserBean bean=BmobUser.getCurrentUser(Bmob_UserBean.class);
+            Log.i("tagnewphoto",bean.getphotoUrl());
+            BmobFile myphoto = new BmobFile("myphoto.png", "", bean.getphotoUrl());
             File filephoto = new File(Environment
                     .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/myphoto", myphoto.getFilename());
             myphoto.download(filephoto, new DownloadFileListener() {
@@ -203,7 +224,7 @@ public class Index_Left_Fg extends Fragment implements AdapterView.OnItemClickLi
 
                 @Override
                 public void done(String s, BmobException e) {
-                    Toast.makeText(getActivity(), "头像从服务器下载成功，已经保存在/clocle/myphoto中", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "上传成功，头像从服务器下载成功，已经保存在/clocle/myphoto中", Toast.LENGTH_SHORT).show();
                     index_photo.setImageURI("file://" + Environment
                             .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/myphoto/myphoto.png");
                 }

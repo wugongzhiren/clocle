@@ -1,6 +1,5 @@
 package com.function;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,17 +12,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
+import com.bean.Clocle_help;
 import com.bean.Messages;
-import com.bean.Pulish_bean;
 import com.clocle.huxiang.clocle.Publish;
 import com.clocle.huxiang.clocle.R;
 import com.constant.Constant;
@@ -32,6 +31,10 @@ import com.httpThread.Clocle_help_AsyncTask;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import tool.RecycleViewAdapter;
 
 
@@ -39,7 +42,7 @@ import tool.RecycleViewAdapter;
  * 圈圈帮主页
  * Created by Administrator on 2016/8/13.
  */
-public class Clocle_help extends AppCompatActivity {
+public class Clocle_help_activity extends AppCompatActivity {
     private View viewpager1, viewpager2;
     private ViewPager viewPager;
     private List<View> viewList;//view数组
@@ -56,8 +59,11 @@ public class Clocle_help extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Bmob初始化
+
         getDeviceWH();
         setContentView(R.layout.clocle_help_layout);
+        Bmob.initialize(Clocle_help_activity.this, "fbd7c66a38b160c5677a774971be3294");
         Toast.makeText(this,"测试4",Toast.LENGTH_SHORT).show();
         pageList=new ArrayList<>();
         initView();
@@ -87,13 +93,13 @@ public class Clocle_help extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case Menu.FIRST + 0:
-                        Toast.makeText(Clocle_help.this, "悬赏",
+                        Toast.makeText(Clocle_help_activity.this, "悬赏",
                                 Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(Clocle_help.this, Publish.class);
+                        Intent intent = new Intent(Clocle_help_activity.this, Publish.class);
                         startActivityForResult(intent, 301);
                         break;
                     case Menu.FIRST + 1:
-                        Toast.makeText(Clocle_help.this, "求悬赏",
+                        Toast.makeText(Clocle_help_activity.this, "求悬赏",
                                 Toast.LENGTH_LONG).show();
                         break;
                     default:
@@ -159,19 +165,33 @@ public class Clocle_help extends AppCompatActivity {
                // if(totalItemCount)
             }
         });
-        mrefresh.setColorSchemeColors(Color.BLUE, Color.RED);
+        mrefresh.setColorSchemeColors(Color.BLACK);
         mrefresh.post(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 mrefresh.setRefreshing(true);
+                Toast.makeText(Clocle_help_activity.this,"开始测试",Toast.LENGTH_SHORT).show();
                 //首次进入，预加载
 
-                new Clocle_help_AsyncTask(pageList,Clocle_help.this.mrefresh, Clocle_help.this, help_recycleview).execute(Constant.GET_HELP_JSON);
+                //new Clocle_help_AsyncTask(pageList,Clocle_help_activity.this.mrefresh, Clocle_help_activity.this, help_recycleview).execute(Constant.GET_HELP_JSON);
+                BmobQuery<Clocle_help> query=new BmobQuery<Clocle_help>("Clocle_help");
+                query.addWhereGreaterThan("peopleNum", 0);
+                query.setLimit(2);
+                query.findObjects(new FindListener<Clocle_help>() {
+                    @Override
+                    public void done(List<Clocle_help> list, BmobException e) {
+                        //
+                        Log.i("返回",list.size()+"");
+                        Clocle_help clocle_help=list.get(0);
+                        Log.i("返回",clocle_help.getContent());
+                        help_recycleview.setAdapter(new RecycleViewAdapter(Clocle_help_activity.this,list));
+                    }
+                });
 
             }
         });
@@ -179,7 +199,7 @@ public class Clocle_help extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 //下拉刷新，我绝对要将当前页面的list给传过去
-                new Clocle_help_AsyncTask(pageList,mrefresh, Clocle_help.this, help_recycleview).execute(Constant.GET_HELP_JSON);
+                new Clocle_help_AsyncTask(pageList,mrefresh, Clocle_help_activity.this, help_recycleview).execute(Constant.GET_HELP_JSON);
 
             }
         });

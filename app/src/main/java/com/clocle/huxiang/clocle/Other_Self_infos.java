@@ -16,7 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.constant.Constant;
-import com.httpThread.Clocle_help_AsyncTask;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,7 @@ private TabLayout mtablayout;
 
 
         recycleview1.setLayoutManager(new LinearLayoutManager(this));
-        new Clocle_help_AsyncTask(null,null, this, recycleview1).execute(Constant.GET_HELP_JSON);
+       // new Clocle_help_AsyncTask(null,null, this, recycleview1).execute(Constant.GET_HELP_JSON);
         //使用CollapsingToolbarLayout必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上则不会显示
         CollapsingToolbarLayout mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
         mCollapsingToolbarLayout.setTitle("");

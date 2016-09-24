@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.constant.Constant;
-import com.httpThread.Clocle_help_AsyncTask;
+
 
 /**
  * Created by Administrator on 2016/8/1.

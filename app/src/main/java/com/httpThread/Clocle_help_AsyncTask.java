@@ -1,3 +1,4 @@
+/*
 package com.httpThread;
 
 
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.bean.Clocle_help;
 import com.bean.Message;
 import com.bean.Messages;
 import com.google.gson.Gson;
@@ -30,21 +32,23 @@ import okhttp3.Response;
 import tool.RecycleViewAdapter;
 
 
+*/
 /**
  * 应用启动时，将服务器的最新listview信息显示在是圈圈帮页面中
  * Created by Administrator on 2016/8/1.
- */
-public class Clocle_help_AsyncTask extends AsyncTask<String, Void, List<Messages>> {
+ *//*
+
+public class Clocle_help_AsyncTask extends AsyncTask<String, Void, List<Clocle_help>> {
     private Gson mgson = new Gson();
     private RecycleViewAdapter adapter;
     private Context mcontext;
     private RecyclerView mrecycleView;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private List<Messages> adapterList = new ArrayList();
-    private List<Messages> mpageList;
+    private List<Clocle_help> adapterList = new ArrayList();
+    private List<Clocle_help> mpageList;
     List<Messages> messagesList = new ArrayList();//存放服务器返回的jsonlist的beanList,也就是加载到的list，第一次进入会是预加载的15条数据
 
-    public Clocle_help_AsyncTask(List<Messages> pageList, SwipeRefreshLayout refreshLayout, Context mcontext, RecyclerView mrecycleView) {
+    public Clocle_help_AsyncTask(List<Clocle_help> pageList, SwipeRefreshLayout refreshLayout, Context mcontext, RecyclerView mrecycleView) {
         this.swipeRefreshLayout = refreshLayout;
         this.mcontext = mcontext;
         this.mrecycleView = mrecycleView;
@@ -52,11 +56,11 @@ public class Clocle_help_AsyncTask extends AsyncTask<String, Void, List<Messages
     }
 
     @Override
-    protected List<Messages> doInBackground(String... params) {
+    protected List<Clocle_help> doInBackground(String... params) {
         return getIndex_Json_data(params[0]);
     }
 
-    private List<Messages> getIndex_Json_data(String url) {
+    private List<Clocle_help> getIndex_Json_data(String url) {
 
         Boolean loadflag = false;
         String help_json = null;//help_json是包含多个Messags的json字符串
@@ -76,7 +80,7 @@ public class Clocle_help_AsyncTask extends AsyncTask<String, Void, List<Messages
         }
 
 //将json转化为list，最多返回15条
-        messagesList = mgson.fromJson(help_json, new TypeToken<List<Messages>>() {
+        messagesList = mgson.fromJson(help_json, new TypeToken<List<Clocle_help>>() {
         }.getType());
         //  Log.i("tag", jsondatas);
 
@@ -135,9 +139,11 @@ public class Clocle_help_AsyncTask extends AsyncTask<String, Void, List<Messages
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(false);
         }
-        /*for (int i = messages.size() - 1; i >= 0; i--) {
+        */
+/*for (int i = messages.size() - 1; i >= 0; i--) {
             adapterList.add(messages.get(i));
-        }*/
+        }*//*
+
         adapter = new RecycleViewAdapter(mcontext, mpageList);
 
         mrecycleView.setAdapter(adapter);
@@ -165,3 +171,4 @@ public class Clocle_help_AsyncTask extends AsyncTask<String, Void, List<Messages
 
 
 }
+*/

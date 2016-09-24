@@ -2,8 +2,10 @@ package com.clocle.huxiang.clocle;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,26 +17,38 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.adapter.Picked_photo_adapter;
+import com.application.Http_Application;
 import com.bean.Pulish_bean;
+import com.common_tool.ImageFactory;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.listener.UploadBatchListener;
 import okhttp3.Call;
 import test.Test_imageloader;
 import tool.DecodeSampleBitmapFromUrl;
@@ -44,6 +58,7 @@ import tool.SerializableMap;
 import tool.Utils;
 
 /**
+ * 圈圈帮的悬赏页面（还需要优化）
  * Created by Administrator on 2016/7/26.
  */
 public class Publish extends Activity implements View.OnClickListener {
@@ -64,19 +79,23 @@ public class Publish extends Activity implements View.OnClickListener {
     private int imgCount;
     private int deviceW;
     private int deviceH;
-    private static final String addphotourl= "res://com.clocle.huxiang.clocle/"+Uri.parse(R.mipmap.addphoto+"");
-private RecyclerView recyclerView;
+    private static final String addphotourl = "res://com.clocle.huxiang.clocle/" + Uri.parse(R.mipmap.addphoto + "");
+    private RecyclerView recyclerView;
     private Picked_photo_adapter picked_photo_adapter;
-    private ArrayList<String> url;
+    private ArrayList<String> url;//要上传照片的URL
+    private ArrayList<String> pickedurl;//fresco加载的url
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.publish_layout);
-        Toast.makeText(this,"测试2",Toast.LENGTH_SHORT).show();
-        url=new ArrayList<>();
-       url.add(addphotourl);
-        picked_photo_adapter=new Picked_photo_adapter(this,url);
+
+        Toast.makeText(this, "测试2", Toast.LENGTH_SHORT).show();
+        url = new ArrayList<>();
+        pickedurl=new ArrayList<>();
+        url.add(addphotourl);
+        pickedurl.add(addphotourl);
+        picked_photo_adapter = new Picked_photo_adapter(this, pickedurl);
         initviews();
         //获取屏幕的宽高
         getDeviceWH();
@@ -84,43 +103,84 @@ private RecyclerView recyclerView;
 
     private void initviews() {
         publish_text = (EditText) findViewById(R.id.publish_text);
-        chooseimgs = (Button) findViewById(R.id.chooseimgs);
+
         money_text = (EditText) findViewById(R.id.money_text);
         publish_button = (Button) findViewById(R.id.publish_button);
         /*img1 = (ImageView) findViewById(R.id.help_img1);
         img2 = (ImageView) findViewById(R.id.help_img2);
         img3 = (ImageView) findViewById(R.id.help_img3);*/
-        recyclerView= (RecyclerView) findViewById(R.id.picked_photo);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,4));
+        recyclerView = (RecyclerView) findViewById(R.id.picked_photo);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         recyclerView.setAdapter(picked_photo_adapter);
         publish_text.setOnClickListener(this);
         money_text.setOnClickListener(this);
         publish_button.setOnClickListener(this);
-        chooseimgs.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.publish_button://发表
-
+                //首先上传照片
+                //Bmob_UserBean bean = BmobUser.getCurrentUser(Bmob_UserBean.class);
                 String publishtext = publish_text.getText().toString();//获取发表内容
                 int money = Integer.parseInt(money_text.getText().toString());//获取悬赏金额
                 int userid = 1;//实验用户id
+                int urlsize = url.size();
+                Log.i("tag", "onClick: "+urlsize);
+                if (url.size() > 1) {
+                    final String urlArr[] = new String[urlsize - 1];
+                    for (int i = 0; i < urlArr.length; i++) {
+                        File file = new File(Environment
+                                .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/temp_img/");
+                        //在这里清空文件夹的文件
+                      Bitmap bmp=new ImageFactory().getBitmap(url.get(i));
 
-                Calendar calendar = Calendar.getInstance();
-                String date = calendar.get(Calendar.YEAR) + "年"
-                        + calendar.get(Calendar.MONTH) + "月"
-                        + calendar.get(Calendar.DAY_OF_MONTH) + "日";//测试日期
+
+                        String urlImg = Utils.savePhoto(bmp, Environment
+                                .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/temp_img/", String
+                                .valueOf(System.currentTimeMillis()));
+                        urlArr[i] = urlImg;
+                       /* if(bitmap != null && !bitmap.isRecycled()){
+                            bitmap.recycle();
+                            bitmap = null;
+                            System.gc();
+                        }*/
+                    }
+                    Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
+                    BmobFile.uploadBatch(urlArr, new UploadBatchListener() {
+                        @Override
+                        public void onSuccess(List<BmobFile> list, List<String> list1) {
+if(list1.size()==urlArr.length){
+    Toast.makeText(Publish.this,"图片上传成功",Toast.LENGTH_SHORT).show();
+}
+                        }
+
+                        @Override
+                        public void onProgress(int i, int i1, int i2, int i3) {
+
+                        }
+
+                        @Override
+                        public void onError(int i, String s) {
+                            Toast.makeText(Publish.this,s,Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                //用户没有选择添加图片
+                else {
+
+                }
 
 
-                Pulish_bean bean = new Pulish_bean(0, userid,
-                        publishtext, date, money, null, null, null);
-                Obeject_toJson obeject_toJson = new Obeject_toJson();
-                request_string = obeject_toJson.publish_tojson(bean);//将bean对象转化为json字符串
+              //  Pulish_bean bean = new Pulish_bean(0, userid,
+            //  //          publishtext, date, money, null, null, null);
+              //  Obeject_toJson obeject_toJson = new Obeject_toJson();
+             //   request_string = obeject_toJson.publish_tojson(bean);//将bean对象转化为json字符串
                 //点击button开启一个线程，线程中的网络请求又是一个异步请求，但是这个网络请求的线程非系统的主线程
                 //所以必须通过Asynctask或者handle，或者runonuithread的方式来进行UI操作
-                new Thread() {
+            /*    new Thread() {
                     @Override
                     public void run() {
 
@@ -133,12 +193,13 @@ private RecyclerView recyclerView;
                                 Toast.makeText(Publish.this, "请求", Toast.LENGTH_SHORT).show();
                                 mydialog = new Progress_dialog(Publish.this).createLoadingDialog("111");
                                 mydialog.show();
-                                if(imgCount==1){
-                                publish_requestwithOnephoto();}
-                                if(imgCount==2){
+                                if (imgCount == 1) {
+                                    publish_requestwithOnephoto();
+                                }
+                                if (imgCount == 2) {
                                     publish_requestwithTwophoto();
                                 }
-                                if(imgCount==3){
+                                if (imgCount == 3) {
                                     publish_requestwithThreephoto();
                                 }
 
@@ -148,14 +209,10 @@ private RecyclerView recyclerView;
 
 
                     }
-                }.start();
+                }.start();*/
 
                 break;
-            case R.id.chooseimgs://添加图片
-                intent = new Intent(this, Test_imageloader.class);
-                startActivityForResult(intent, 401);
 
-                break;
 
             default:
                 break;
@@ -185,7 +242,7 @@ private RecyclerView recyclerView;
                 .url(url).tag(this).params(map)
                 //头像url信息和其他的文字内容存在publish——text中
                 .build()
-                .execute(new StringCallback()  {
+                .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
 
@@ -226,7 +283,7 @@ private RecyclerView recyclerView;
 
         OkHttpUtils
                 .post()
-                .addFile("mFile",imgname,new File(img1url) )
+                .addFile("mFile", imgname, new File(img1url))
                 .addFile("mFile1", imgname1, new File(img2url))
                 .url(url).tag(this).params(map)
                 //头像url信息和其他的文字内容存在publish——text中
@@ -274,7 +331,7 @@ private RecyclerView recyclerView;
 
         OkHttpUtils
                 .post()
-                .addFile("mFile",imgname,new File(img1url) )
+                .addFile("mFile", imgname, new File(img1url))
                 .addFile("mFile1", imgname1, new File(img2url))
                 .addFile("mFile2", imgname2, new File(img3url))
                 .url(url).tag(this).params(map)
@@ -304,7 +361,6 @@ private RecyclerView recyclerView;
     }
 
 
-
     /**
      * 接收相册选取后传过来的图片
      *
@@ -314,20 +370,23 @@ private RecyclerView recyclerView;
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ArrayList<String> pickedurl;
+      ArrayList<String> tempurl;
 
         if (requestCode == 401 && resultCode == 401) {
-            pickedurl=data.getStringArrayListExtra("url");
+            tempurl = data.getStringArrayListExtra("url");
             url.clear();
-for(int i=0;i<pickedurl.size();i++){
+            pickedurl.clear();
+            for (int i = 0; i < tempurl.size(); i++) {
 
-    url.add("file://"+Uri.parse(pickedurl.get(i)));
-}
+                pickedurl.add("file://" + Uri.parse(tempurl.get(i)));
+                url.add(Uri.parse(tempurl.get(i))+"");
+            }
             url.add(addphotourl);
-        //   url.add("file://"+Uri.parse(pickedurl.get(1)));
-            Toast.makeText(this,url.size()+"2",Toast.LENGTH_SHORT).show();
+            pickedurl.add(addphotourl);
+            //   url.add("file://"+Uri.parse(pickedurl.get(1)));
+            Toast.makeText(this, url.size() + "2", Toast.LENGTH_SHORT).show();
 
-picked_photo_adapter.notifyDataSetChanged();
+            picked_photo_adapter.notifyDataSetChanged();
             //recyclerView.setAdapter(new Picked_photo_adapter(this,url));
         }
 
@@ -401,6 +460,7 @@ picked_photo_adapter.notifyDataSetChanged();
 
         }*/
     }
+
     public void getDeviceWH() {
         Display display = getWindow().getWindowManager().getDefaultDisplay();
         DisplayMetrics dm = new DisplayMetrics();
@@ -408,6 +468,113 @@ picked_photo_adapter.notifyDataSetChanged();
         deviceW = dm.widthPixels;
         deviceH = dm.heightPixels;
     }
+
+    class Picked_photo_adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+        private LayoutInflater inflater;
+
+        private int marginleft;
+        private int photoW;
+        private int type0 = 0;//图片
+        private int type1 = 1;//添加图片
+
+        public Picked_photo_adapter(Context context, ArrayList<String> urlList) {
+
+
+            inflater = LayoutInflater.from(context);
+        }
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            if (viewType == type0) {
+                View itemview = inflater.inflate(R.layout.picked_photo_item, parent, false);
+
+                return new ViewHolder(itemview);
+            } else {
+                View itemview = inflater.inflate(R.layout.addphoto, parent, false);
+                return new ViewHolderWithAddPhoto(itemview);
+            }
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            holder.itemView.setTag(position);
+            if (holder instanceof ViewHolder) {
+
+
+                ((ViewHolder) holder).mimageButton.setVisibility(View.VISIBLE);
+                ((ViewHolder) holder).pickedphotoView.setImageURI(pickedurl.get(position));
+            } else if (holder instanceof ViewHolderWithAddPhoto) {
+                ((ViewHolderWithAddPhoto) holder).mimageview.setImageResource(R.mipmap.addphoto);
+            }
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if (position == (pickedurl.size() - 1)) {
+                return type1;
+            } else {
+                return type0;
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return pickedurl.size();
+        }
+    }
+
+    class ViewHolderWithAddPhoto extends RecyclerView.ViewHolder {
+        private ImageView mimageview;
+
+        public ViewHolderWithAddPhoto(View itemView) {
+            super(itemView);
+            mimageview = (ImageView) itemView.findViewById(R.id.addphoto);
+            int width = mimageview.getLayoutParams().width = (getResources().getDisplayMetrics().widthPixels - 15) / 4;
+            mimageview.getLayoutParams().height = width;
+            mimageview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Publish.this, Test_imageloader.class);
+                    startActivityForResult(intent, 401);
+                }
+            });
+
+        }
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        public SimpleDraweeView pickedphotoView;
+        public ImageButton mimageButton;
+
+        public ViewHolder(final View itemView) {
+            super(itemView);
+            pickedphotoView = (SimpleDraweeView) itemView.findViewById(R.id.picked_photo_item);
+            //设置pickedphotoView的宽高一样，适应屏幕大小
+            int photoW;
+            photoW = pickedphotoView.getLayoutParams().width = (getResources().getDisplayMetrics().widthPixels - 15) / 4;
+            pickedphotoView.getLayoutParams().height = photoW;
+            // Log.i("width" ,mcontext.getResources().getDisplayMetrics().widthPixels+"");
+            //marginleft = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, mcontext.getResources().getDisplayMetrics());
+            // Log.i("width1" ,marginleft+"");
+            mimageButton = (ImageButton) itemView.findViewById(R.id.photo_clear);
+            mimageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    url.remove((int) itemView.getTag());
+                    picked_photo_adapter.notifyDataSetChanged();
+                }
+            });
+        }
+    }
+
+
 }
 
 

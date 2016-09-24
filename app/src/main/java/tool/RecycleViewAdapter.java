@@ -140,15 +140,15 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      */
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        String img1 = datas.get(position).getImg1();
-        String img2 = datas.get(position).getImg2();
-        String img3 = datas.get(position).getImg3();
+        String img1 = datas.get(position).getImgs().get(0);
+        String img2 = datas.get(position).getImgs().get(1);
+        String img3 = datas.get(position).getImgs().get(2);
         final ArrayList<String> urlList=new ArrayList<>();
         urlList.add(img1);
         urlList.add(img2);
         urlList.add(img3);
-        String pic=datas.get(position).getPic();
-        holder.itemView.setTag(datas.get(position).getHelp_id() + "_" + datas.get(position).getUser_id());
+        String pic=datas.get(position).getBmob_userBean().getphotoUrl();
+        holder.itemView.setTag(datas.get(position).getObjectId());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,24 +158,24 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         //无图片
         if (holder instanceof ViewHolderwithoutImg) {
             //性别
-            if (datas.get(position).getSex().equals("女")) {
+            if (datas.get(position).getBmob_userBean().getSex().equals("女")) {
                 ((ViewHolderwithoutImg) holder).sex.setImageResource(R.mipmap.woman);
             } else {
                 ((ViewHolderwithoutImg) holder).sex.setImageResource(R.mipmap.man);
             }
             //头像
 
-            ((ViewHolderwithoutImg) holder).photo.setImageURI(Uri.parse(datas.get(position).getPic()));
+            ((ViewHolderwithoutImg) holder).photo.setImageURI(Uri.parse(datas.get(position).getBmob_userBean().getphotoUrl()));
 
             //  ImageLoader.getInstance().displayImage(datas.get(position).getPic(), ((ViewHolderwithoutImg) holder).photo, options);
             //昵称，时间，学校
 
-            ((ViewHolderwithoutImg) holder).name.setText(datas.get(position).getName());//昵称
-            ((ViewHolderwithoutImg) holder).contexttext.setText(datas.get(position).getMessage());//正文内容
+            ((ViewHolderwithoutImg) holder).name.setText(datas.get(position).getBmob_userBean().getUsername());//昵称
+            ((ViewHolderwithoutImg) holder).contexttext.setText(datas.get(position).getContent());//正文内容
         }
         //单图
         if (holder instanceof ViewHolderwithSingleImg) {
-            if (datas.get(position).getSex().equals("女")) {
+            if (datas.get(position).getBmob_userBean().getSex().equals("女")) {
                 ((ViewHolderwithSingleImg) holder).sex.setImageResource(R.mipmap.woman);
             } else {
                 ((ViewHolderwithSingleImg) holder).sex.setImageResource(R.mipmap.man);
@@ -184,17 +184,17 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((ViewHolderwithSingleImg) holder).photo.setImageURI(Uri.parse(pic));
             // ImageLoader.getInstance().displayImage("http://sqimg.qq.com/qq_product_operations/im/2016/pc/ay/mb65_b.jpg", ((ViewHolderwithSingleImg) holder).photo, options);
             //昵称，时间，学校
-            ((ViewHolderwithSingleImg) holder).name.setText(datas.get(position).getName());//昵称
-            ((ViewHolderwithSingleImg) holder).contexttext.setText(datas.get(position).getMessage());//正文内容
+            ((ViewHolderwithSingleImg) holder).name.setText(datas.get(position).getBmob_userBean().getUsername());//昵称
+            ((ViewHolderwithSingleImg) holder).contexttext.setText(datas.get(position).getContent());//正文内容
             //图片1
            // ((ViewHolderwithSingleImg) holder).only_one_image.setImageURI(Uri.parse(datas.get(position).getImg1()));
             ((ViewHolderwithSingleImg) holder).only_one_image.setImageURI(Uri.parse(img1));
-            Log.i("img1url", "onBindViewHolder: "+datas.get(position).getImg1());
+
             // ImageLoader.getInstance().displayImage(datas.get(position).getImg1(), ((ViewHolderwithSingleImg) holder).only_one_image, options);
         }
         //多图
         if (holder instanceof ViewHolderwithMutiImg) {
-            if (datas.get(position).getSex().equals("女")) {
+            if (datas.get(position).getBmob_userBean().getSex().equals("女")) {
                 ((ViewHolderwithMutiImg) holder).sex.setImageResource(R.mipmap.woman);
             } else {
                 ((ViewHolderwithMutiImg) holder).sex.setImageResource(R.mipmap.man);
@@ -213,14 +213,14 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
             });
             //头像
-            ((ViewHolderwithMutiImg) holder).photo.setImageURI(Uri.parse(datas.get(position).getPic()));
+            ((ViewHolderwithMutiImg) holder).photo.setImageURI(Uri.parse(datas.get(position).getBmob_userBean().getphotoUrl()));
             // ImageLoader.getInstance().displayImage(datas.get(position).getPic(), ((ViewHolderwithMutiImg) holder).photo, options);
             //昵称，时间，学校
-            ((ViewHolderwithMutiImg) holder).name.setText(datas.get(position).getName());//昵称
-            ((ViewHolderwithMutiImg) holder).contexttext.setText(datas.get(position).getMessage());//正文内容
+            ((ViewHolderwithMutiImg) holder).name.setText(datas.get(position).getBmob_userBean().getUsername());//昵称
+            ((ViewHolderwithMutiImg) holder).contexttext.setText(datas.get(position).getContent());//正文内容
         }
         if(holder instanceof ViewHolderwithDoubleImg){
-            if (datas.get(position).getSex().equals("女")) {
+            if (datas.get(position).getBmob_userBean().getSex().equals("女")) {
                 ((ViewHolderwithDoubleImg) holder).sex.setImageResource(R.mipmap.woman);
             } else {
                 ((ViewHolderwithDoubleImg) holder).sex.setImageResource(R.mipmap.man);
@@ -228,11 +228,11 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             /*String img1 = datas.get(position).getImg1();
             String img2 = datas.get(position).getImg2();*/
             //头像
-            ((ViewHolderwithDoubleImg) holder).photo.setImageURI(Uri.parse(datas.get(position).getPic()));
+            ((ViewHolderwithDoubleImg) holder).photo.setImageURI(Uri.parse(datas.get(position).getBmob_userBean().getphotoUrl()));
             // ImageLoader.getInstance().displayImage("http://sqimg.qq.com/qq_product_operations/im/2016/pc/ay/mb65_b.jpg", ((ViewHolderwithSingleImg) holder).photo, options);
             //昵称，时间，学校
-            ((ViewHolderwithDoubleImg) holder).name.setText(datas.get(position).getName());//昵称
-            ((ViewHolderwithDoubleImg) holder).contexttext.setText(datas.get(position).getMessage());//正文内容
+            ((ViewHolderwithDoubleImg) holder).name.setText(datas.get(position).getBmob_userBean().getUsername());//昵称
+            ((ViewHolderwithDoubleImg) holder).contexttext.setText(datas.get(position).getContent());//正文内容
             ((ViewHolderwithDoubleImg) holder).help_imgs1.setImageURI(Uri.parse(img1));
             ((ViewHolderwithDoubleImg) holder).help_imgs2.setImageURI(Uri.parse(img2));
         }
@@ -244,7 +244,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public long getItemId(int position) {
-        return datas.get(position).getHelp_id();
+        return position;
     }
 
     @Override

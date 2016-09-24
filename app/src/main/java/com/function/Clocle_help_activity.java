@@ -26,7 +26,7 @@ import com.bean.Messages;
 import com.clocle.huxiang.clocle.Publish;
 import com.clocle.huxiang.clocle.R;
 import com.constant.Constant;
-import com.httpThread.Clocle_help_AsyncTask;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -186,10 +186,12 @@ public class Clocle_help_activity extends AppCompatActivity {
                     @Override
                     public void done(List<Clocle_help> list, BmobException e) {
                         //
+                        Toast.makeText(Clocle_help_activity.this,"访问结束",Toast.LENGTH_SHORT).show();
                         Log.i("返回",list.size()+"");
                         Clocle_help clocle_help=list.get(0);
                         Log.i("返回",clocle_help.getContent());
                         help_recycleview.setAdapter(new RecycleViewAdapter(Clocle_help_activity.this,list));
+                        mrefresh.setRefreshing(false);
                     }
                 });
 
@@ -199,7 +201,7 @@ public class Clocle_help_activity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 //下拉刷新，我绝对要将当前页面的list给传过去
-                new Clocle_help_AsyncTask(pageList,mrefresh, Clocle_help_activity.this, help_recycleview).execute(Constant.GET_HELP_JSON);
+               // new Clocle_help_AsyncTask(pageList,mrefresh, Clocle_help_activity.this, help_recycleview).execute(Constant.GET_HELP_JSON);
 
             }
         });
@@ -215,7 +217,7 @@ public class Clocle_help_activity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 301 && resultCode == 301) {
 
-            new Clocle_help_AsyncTask(null,mrefresh, this, help_recycleview).execute(Constant.GET_HELP_JSON);
+           // new Clocle_help_AsyncTask(null,mrefresh, this, help_recycleview).execute(Constant.GET_HELP_JSON);
         }
 
     }

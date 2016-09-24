@@ -23,7 +23,7 @@ import android.widget.TextView;
 import com.clocle.huxiang.clocle.R;
 import com.constant.Constant;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.httpThread.Clocle_help_AsyncTask;
+
 import com.httpThread.Image_Loader;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -76,7 +76,7 @@ public class Test3 extends AppCompatActivity {
     }*/
         RecyclerView view= (RecyclerView) findViewById(R.id.recyclerView);
         view.setLayoutManager(new LinearLayoutManager(this));
-        new Clocle_help_AsyncTask(null,null, this, view).execute(Constant.GET_HELP_JSON);
+       // new Clocle_help_AsyncTask(null,null, this, view).execute(Constant.GET_HELP_JSON);
     }
     class Adapter extends BaseAdapter{
         private List list;

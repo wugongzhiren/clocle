@@ -39,7 +39,7 @@ public class Utils {
 			try {
 				fileOutputStream = new FileOutputStream(photoFile);
 				if (photoBitmap != null) {
-					if (photoBitmap.compress(Bitmap.CompressFormat.PNG, 100,
+					if (photoBitmap.compress(Bitmap.CompressFormat.PNG, 70,
 							fileOutputStream)) {
 						localPath = photoFile.getPath();
 						fileOutputStream.flush();

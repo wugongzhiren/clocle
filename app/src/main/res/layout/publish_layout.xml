@@ -26,29 +26,13 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/buttons"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_below="@+id/imgs">
 
-        <Button
-            android:id="@+id/chooseimgs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="选择图片" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="拍照" />
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/school"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_below="@+id/buttons"
+        android:layout_below="@+id/imgs"
         android:layout_margin="10dp">
 
         <TextView

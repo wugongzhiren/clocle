@@ -15,6 +15,15 @@ public class Clocle_help extends BmobObject{
     private Integer sum_clocle_money;
     private Bmob_UserBean bmob_userBean;
     private List<String > imgs;
+    private String tag;
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
     public String getContent() {
         return content;

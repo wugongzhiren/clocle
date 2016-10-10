@@ -53,10 +53,7 @@
             android:layout_height="wrap_content"
             android:text="打赏" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-" />
+
 
         <EditText
             android:id="@+id/money_text"
@@ -67,12 +64,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="元" />
+            android:text="粒圈圈豆" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+" />
+
     </LinearLayout>
 
     <Button

@@ -32,7 +32,7 @@ public class ImageFactory {
         newOpts.inPurgeable = true;
         newOpts.inInputShareable = true;
         // Do not compress
-        newOpts.inSampleSize =1;
+        newOpts.inSampleSize =4;
         newOpts.inPreferredConfig = Config.RGB_565;
         return BitmapFactory.decodeFile(imgPath, newOpts);
     }

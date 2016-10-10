@@ -19,6 +19,7 @@ import com.application.Http_Application;
 import com.bean.Clocle_help;
 import com.bean.Messages;
 
+import com.clocle.huxiang.clocle.Bmob_UserBean;
 import com.clocle.huxiang.clocle.Other_Self_infos;
 import com.clocle.huxiang.clocle.R;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -43,6 +44,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private final static int SINGLE_IMAGE = 1;
     private final static int MUTI_IMAGE = 2;
     private final static int DOUBLE_IMAGE=3;
+    private final static int FOOTER=4;//recycleview的footer
     private int deviceWidth;
     private int deviceHeight;
     private int marginleft;
@@ -100,10 +102,15 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             view = inflater.inflate(R.layout.messege_layout_single_img, parent, false);
             return new ViewHolderwithSingleImg(view);
         }
-        else {
+        else if(viewType==DOUBLE_IMAGE){
             view=inflater.inflate(R.layout.messege_layout_double_img,parent,false);
             return new ViewHolderwithDoubleImg(view);
         }
+        else return null;
+        /*else {
+            view =inflater.inflate(R.layout.footer,parent,false);
+            return new ViewHolderFooter(view);
+        }*/
         // Log.d("tag","创建Viewholder1");
         // RecycleviewViewHolder viewHolder = new RecycleviewViewHolder(view);
         //  Log.d("tag","创建Viewholder2");
@@ -115,10 +122,12 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemViewType(int position) {
         List<String> urlsize=datas.get(position).getImgs();
+Bmob_UserBean user=datas.get(position).getBmob_userBean();
 
-
-
-        if (urlsize.size()== 0) {
+/*if(position==getItemCount()){
+    return FOOTER;
+}*/
+        if (urlsize==null) {
             return NO_IMAGE;
         }
         if (urlsize.size() == 1) {
@@ -140,21 +149,13 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      */
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        String img1 = datas.get(position).getImgs().get(0);
-        String img2 = datas.get(position).getImgs().get(1);
-        String img3 = datas.get(position).getImgs().get(2);
-        final ArrayList<String> urlList=new ArrayList<>();
-        urlList.add(img1);
-        urlList.add(img2);
-        urlList.add(img3);
-        String pic=datas.get(position).getBmob_userBean().getphotoUrl();
+
+        final String pic=datas.get(position).getBmob_userBean().getphotoUrl();
         holder.itemView.setTag(datas.get(position).getObjectId());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mcontext, "点击了" + holder.itemView.getTag(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        if(holder instanceof ViewHolderFooter){
+            ((ViewHolderFooter) holder).textView.setText("加载中。。。。");
+        }
+
         //无图片
         if (holder instanceof ViewHolderwithoutImg) {
             //性别
@@ -169,73 +170,139 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             //  ImageLoader.getInstance().displayImage(datas.get(position).getPic(), ((ViewHolderwithoutImg) holder).photo, options);
             //昵称，时间，学校
-
-            ((ViewHolderwithoutImg) holder).name.setText(datas.get(position).getBmob_userBean().getUsername());//昵称
-            ((ViewHolderwithoutImg) holder).contexttext.setText(datas.get(position).getContent());//正文内容
-        }
-        //单图
-        if (holder instanceof ViewHolderwithSingleImg) {
-            if (datas.get(position).getBmob_userBean().getSex().equals("女")) {
-                ((ViewHolderwithSingleImg) holder).sex.setImageResource(R.mipmap.woman);
-            } else {
-                ((ViewHolderwithSingleImg) holder).sex.setImageResource(R.mipmap.man);
-            }
-            //头像
-            ((ViewHolderwithSingleImg) holder).photo.setImageURI(Uri.parse(pic));
-            // ImageLoader.getInstance().displayImage("http://sqimg.qq.com/qq_product_operations/im/2016/pc/ay/mb65_b.jpg", ((ViewHolderwithSingleImg) holder).photo, options);
-            //昵称，时间，学校
-            ((ViewHolderwithSingleImg) holder).name.setText(datas.get(position).getBmob_userBean().getUsername());//昵称
-            ((ViewHolderwithSingleImg) holder).contexttext.setText(datas.get(position).getContent());//正文内容
-            //图片1
-           // ((ViewHolderwithSingleImg) holder).only_one_image.setImageURI(Uri.parse(datas.get(position).getImg1()));
-            ((ViewHolderwithSingleImg) holder).only_one_image.setImageURI(Uri.parse(img1));
-
-            // ImageLoader.getInstance().displayImage(datas.get(position).getImg1(), ((ViewHolderwithSingleImg) holder).only_one_image, options);
-        }
-        //多图
-        if (holder instanceof ViewHolderwithMutiImg) {
-            if (datas.get(position).getBmob_userBean().getSex().equals("女")) {
-                ((ViewHolderwithMutiImg) holder).sex.setImageResource(R.mipmap.woman);
-            } else {
-                ((ViewHolderwithMutiImg) holder).sex.setImageResource(R.mipmap.man);
-            }
-
-            //三张图片的设置
-            ((ViewHolderwithMutiImg) holder).help_imgs1.setImageURI(Uri.parse(img1));
-            ((ViewHolderwithMutiImg) holder).help_imgs2.setImageURI(Uri.parse(img2));
-            ((ViewHolderwithMutiImg) holder).help_imgs3.setImageURI(Uri.parse(img3));
-            ((ViewHolderwithMutiImg) holder).help_imgs1.setOnClickListener(new View.OnClickListener() {
+            final String nickname=datas.get(position).getBmob_userBean().getUsername();
+            final String text=datas.get(position).getContent();
+            ((ViewHolderwithoutImg) holder).name.setText(nickname);//昵称
+            ((ViewHolderwithoutImg) holder).contexttext.setText(text);//正文内容
+            ((ViewHolderwithoutImg) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent=new Intent(Http_Application.getContext(), Preview_photo.class);
-                    intent.putStringArrayListExtra("urlList",urlList);
+                    Intent intent=new Intent(Http_Application.getContext(),Clocle_help_details.class);
+                    intent.putExtra("nickname",nickname);
+                    intent.putExtra("detailsText",text);
+                    intent.putStringArrayListExtra("urls",null);
+                    intent.putExtra("userphoto",pic);
                     mcontext.startActivity(intent);
                 }
             });
-            //头像
-            ((ViewHolderwithMutiImg) holder).photo.setImageURI(Uri.parse(datas.get(position).getBmob_userBean().getphotoUrl()));
-            // ImageLoader.getInstance().displayImage(datas.get(position).getPic(), ((ViewHolderwithMutiImg) holder).photo, options);
-            //昵称，时间，学校
-            ((ViewHolderwithMutiImg) holder).name.setText(datas.get(position).getBmob_userBean().getUsername());//昵称
-            ((ViewHolderwithMutiImg) holder).contexttext.setText(datas.get(position).getContent());//正文内容
         }
-        if(holder instanceof ViewHolderwithDoubleImg){
-            if (datas.get(position).getBmob_userBean().getSex().equals("女")) {
-                ((ViewHolderwithDoubleImg) holder).sex.setImageResource(R.mipmap.woman);
-            } else {
-                ((ViewHolderwithDoubleImg) holder).sex.setImageResource(R.mipmap.man);
+        String img1;String img2;String img3;
+        final ArrayList<String> urlList=new ArrayList<>();
+        if(datas.get(position).getImgs()!=null){
+            if(datas.get(position).getImgs().size()==1){
+                img1 = datas.get(position).getImgs().get(0);
+                urlList.add(img1);
+                if (holder instanceof ViewHolderwithSingleImg) {
+                    if (datas.get(position).getBmob_userBean().getSex().equals("女")) {
+                        ((ViewHolderwithSingleImg) holder).sex.setImageResource(R.mipmap.woman);
+                    } else {
+                        ((ViewHolderwithSingleImg) holder).sex.setImageResource(R.mipmap.man);
+                    }
+                    //头像
+                    ((ViewHolderwithSingleImg) holder).photo.setImageURI(Uri.parse(pic));
+                    // ImageLoader.getInstance().displayImage("http://sqimg.qq.com/qq_product_operations/im/2016/pc/ay/mb65_b.jpg", ((ViewHolderwithSingleImg) holder).photo, options);
+                    //昵称，时间，学校
+                    ((ViewHolderwithSingleImg) holder).name.setText(datas.get(position).getBmob_userBean().getUsername());//昵称
+                    ((ViewHolderwithSingleImg) holder).contexttext.setText(datas.get(position).getContent());//正文内容
+                    //图片1
+                    // ((ViewHolderwithSingleImg) holder).only_one_image.setImageURI(Uri.parse(datas.get(position).getImg1()));
+                    ((ViewHolderwithSingleImg) holder).only_one_image.setImageURI(Uri.parse(img1));
+
+                    // ImageLoader.getInstance().displayImage(datas.get(position).getImg1(), ((ViewHolderwithSingleImg) holder).only_one_image, options);
+                }
             }
+            if(datas.get(position).getImgs().size()==2){
+                img1 = datas.get(position).getImgs().get(0);
+                img2 = datas.get(position).getImgs().get(1);
+                urlList.add(img1);
+                urlList.add(img2);
+                if(holder instanceof ViewHolderwithDoubleImg){
+                    if (datas.get(position).getBmob_userBean().getSex().equals("女")) {
+                        ((ViewHolderwithDoubleImg) holder).sex.setImageResource(R.mipmap.woman);
+                    } else {
+                        ((ViewHolderwithDoubleImg) holder).sex.setImageResource(R.mipmap.man);
+                    }
             /*String img1 = datas.get(position).getImg1();
             String img2 = datas.get(position).getImg2();*/
-            //头像
-            ((ViewHolderwithDoubleImg) holder).photo.setImageURI(Uri.parse(datas.get(position).getBmob_userBean().getphotoUrl()));
-            // ImageLoader.getInstance().displayImage("http://sqimg.qq.com/qq_product_operations/im/2016/pc/ay/mb65_b.jpg", ((ViewHolderwithSingleImg) holder).photo, options);
-            //昵称，时间，学校
-            ((ViewHolderwithDoubleImg) holder).name.setText(datas.get(position).getBmob_userBean().getUsername());//昵称
-            ((ViewHolderwithDoubleImg) holder).contexttext.setText(datas.get(position).getContent());//正文内容
-            ((ViewHolderwithDoubleImg) holder).help_imgs1.setImageURI(Uri.parse(img1));
-            ((ViewHolderwithDoubleImg) holder).help_imgs2.setImageURI(Uri.parse(img2));
-        }
+                    //头像
+                    ((ViewHolderwithDoubleImg) holder).photo.setImageURI(Uri.parse(datas.get(position).getBmob_userBean().getphotoUrl()));
+                    // ImageLoader.getInstance().displayImage("http://sqimg.qq.com/qq_product_operations/im/2016/pc/ay/mb65_b.jpg", ((ViewHolderwithSingleImg) holder).photo, options);
+                    //昵称，时间，学校
+                    ((ViewHolderwithDoubleImg) holder).name.setText(datas.get(position).getBmob_userBean().getUsername());//昵称
+                    ((ViewHolderwithDoubleImg) holder).contexttext.setText(datas.get(position).getContent());//正文内容
+                    ((ViewHolderwithDoubleImg) holder).help_imgs1.setImageURI(Uri.parse(img1));
+                    ((ViewHolderwithDoubleImg) holder).help_imgs2.setImageURI(Uri.parse(img2));
+                    ((ViewHolderwithDoubleImg) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent=new Intent(Http_Application.getContext(),Clocle_help_details.class);
+                            intent.putExtra("nickname","测试");
+                            intent.putExtra("detailsText","呵呵呵呵呵呵哒哒");
+                            intent.putStringArrayListExtra("urls",urlList);
+                            intent.putExtra("userphoto",pic);
+                            mcontext.startActivity(intent);
+                        }
+                    });
+                }}
+
+
+            if(datas.get(position).getImgs().size()==3){
+                img1 = datas.get(position).getImgs().get(0);
+                img2 = datas.get(position).getImgs().get(1);
+                img3 = datas.get(position).getImgs().get(2);
+                urlList.add(img1);
+                urlList.add(img2);
+                urlList.add(img3);
+                if (holder instanceof ViewHolderwithMutiImg) {
+                    if (datas.get(position).getBmob_userBean().getSex().equals("女")) {
+                        ((ViewHolderwithMutiImg) holder).sex.setImageResource(R.mipmap.woman);
+                    } else {
+                        ((ViewHolderwithMutiImg) holder).sex.setImageResource(R.mipmap.man);
+                    }
+
+                    //三张图片的设置
+                    ((ViewHolderwithMutiImg) holder).help_imgs1.setImageURI(Uri.parse(img1));
+                    ((ViewHolderwithMutiImg) holder).help_imgs2.setImageURI(Uri.parse(img2));
+                    ((ViewHolderwithMutiImg) holder).help_imgs3.setImageURI(Uri.parse(img3));
+                    //图片的预览
+                    ((ViewHolderwithMutiImg) holder).help_imgs1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent=new Intent(Http_Application.getContext(), Preview_photo.class);
+                            intent.putStringArrayListExtra("urlList",urlList);
+                            mcontext.startActivity(intent);
+                        }
+                    });
+                    //头像
+                    ((ViewHolderwithMutiImg) holder).photo.setImageURI(Uri.parse(datas.get(position).getBmob_userBean().getphotoUrl()));
+                    // ImageLoader.getInstance().displayImage(datas.get(position).getPic(), ((ViewHolderwithMutiImg) holder).photo, options);
+                    //昵称，时间，学校
+                    final String nickname=datas.get(position).getBmob_userBean().getUsername();
+                    final String contexttext=datas.get(position).getContent();
+                    ((ViewHolderwithMutiImg) holder).name.setText(nickname);//昵称
+                    ((ViewHolderwithMutiImg) holder).contexttext.setText(datas.get(position).getContent());//正文内容
+                    ((ViewHolderwithMutiImg) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent=new Intent(Http_Application.getContext(),Clocle_help_details.class);
+                            intent.putExtra("nickname",nickname);
+                            intent.putExtra("detailsText",contexttext);
+                            intent.putStringArrayListExtra("urls",urlList);
+                            intent.putExtra("userphoto",pic);
+                            mcontext.startActivity(intent);
+                        }
+                    });
+                }
+            }}
+
+          //  img2 = datas.get(position).getImgs().get(1);
+
+
+
+        //单图
+
+        //多图
+
 
         //之所以出现错乱，是因为holder复用了img1url为空的视图
         //不显示图片
@@ -258,7 +325,15 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         Toast.makeText(mcontext, getItemId()+"点击了", Toast.LENGTH_SHORT).show();
     }*/
+class ViewHolderFooter extends RecyclerView.ViewHolder {
+private TextView textView;
 
+    public ViewHolderFooter(View itemView) {
+        super(itemView);
+        textView= (TextView) itemView.findViewById(R.id.footer);
+
+    }
+}
 
     class ViewHolderwithoutImg extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView name;

@@ -1,6 +1,5 @@
 package com.clocle.huxiang.clocle;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,11 +9,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -35,13 +36,13 @@ import tool.Utils;
  * 个人中心界面
  * Created by Administrator on 2016/7/16.
  */
-public class Self_manager extends Activity implements View.OnClickListener {
-    private TextView edit_text;//个人中心的编辑
+public class Self_manager extends AppCompatActivity implements View.OnClickListener {
     private ImageView change_photo;
     protected static Uri tempUri;
     private String userPhotoUrl;
     private Intent index_fg_intent;
-
+    private android.support.v7.widget.Toolbar mtoolbar;
+private TextView toolBarTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,20 +50,36 @@ public class Self_manager extends Activity implements View.OnClickListener {
         index_fg_intent=getIntent();
         Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
         bindViews();
+        initToolBar();
     }
 
     private void bindViews() {
-        edit_text = (TextView) findViewById(R.id.edit_text);
+       // edit_text = (TextView) findViewById(R.id.edit_text);
+        mtoolbar= (android.support.v7.widget.Toolbar)findViewById(R.id.common_toolbar);
+        toolBarTitle= (TextView) findViewById(R.id.center_title);
         change_photo = (ImageView) findViewById(R.id.self_photo);
         Bitmap bm= BitmapFactory.decodeFile(Environment
                 .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/myphoto/myphoto.png");
         change_photo.setImageBitmap(bm);
 
 
-        edit_text.setOnClickListener(this);
+        //edit_text.setOnClickListener(this);
 
         change_photo.setOnClickListener(this);
     }
+    private void initToolBar(){
+
+setSupportActionBar(mtoolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        mtoolbar.setNavigationIcon(R.mipmap.back);
+        mtoolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -70,10 +87,10 @@ public class Self_manager extends Activity implements View.OnClickListener {
             case R.id.self_photo:
                 choosePhoto_dialog();
                 break;
-            case R.id.edit_text:
+           /* case R.id.edit_text:
                 Toast.makeText(this, "跳转至个人资料卡", Toast.LENGTH_SHORT);
                 Intent intent = new Intent(Self_manager.this, Self_Info.class);
-                startActivity(intent);
+                startActivity(intent);*/
         }
 
     }

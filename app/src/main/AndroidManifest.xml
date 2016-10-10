@@ -20,8 +20,11 @@
 
         </activity>
         <activity android:name=".Reg">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
@@ -32,7 +35,13 @@
 
         </activity>
         <activity android:name=".Self_Info"></activity>
-        <activity android:name=".Self_manager">
+        <!--个人中心-->
+        <activity android:name=".Self_manager"
+            android:label="@string/selfmanage"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden">
 
         </activity>
         <activity android:name="test.Test_imageloader">
@@ -59,11 +68,7 @@
 
         </activity>
         <activity android:name=".Publish">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -106,6 +111,7 @@
 
         </activity>
         <activity android:name="com.function.Clocle_help_activity">
+
 
         </activity>
         <activity android:name="com.function.Clocle_help_details">

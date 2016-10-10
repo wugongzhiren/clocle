@@ -21,6 +21,7 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import tool.DecodeSampleBitmapFromUrl;
+import tool.RecycleViewAdapter;
 
 
 /**
@@ -32,9 +33,26 @@ public class Test_Bmob extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_bmob);
+        Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
         Toast.makeText(this,"测试",Toast.LENGTH_SHORT).show();
-        ImageFactory factory=new ImageFactory();
-String path="/storage/emulated/0/DCIM/Camera/IMG_20151002_080421_mh1466438438485.jpg";
+        BmobQuery<Clocle_help> query=new BmobQuery<Clocle_help>();
+        query.addWhereGreaterThan("peopleNum", 0);
+        query.include("bmob_userBean");
+        query.setLimit(2);
+        query.findObjects(new FindListener<Clocle_help>() {
+            @Override
+            public void done(List<Clocle_help> list, BmobException e) {
+                //
+             //   Toast.makeText(Clocle_help_activity.this,"访问结束",Toast.LENGTH_SHORT).show();
+                Log.i("返回",list.size()+"");
+                Clocle_help clocle_help=list.get(0);
+                Log.i("返回",clocle_help.getContent());
+          //      help_recycleview.setAdapter(new RecycleViewAdapter(Clocle_help_activity.this,list));
+         //       mrefresh.setRefreshing(false);
+            }
+        });
+ //       ImageFactory factory=new ImageFactory();
+/*String path="/storage/emulated/0/DCIM/Camera/IMG_20151002_080421_mh1466438438485.jpg";
         Bitmap bm=factory.getBitmap(path);
         Bitmap b=factory.ratio(path,400,400);
         File file=new File("");
@@ -43,7 +61,7 @@ String path="/storage/emulated/0/DCIM/Camera/IMG_20151002_080421_mh1466438438485
             new DecodeSampleBitmapFromUrl().decodeSampleBitmapFromPath(path,view);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
-        }
+        }*/
         //第一：默认初始化
 /*Toast.makeText(this,"ceshi",Toast.LENGTH_SHORT).show();
         Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");

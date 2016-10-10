@@ -29,6 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.application.Http_Application;
+import com.bean.Clocle_help;
 import com.bean.Pulish_bean;
 import com.common_tool.ImageFactory;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -48,6 +49,8 @@ import java.util.Map;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadBatchListener;
 import okhttp3.Call;
 import test.Test_imageloader;
@@ -69,13 +72,6 @@ public class Publish extends Activity implements View.OnClickListener {
     private Button chooseimgs;
     public String request_string;
     public Dialog mydialog;
-    private Intent intent;
-    private ImageView img1;
-    private ImageView img2;
-    private ImageView img3;
-    private String img1url;
-    private String img2url;
-    private String img3url;
     private int imgCount;
     private int deviceW;
     private int deviceH;
@@ -89,7 +85,7 @@ public class Publish extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.publish_layout);
-
+        Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
         Toast.makeText(this, "测试2", Toast.LENGTH_SHORT).show();
         url = new ArrayList<>();
         pickedurl=new ArrayList<>();
@@ -106,7 +102,7 @@ public class Publish extends Activity implements View.OnClickListener {
 
         money_text = (EditText) findViewById(R.id.money_text);
         publish_button = (Button) findViewById(R.id.publish_button);
-        /*img1 = (ImageView) findViewById(R.id.help_img1);
+      /*  img1 = (ImageView) findViewById(R.id.help_img1);
         img2 = (ImageView) findViewById(R.id.help_img2);
         img3 = (ImageView) findViewById(R.id.help_img3);*/
         recyclerView = (RecyclerView) findViewById(R.id.picked_photo);
@@ -123,10 +119,10 @@ public class Publish extends Activity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.publish_button://发表
                 //首先上传照片
-                //Bmob_UserBean bean = BmobUser.getCurrentUser(Bmob_UserBean.class);
-                String publishtext = publish_text.getText().toString();//获取发表内容
-                int money = Integer.parseInt(money_text.getText().toString());//获取悬赏金额
-                int userid = 1;//实验用户id
+                final Bmob_UserBean bean = BmobUser.getCurrentUser(Bmob_UserBean.class);
+                final String publishcontent = publish_text.getText().toString();//获取发表内容
+                final int money = Integer.parseInt(money_text.getText().toString());//获取悬赏金额
+                //int userid = 1;//实验用户id
                 int urlsize = url.size();
                 Log.i("tag", "onClick: "+urlsize);
                 if (url.size() > 1) {
@@ -142,18 +138,38 @@ public class Publish extends Activity implements View.OnClickListener {
                                 .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/temp_img/", String
                                 .valueOf(System.currentTimeMillis()));
                         urlArr[i] = urlImg;
-                       /* if(bitmap != null && !bitmap.isRecycled()){
-                            bitmap.recycle();
-                            bitmap = null;
-                            System.gc();
-                        }*/
+                       if(bmp != null && !bmp.isRecycled()){
+                           bmp.recycle();
+                           bmp=null;
+                           System.gc();
+                        }
                     }
-                    Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
+                    final Dialog mydialog=new Progress_dialog(Publish.this).createLoadingDialog("111");
                     BmobFile.uploadBatch(urlArr, new UploadBatchListener() {
                         @Override
                         public void onSuccess(List<BmobFile> list, List<String> list1) {
 if(list1.size()==urlArr.length){
     Toast.makeText(Publish.this,"图片上传成功",Toast.LENGTH_SHORT).show();
+
+    mydialog.show();
+   //插入数据到圈圈帮帖子表
+    Clocle_help help=new Clocle_help();
+    help.setContent(publishcontent);
+    help.setImgs(list1);
+    help.setPeopleNum(2);
+    help.setTag("羽毛球");
+    help.setSum_clocle_money(money);
+    help.setBmob_userBean(bean);
+    help.save(new SaveListener<String>() {
+        @Override
+        public void done(String s, BmobException e) {
+            if(e==null){
+                mydialog.dismiss();
+            }
+        }
+    });
+    //help.setBmob_userBean(bean);
+
 }
                         }
 
@@ -170,7 +186,21 @@ if(list1.size()==urlArr.length){
                 }
                 //用户没有选择添加图片
                 else {
-
+                    Clocle_help help=new Clocle_help();
+                    help.setContent(publishcontent);
+                    help.setPeopleNum(2);
+                    help.setTag("羽毛球");
+                    help.setSum_clocle_money(money);
+                    help.setBmob_userBean(bean);
+                    final Dialog mydialog=new Progress_dialog(Publish.this).createLoadingDialog("111");
+                    help.save(new SaveListener<String>() {
+                        @Override
+                        public void done(String s, BmobException e) {
+                            if(e==null){
+                                mydialog.dismiss();
+                            }
+                        }
+                    });
                 }
 
 
@@ -221,9 +251,9 @@ if(list1.size()==urlArr.length){
         }
     }
 
-    /**
+   /* *//**
      * 用户选择一张图片调用此方法
-     */
+     *//*
     public void publish_requestwithOnephoto() {
         final Intent intent = getIntent();
 
@@ -231,8 +261,8 @@ if(list1.size()==urlArr.length){
         String url = "http://192.168.1.110:8080/clocle/servlet/Post_Clocle_JsonData";
         Map map = new HashMap<>();
         map.put("request_string", request_string);
-        /*Map map1=new HashMap<>();
-        map1.put("Content-Type","application/octet-stream");*/
+        *//*Map map1=new HashMap<>();
+        map1.put("Content-Type","application/octet-stream");*//*
         int index = img1url.lastIndexOf("/");
 
         String imgname = img1url.substring(index);
@@ -265,9 +295,9 @@ if(list1.size()==urlArr.length){
 
     }
 
-    /**
+    *//**
      * 用户选择两张图片调用此方法
-     */
+     *//*
     public void publish_requestwithTwophoto() {
         final Intent intent = getIntent();
 
@@ -311,9 +341,9 @@ if(list1.size()==urlArr.length){
 
     }
 
-    /**
+    *//**
      * 用户选择三张图片调用此方法
-     */
+     *//*
     public void publish_requestwithThreephoto() {
         final Intent intent = getIntent();
 
@@ -359,7 +389,7 @@ if(list1.size()==urlArr.length){
                 });
 
     }
-
+*/
 
     /**
      * 接收相册选取后传过来的图片
@@ -567,7 +597,7 @@ if(list1.size()==urlArr.length){
             mimageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    url.remove((int) itemView.getTag());
+                    pickedurl.remove((int) itemView.getTag());
                     picked_photo_adapter.notifyDataSetChanged();
                 }
             });

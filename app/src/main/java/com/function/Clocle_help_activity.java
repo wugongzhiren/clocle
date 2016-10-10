@@ -64,8 +64,8 @@ public class Clocle_help_activity extends AppCompatActivity {
         getDeviceWH();
         setContentView(R.layout.clocle_help_layout);
         Bmob.initialize(Clocle_help_activity.this, "fbd7c66a38b160c5677a774971be3294");
-        Toast.makeText(this,"测试4",Toast.LENGTH_SHORT).show();
-        pageList=new ArrayList<>();
+        Toast.makeText(this, "测试4", Toast.LENGTH_SHORT).show();
+        pageList = new ArrayList<>();
         initView();
         initData();
     }
@@ -162,37 +162,41 @@ public class Clocle_help_activity extends AppCompatActivity {
                 int totalItemCount = layoutManager.getItemCount();
                 //获取最后一个item的位置
                 int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-               // if(totalItemCount)
+                // if(totalItemCount)
             }
         });
         mrefresh.setColorSchemeColors(Color.BLACK);
         mrefresh.post(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
                 mrefresh.setRefreshing(true);
-                Toast.makeText(Clocle_help_activity.this,"开始测试",Toast.LENGTH_SHORT).show();
+                Toast.makeText(Clocle_help_activity.this, "开始测试", Toast.LENGTH_SHORT).show();
                 //首次进入，预加载
 
                 //new Clocle_help_AsyncTask(pageList,Clocle_help_activity.this.mrefresh, Clocle_help_activity.this, help_recycleview).execute(Constant.GET_HELP_JSON);
-                BmobQuery<Clocle_help> query=new BmobQuery<Clocle_help>("Clocle_help");
+                BmobQuery<Clocle_help> query = new BmobQuery<Clocle_help>();
                 query.addWhereGreaterThan("peopleNum", 0);
-                query.setLimit(2);
+                query.include("bmob_userBean");
+                query.setLimit(15);
+                //query.order("-createdAt");
                 query.findObjects(new FindListener<Clocle_help>() {
                     @Override
                     public void done(List<Clocle_help> list, BmobException e) {
                         //
-                        Toast.makeText(Clocle_help_activity.this,"访问结束",Toast.LENGTH_SHORT).show();
-                        Log.i("返回",list.size()+"");
-                        Clocle_help clocle_help=list.get(0);
-                        Log.i("返回",clocle_help.getContent());
-                        help_recycleview.setAdapter(new RecycleViewAdapter(Clocle_help_activity.this,list));
-                        mrefresh.setRefreshing(false);
-                    }
+                        if(e==null){
+                            if(list.size()>0){
+                        Toast.makeText(Clocle_help_activity.this, "访问结束", Toast.LENGTH_SHORT).show();
+                        Log.i("返回", list.size() + "");
+                        Clocle_help clocle_help = list.get(0);
+                        Log.i("返回", clocle_help.getContent());
+                        help_recycleview.setAdapter(new RecycleViewAdapter(Clocle_help_activity.this, list));
+                        mrefresh.setRefreshing(false);}
+                            else {
+                                help_recycleview.setAdapter(null);
+                                mrefresh.setRefreshing(false);
+                            }
+                    }}
                 });
 
             }
@@ -201,8 +205,23 @@ public class Clocle_help_activity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 //下拉刷新，我绝对要将当前页面的list给传过去
-               // new Clocle_help_AsyncTask(pageList,mrefresh, Clocle_help_activity.this, help_recycleview).execute(Constant.GET_HELP_JSON);
-
+                // new Clocle_help_AsyncTask(pageList,mrefresh, Clocle_help_activity.this, help_recycleview).execute(Constant.GET_HELP_JSON);
+                BmobQuery<Clocle_help> query = new BmobQuery<>();
+                query.addWhereGreaterThan("peopleNum", 0);
+                query.include("bmob_userBean");
+                query.setLimit(15);
+                query.findObjects(new FindListener<Clocle_help>() {
+                    @Override
+                    public void done(List<Clocle_help> list, BmobException e) {
+                        //
+                        Toast.makeText(Clocle_help_activity.this, "刷新数据", Toast.LENGTH_SHORT).show();
+                        Log.i("返回", list.size() + "");
+                        Clocle_help clocle_help = list.get(0);
+                        Log.i("返回", clocle_help.getContent());
+                        help_recycleview.setAdapter(new RecycleViewAdapter(Clocle_help_activity.this, list));
+                        mrefresh.setRefreshing(false);
+                    }
+                });
             }
         });
 
@@ -210,14 +229,12 @@ public class Clocle_help_activity extends AppCompatActivity {
     }
 
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 301 && resultCode == 301) {
 
-           // new Clocle_help_AsyncTask(null,mrefresh, this, help_recycleview).execute(Constant.GET_HELP_JSON);
+            // new Clocle_help_AsyncTask(null,mrefresh, this, help_recycleview).execute(Constant.GET_HELP_JSON);
         }
 
     }

@@ -20,11 +20,7 @@
 
         </activity>
         <activity android:name=".Reg">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
@@ -149,6 +145,15 @@
         <activity android:name="com.view.Preview_photo">
 
         </activity>
+        <activity android:name="com.Base_activity"/>
+        <activity android:name="com.function.FleaMarket">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 

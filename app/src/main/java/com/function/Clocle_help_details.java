@@ -139,19 +139,19 @@ convertView=LayoutInflater.from(Clocle_help_details.this).inflate(R.layout.listv
 
                 convertView = LayoutInflater.from(Clocle_help_details.this).inflate(R.layout.single_img, parent, false);
                 holder = new GridviewHolder();
-                holder.img = (ImageView) convertView.findViewById(R.id.single_img);
+                holder.img = (SimpleDraweeView) convertView.findViewById(R.id.single_img);
                 convertView.setTag(holder);
 
 
             } else holder = (GridviewHolder) convertView.getTag();
-            holder.img.setImageResource(R.mipmap.t8);
+            holder.img.setImageURI(urls.get(position));
             return convertView;
         }
 
     }
 
     class GridviewHolder {
-        public ImageView img;
+        public SimpleDraweeView img;
 
     }
 }

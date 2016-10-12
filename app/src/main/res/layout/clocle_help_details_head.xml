@@ -77,8 +77,8 @@
     <GridView
         android:id="@+id/clocle_help_details_photos"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:numColumns="2"
+        android:layout_height="200dp"
+        android:numColumns="4"
         android:horizontalSpacing="3dp"
         android:stretchMode="columnWidth">
 

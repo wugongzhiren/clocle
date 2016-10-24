@@ -111,6 +111,7 @@ private List<Flea_market> flea_marketList;//从服务器获取的二手信息
     public void initData(){
         //开发阶段返回所有数据
         BmobQuery<Flea_market> query=new BmobQuery<>();
+        query.include("flea_user");
         query.findObjects(new FindListener<Flea_market>() {
             @Override
             public void done(List<Flea_market> list, BmobException e) {
@@ -170,6 +171,7 @@ private List<Flea_market> flea_marketList;//从服务器获取的二手信息
                     intent.putExtra("content",flea_marketList.get(position).getFlea_content());
                     intent.putStringArrayListExtra("imgs",(ArrayList<String>) flea_marketList.get(position).getFlea_imgs());
                     intent.putExtra("views",flea_marketList.get(position).getViews());
+                    startActivity(intent);
                 }
             });
             holder.img_flea_rv.setLayoutManager(new StaggeredGridLayoutManager(1,

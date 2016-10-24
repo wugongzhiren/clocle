@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 <android.support.v7.widget.Toolbar
     android:background="#FF46D2B4"
@@ -20,10 +22,12 @@
         android:background="#FF4BE7DF"
         android:layout_width="match_parent"
         android:layout_height="68dp">
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/flea_details_photo"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@mipmap/t7"/>
+            fresco:roundAsCircle="true"
+            />
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
@@ -32,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:id="@+id/flea_nickname"
+                    android:id="@+id/flea_details_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="测试用户名"/>
@@ -65,6 +69,11 @@
 
 
    </LinearLayout>
+        <TextView
+            android:id="@+id/flea_details_content"
+            android:textColor="#ff0b9d"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     <LinearLayout
         android:background="#FF21DF47"
         android:layout_width="match_parent"

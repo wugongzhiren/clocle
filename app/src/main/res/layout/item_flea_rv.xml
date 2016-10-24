@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 <LinearLayout
     android:orientation="horizontal"
     android:background="#FF4BE7DF"
     android:layout_width="match_parent"
     android:layout_height="68dp">
-<ImageView
+<com.facebook.drawee.view.SimpleDraweeView
+    android:id="@+id/flea_userphoto"
     android:layout_width="50dp"
     android:layout_height="50dp"
+    fresco:roundAsCircle="true"
     android:src="@mipmap/t7"/>
     <LinearLayout
         android:orientation="vertical"
@@ -47,7 +51,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/flea_rv_imgs"
         android:layout_width="wrap_content"
-        android:layout_height="88dp">
+        android:layout_height="188dp"
+        >
 
     </android.support.v7.widget.RecyclerView>
     <LinearLayout

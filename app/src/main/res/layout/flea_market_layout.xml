@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
+
 <android.support.design.widget.CoordinatorLayout
     android:id="@+id/main_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11,27 +14,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <android.support.v7.widget.Toolbar
-            android:background="#FF31D9A6"
-            android:layout_width="match_parent"
-            app:layout_scrollFlags="scroll|enterAlways"
-            android:layout_height="@dimen/__picker_iwf_actionBarSize">
-            </android.support.v7.widget.Toolbar>
+
 
 
         <LinearLayout
-            android:id="@+id/toolbar"
+            android:id="@+id/adv_head"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="#123456"
-            app:layout_scrollFlags="scroll|enterAlways"
+            android:layout_height="220dp"
+            android:minHeight="56dp"
+            android:background="#d25c5c"
+            app:layout_scrollFlags="scroll"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:gravity="center_vertical"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="the best app"/>
+                android:text="轮播图片"/>
+
+        </LinearLayout>
+        <LinearLayout
+            app:layout_scrollFlags="scroll"
+            android:background="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+            </LinearLayout>
         </LinearLayout>
 
         <android.support.design.widget.TabLayout
@@ -41,12 +53,23 @@
             android:background="#810e88"/>
 
     </android.support.design.widget.AppBarLayout>
-    <android.support.v4.view.ViewPager
+    <com.view.MyfleMarket_viewpager
         android:id="@+id/flea_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:isScrollContainer="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </android.support.v4.view.ViewPager>
-
+    </com.view.MyfleMarket_viewpager>
+<android.support.design.widget.FloatingActionButton
+    android:id="@+id/flea_publish"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:layout_gravity="right|bottom"
+    android:layout_margin="60dp"
+    android:src="@mipmap/publish"
+    app:backgroundTint="#FFFFffff"
+    app:elevation="6dp"
+    app:pressedTranslationZ="12dp"
+    app:rippleColor="#FFF41115"/>
 </android.support.design.widget.CoordinatorLayout>

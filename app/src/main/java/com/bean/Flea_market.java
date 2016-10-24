@@ -1,5 +1,7 @@
 package com.bean;
 
+import android.text.Editable;
+
 import com.clocle.huxiang.clocle.Bmob_UserBean;
 
 import java.util.List;
@@ -7,18 +9,29 @@ import java.util.List;
 import cn.bmob.v3.BmobObject;
 
 /**
+ * 跳蚤市场model，和数据库字段对应
  * Created by Administrator on 2016/10/12.
  */
 public class Flea_market extends BmobObject {
     private Bmob_UserBean flea_user;//发布者
     private String flea_content;//附带说明内容
-    private List<String > flea_imgs;//二手货图片
+    private List<String> flea_imgs;//二手货图片
+    private String flea_type;//分类
     private Integer views;//浏览数
     private Integer follows;//评论人数
     private Integer flea_money;//报价
+    private Integer viewType;//标识listview的布局类型
 
     public Bmob_UserBean getFlea_user() {
         return flea_user;
+    }
+
+    public String getFlea_type() {
+        return flea_type;
+    }
+
+    public void setFlea_type(String flea_type) {
+        this.flea_type = flea_type;
     }
 
     public void setFlea_user(Bmob_UserBean flea_user) {

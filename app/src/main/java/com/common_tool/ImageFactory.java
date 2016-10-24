@@ -12,6 +12,7 @@ import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 
 /**
+ * 压缩图片
  * Image compress factory class
  *
  * @author
@@ -25,7 +26,7 @@ public class ImageFactory {
      * @param imgPath
      * @return
      */
-    public Bitmap getBitmap(String imgPath) {
+    public static Bitmap getBitmap(String imgPath) {
         // Get bitmap through image path
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         newOpts.inJustDecodeBounds = false;

@@ -1,35 +1,52 @@
 package com.function;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
 
 import com.Base_activity;
 import com.clocle.huxiang.clocle.R;
 import com.fragment.Flea_fresh_viewpager1;
+import com.view.MyfleMarket_viewpager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/**圈圈二手市场首页
  * Created by Administrator on 2016/10/11.
  */
 public class FleaMarket extends Base_activity {
-    private ViewPager flea_viewpager;
+    private MyfleMarket_viewpager flea_viewpager;
     private ArrayList<Fragment> fragmentsList;
     private int currIndex;
+    private FloatingActionButton flea_publish;
+    private SwipeRefreshLayout flea_refresh;
     List<String> titles;
     private TabLayout tab;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.flea_market_layout);
+        flea_publish= (FloatingActionButton) findViewById(R.id.flea_publish);
+       // flea_refresh= (SwipeRefreshLayout) findViewById(R.id.flea_refresh);
+//        flea_refresh.setRefreshing(true);
+        flea_publish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(FleaMarket.this,Flea_publish.class);
+                startActivity(intent);
+            }
+        });
         tab= (TabLayout) findViewById(R.id.flea_tabs);
-        flea_viewpager= (ViewPager) findViewById(R.id.flea_body);
+        flea_viewpager= (MyfleMarket_viewpager) findViewById(R.id.flea_body);
         initviewPager();
     }
 
@@ -90,5 +107,6 @@ public class FleaMarket extends Base_activity {
         public CharSequence getPageTitle(int position) {
             return titles.get(position);
         }
+
     }
 }

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<com.facebook.drawee.view.SimpleDraweeView
-    android:id="@+id/single_img"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
-    <!--fresco:actualImageScaleType="centerCrop"-->
 
-</LinearLayout>
+<com.facebook.drawee.view.SimpleDraweeView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_single_img"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    fresco:actualImageScaleType="centerCrop" />
+    <!--fresco:actualImageScaleType="centerCrop"-->

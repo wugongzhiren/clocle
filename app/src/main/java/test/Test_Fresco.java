@@ -33,8 +33,8 @@ setContentView(R.layout.test_fresco);
       // uri = Uri.parse("assets:///addphoto.png");
       // uri = Uri.parse("res://com.clocle.huxiang.clocle/"+R.mipmap.addphoto);
        // SimpleDraweeView draweeView = (SimpleDraweeView) findViewById(R.id.my_image_view);
-      String url="res://com.clocle.huxiang.clocle/"+ Uri.parse(R.mipmap.addphoto+"");
-       view.setImageURI(url);
+      //String url="res://com.clocle.huxiang.clocle/"+ Uri.parse(R.mipmap.addphoto+"");
+       view.setImageURI("http://bmob-cdn-6342.b0.upaiyun.com/2016/10/10/33555581dc2446f69e376abb3fffde67.png");
        /* ControllerListener listener=new BaseControllerListener(){
             @Override
             public void onFailure(String id, Throwable throwable) {

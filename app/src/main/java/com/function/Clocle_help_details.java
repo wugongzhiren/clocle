@@ -139,7 +139,7 @@ convertView=LayoutInflater.from(Clocle_help_details.this).inflate(R.layout.listv
 
                 convertView = LayoutInflater.from(Clocle_help_details.this).inflate(R.layout.single_img, parent, false);
                 holder = new GridviewHolder();
-                holder.img = (SimpleDraweeView) convertView.findViewById(R.id.single_img);
+                holder.img = (SimpleDraweeView) convertView.findViewById(R.id.item_single_img);
                 convertView.setTag(holder);
 
 

@@ -4,9 +4,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,19 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bean.Index_list_bean;
-import com.clocle.huxiang.clocle.Bmob_UserBean;
 import com.clocle.huxiang.clocle.R;
 import com.clocle.huxiang.clocle.Self_manager;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.function.Clocle_help_activity;
 
-import java.io.File;
 import java.util.ArrayList;
-
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.DownloadFileListener;
 
 /**
  * Created by Administrator on 2016/9/13.
@@ -57,17 +48,18 @@ public class Index_Left_Fg extends Fragment implements AdapterView.OnItemClickLi
         list.add(new Index_list_bean(R.mipmap.t6, "圈圈校园期刊"));
         list.add(new Index_list_bean(R.mipmap.t6, "礼品兑换中心"));
         mcontext = getActivity();
-        Bmob_UserBean currentuser = BmobUser.getCurrentUser(Bmob_UserBean.class);
         View view = inflater.inflate(R.layout.index_left_fg, container, false);
+       /* //Bmob_UserBean currentuser = BmobUser.getCurrentUser(Bmob_UserBean.class);
+
         signature = (TextView) view.findViewById(R.id.signature);//签名
 
         nickname = (TextView) view.findViewById(R.id.leftfg_nickname);
-        nickname.setText(currentuser.getUsername());
-        if (currentuser.getSignature() == null) {
-            signature.setText("美美的人都有签名奥！");
-        } else {
-            signature.setText(currentuser.getSignature());
-        }
+       // nickname.setText(currentuser.getUsername());
+       // if (currentuser.getSignature() == null) {
+       //     signature.setText("美美的人都有签名奥！");
+      //  } else {
+      //      signature.setText(currentuser.getSignature());
+     //   }
         index_photo = (SimpleDraweeView) view.findViewById(R.id.index_photo);
         File photo = new File(Environment
                 .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/myphoto", "myphoto.png");
@@ -113,7 +105,7 @@ public class Index_Left_Fg extends Fragment implements AdapterView.OnItemClickLi
 
             });
            // index_photo.setImageURI("res://com.clocle.huxiang.clocle/" + Uri.parse(R.mipmap.reg + ""));
-        }
+        }*/
 
         initview(view);
         return view;
@@ -125,8 +117,8 @@ public class Index_Left_Fg extends Fragment implements AdapterView.OnItemClickLi
         listview.setDividerHeight(4);
         listview.setAdapter(new Index_list_Adapter());
         listview.setOnItemClickListener(this);
-        index_photo.setImageURI(BmobUser.getCurrentUser(Bmob_UserBean.class).getphotoUrl());
-        index_photo.setOnClickListener(this);
+        //index_photo.setImageURI(BmobUser.getCurrentUser(Bmob_UserBean.class).getphotoUrl());
+      //  index_photo.setOnClickListener(this);
     }
 
     @Override
@@ -206,7 +198,7 @@ public class Index_Left_Fg extends Fragment implements AdapterView.OnItemClickLi
         private TextView mtext;
     }
 
-    @Override
+  /*  @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==001&resultCode==001){
@@ -231,5 +223,5 @@ public class Index_Left_Fg extends Fragment implements AdapterView.OnItemClickLi
 
             });
         }
-    }
+    }*/
 }

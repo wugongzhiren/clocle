@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<TextView
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:text="好友列表和消息都会在这里哟"/>
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<android.support.design.widget.TabLayout
+    android:id="@+id/friend_tab"
+    android:layout_width="match_parent"
+    app:tabIndicatorColor="#FFF14D0C"
+    app:tabSelectedTextColor="#453939"
+    app:tabTextColor="#0a94f7"
+    app:tabMode="fixed"
+    android:layout_height="50dp"
+    >
+
+</android.support.design.widget.TabLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/friend_viewpager"
+        android:background="#dad8d8"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </android.support.v4.view.ViewPager>
 </LinearLayout>

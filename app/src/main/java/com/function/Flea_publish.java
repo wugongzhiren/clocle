@@ -8,12 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.Base_activity;
 import com.adapter.ChoosePhotoListAdapter;
-import com.application.Http_Application;
+import com.application.App;
 import com.bean.Flea_market;
 import com.clocle.huxiang.clocle.R;
 
@@ -25,11 +24,8 @@ import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadBatchListener;
-import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
-import cn.finalteam.galleryfinal.widget.HorizontalListView;
-import rx.Observable;
 import tool.ShowToast;
 
 /**
@@ -119,7 +115,7 @@ public class Flea_publish extends Base_activity {
                     public void onSuccess(List<BmobFile> files, List<String> urls) {
                         //1、files-上传完成后的BmobFile集合，是为了方便大家对其上传后的数据进行操作，例如你可以将该文件保存到表中
                         //2、urls-上传文件的完整url地址
-                        ShowToast.showToast(Http_Application.getContext(), "图片上传成功");
+                        ShowToast.showToast(App.getContext(), "图片上传成功");
                         if (urls.size() == filePaths.length) {//如果数量相等，则代表文件全部上传完成
                             //do something
                             Flea_market market = new Flea_market();
@@ -127,7 +123,7 @@ public class Flea_publish extends Base_activity {
                             market.setFlea_type("电子数码");
                             //需要common方法截取
                             market.setFlea_money(new Integer(140));
-                            market.setFlea_user(Http_Application.getuser());
+                            market.setFlea_user(App.getuser());
                             market.setFollows(new Integer(230));
                             market.setViews(new Integer(120));
                             market.setFlea_imgs(urls);
@@ -135,9 +131,9 @@ public class Flea_publish extends Base_activity {
                                 @Override
                                 public void done(String s, BmobException e) {
                                     if (e == null) {
-                                        ShowToast.showToast(Http_Application.getContext(), "发布成功，可在我的跳蚤市场查看");
+                                        ShowToast.showToast(App.getContext(), "发布成功，可在我的跳蚤市场查看");
                                     } else {
-                                        ShowToast.showToast(Http_Application.getContext(), "发布失败");
+                                        ShowToast.showToast(App.getContext(), "发布失败");
                                     }
                                 }
                             });
@@ -148,7 +144,7 @@ public class Flea_publish extends Base_activity {
 
                     @Override
                     public void onError(int statuscode, String errormsg) {
-                        ShowToast.showToast(Http_Application.getContext(), "上传失败");
+                        ShowToast.showToast(App.getContext(), "上传失败");
                     }
 
                     @Override

@@ -13,11 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.application.Http_Application;
+import com.application.App;
 import com.bean.Clocle_help;
-import com.bean.Messages;
 
 import com.clocle.huxiang.clocle.Bmob_UserBean;
 import com.clocle.huxiang.clocle.Other_Self_infos;
@@ -177,7 +175,7 @@ Bmob_UserBean user=datas.get(position).getBmob_userBean();
             ((ViewHolderwithoutImg) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent=new Intent(Http_Application.getContext(),Clocle_help_details.class);
+                    Intent intent=new Intent(App.getContext(),Clocle_help_details.class);
                     intent.putExtra("nickname",nickname);
                     intent.putExtra("detailsText",text);
                     intent.putStringArrayListExtra("urls",null);
@@ -235,7 +233,7 @@ Bmob_UserBean user=datas.get(position).getBmob_userBean();
                     ((ViewHolderwithDoubleImg) holder).itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent=new Intent(Http_Application.getContext(),Clocle_help_details.class);
+                            Intent intent=new Intent(App.getContext(),Clocle_help_details.class);
                             intent.putExtra("nickname","测试");
                             intent.putExtra("detailsText","呵呵呵呵呵呵哒哒");
                             intent.putStringArrayListExtra("urls",urlList);
@@ -268,7 +266,7 @@ Bmob_UserBean user=datas.get(position).getBmob_userBean();
                     ((ViewHolderwithMutiImg) holder).help_imgs1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent=new Intent(Http_Application.getContext(), Preview_photo.class);
+                            Intent intent=new Intent(App.getContext(), Preview_photo.class);
                             intent.putStringArrayListExtra("urlList",urlList);
                             mcontext.startActivity(intent);
                         }
@@ -284,7 +282,7 @@ Bmob_UserBean user=datas.get(position).getBmob_userBean();
                     ((ViewHolderwithMutiImg) holder).itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent=new Intent(Http_Application.getContext(),Clocle_help_details.class);
+                            Intent intent=new Intent(App.getContext(),Clocle_help_details.class);
                             intent.putExtra("nickname",nickname);
                             intent.putExtra("detailsText",contexttext);
                             intent.putStringArrayListExtra("urls",urlList);
@@ -368,13 +366,13 @@ private TextView textView;
                 case R.id.help_user_photo:
                     Log.d("tagtiaozhuang", (String) itemView.getTag());
                     //tag是help_id+userid
-                    intent = new Intent(Http_Application.getContext(), Other_Self_infos.class);
+                    intent = new Intent(App.getContext(), Other_Self_infos.class);
                     intent.putExtra("itemtag", itemid);
                     mcontext.startActivity(intent);
                     break;
                 //点击评论跳转到详情页
                 case R.id.help_comment:
-                    intent = new Intent(Http_Application.getContext(), Clocle_help_details.class);
+                    intent = new Intent(App.getContext(), Clocle_help_details.class);
                     intent.putExtra("itemtag", itemid);
                     mcontext.startActivity(intent);
                     break;
@@ -431,13 +429,13 @@ private TextView textView;
                 case R.id.help_userphoto1:
                     Log.d("tagtiaozhuang", (String) itemView.getTag());
                     //tag是help_id+userid
-                    intent = new Intent(Http_Application.getContext(), Other_Self_infos.class);
+                    intent = new Intent(App.getContext(), Other_Self_infos.class);
                     intent.putExtra("itemtag", itemid);
                     mcontext.startActivity(intent);
                     break;
                 //点击评论跳转到详情页
                 case R.id.help_comment:
-                    intent = new Intent(Http_Application.getContext(), Clocle_help_details.class);
+                    intent = new Intent(App.getContext(), Clocle_help_details.class);
                     intent.putExtra("itemtag", itemid);
                     mcontext.startActivity(intent);
                     break;
@@ -509,7 +507,7 @@ private TextView textView;
                 case R.id.help_userphoto3:
                     //跳转到查看个人信息的页面
 
-                    intent = new Intent(Http_Application.getContext(), Other_Self_infos.class);
+                    intent = new Intent(App.getContext(), Other_Self_infos.class);
                     intent.putExtra("itemtag", itemid);
                     mcontext.startActivity(intent);
 
@@ -517,7 +515,7 @@ private TextView textView;
                     break;
                 case R.id.help_comment:
                     Log.i("tag2", "查看悬赏" + itemView.getTag());
-                    intent = new Intent(Http_Application.getContext(), Clocle_help_details.class);
+                    intent = new Intent(App.getContext(), Clocle_help_details.class);
                     mcontext.startActivity(intent);
                     break;
 
@@ -592,7 +590,7 @@ private TextView textView;
                 case R.id.help_userphoto3:
                     //跳转到查看个人信息的页面
 
-                    intent = new Intent(Http_Application.getContext(), Other_Self_infos.class);
+                    intent = new Intent(App.getContext(), Other_Self_infos.class);
                     intent.putExtra("itemtag", itemid);
                     mcontext.startActivity(intent);
 
@@ -600,7 +598,7 @@ private TextView textView;
                     break;
                 case R.id.help_comment:
                     Log.i("tag2", "查看悬赏" + itemView.getTag());
-                    intent = new Intent(Http_Application.getContext(), Clocle_help_details.class);
+                    intent = new Intent(App.getContext(), Clocle_help_details.class);
                     mcontext.startActivity(intent);
                     break;
 

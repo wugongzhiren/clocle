@@ -10,18 +10,7 @@ import android.widget.ImageView;
 
 import com.clocle.huxiang.clocle.R;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 /**
  * Created by Administrator on 2016/7/31.
@@ -32,7 +21,9 @@ public class Test1 extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_layout);
-      //  ImageView myimag= (ImageView) findViewById(R.id.imgs);
+        //启动会话界面
+
+      /*//  ImageView myimag= (ImageView) findViewById(R.id.imgs);
         Bitmap map= BitmapFactory.decodeFile(Environment
                 .getExternalStorageDirectory().getAbsolutePath().toString()+"/clocle_img/"+"myphoto.png");
        // myimag.setImageBitmap(map);
@@ -66,5 +57,5 @@ public class Test1 extends Activity{
                 Log.i("TAG", "uploadMultiFile() response=" + response.body().string());
             }
         });
-    }
-}
+    }*/
+}}

@@ -100,7 +100,7 @@ private ImageView mimageview;
         mimageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(Http_Application.getContext(), Test_imageloader.class);
+                Intent intent=new Intent(App.getContext(), Test_imageloader.class);
                 mcontext.s
             }
         });

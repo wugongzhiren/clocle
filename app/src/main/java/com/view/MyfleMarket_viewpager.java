@@ -12,7 +12,7 @@ public class MyfleMarket_viewpager extends ViewPager {
     private boolean isCanScroll = true;
 
     public MyfleMarket_viewpager(Context context) {
-        super(context);
+        this(context,null);
     }
 
     public MyfleMarket_viewpager(Context context, AttributeSet attrs) {

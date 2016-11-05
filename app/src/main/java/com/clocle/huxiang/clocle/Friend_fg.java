@@ -1,21 +1,23 @@
 package com.clocle.huxiang.clocle;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.adapter.MyfragmentPagerAdapter;
-import com.fragment.ConversationlistFg;
-import com.fragment.MyfriendFg;
-
 import java.util.ArrayList;
+
+import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imlib.model.Conversation;
+
 
 /**
  * Created by Administrator on 2016/7/7.
@@ -26,55 +28,27 @@ public class Friend_fg extends Fragment {
     private ArrayList<String> titles;//viewpager的标题
     private ArrayList<Fragment> fragments;//装载进viewpager的fragment
     private View view;
+    private RecyclerView coversationlistRv;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          view=inflater.inflate(R.layout.friend_fg,container,false);
-        titles=new ArrayList<>();
-        fragments=new ArrayList<>();
-        initViews();
-        MyfragmentPagerAdapter adapter = new MyfragmentPagerAdapter(getActivity().getSupportFragmentManager(), titles, fragments);
+        ConversationListFragment fragment = new ConversationListFragment();
+        Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
+                .appendPath("conversationlist")
+                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
+                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "true")//设置群组会话聚合显示
+                .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")//设置讨论组会话非聚合显示
+                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//设置系统会话非聚合显示
+                .build();
+        fragment.setUri(uri);
 
-        viewPager.setAdapter(adapter);
-        //为TabLayout设置ViewPager
-        tabLayout.setupWithViewPager(viewPager);
-        //使用ViewPager的适配器
-        tabLayout.setTabsFromPagerAdapter(adapter);
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        //rong_content 为你要加载的 id
+        transaction.add(R.id.rong_content, fragment);
+        transaction.commit();
         return view;
     }
 
-    private void initViews() {
-        tabLayout= (TabLayout) view.findViewById(R.id.friend_tab);
-        viewPager= (ViewPager) view.findViewById(R.id.friend_viewpager);
 
-        titles.add("消息");
-        titles.add("好友");
-
-        fragments.add(new ConversationlistFg());
-        fragments.add(new MyfriendFg());
-
-        //tabLayout.addTab();
-       /* viewPager.setAdapter(new FragmentPagerAdapter(getActivity().getSupportFragmentManager()) {
-            private String[] mTitles = new String[]{"消息", "好友"};
-            @Override
-            public Fragment getItem(int position) {
-                if(position == 1){
-                    return new MyfriendFg();
-                }
-
-                return new ConversationlistFg();
-            }
-
-            @Override
-            public int getCount() {
-                return mTitles.length;
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return mTitles[position];
-            }
-        });
-        tabLayout.setupWithViewPager(viewPager);*/
-    }
 }

@@ -10,19 +10,25 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <data
+                    android:host="com.clocle.huxiang.clocle"
+                    android:pathPrefix="/conversationlist"
+                    android:scheme="rong"/>
              </intent-filter>
 
         </activity>
         <activity android:name=".Login">
 
         </activity>
-        <activity android:name=".WelcomeActivity">
+        <activity android:name=".WelcomeActivity1">
 
         </activity>
         <activity android:name=".Reg">
@@ -171,71 +177,34 @@
         <activity android:name="test.Test_Bmob_Im">
 
         </activity>
-<!-- 融云SDKlib开始-->
-        <meta-data
-            android:name="RONG_CLOUD_APP_KEY"
-            android:value="x18ywvqf8wegc" />
-
-        <service
-            android:name="io.rong.imlib.ipc.RongService"
-            android:exported="true"
-            android:process=":ipc" />
-
-        <service android:name="io.rong.imlib.ReConnectService"
-            android:exported="true"/>
-
-        <receiver android:name="io.rong.imlib.ConnectChangeReceiver"
-            android:exported="true"/>
-
-        <receiver
-            android:name="io.rong.imlib.HeartbeatReceiver"
-            android:process=":ipc" />
-        <!-- imlib config end -->
-
-
-        <!--必选： SDK 核心功能-->
-        <!--第三方相关,向第三方推送服务请求 token 的服务 -->
-        <service
-            android:name="io.rong.push.core.PushRegistrationService"
-            android:exported="false">
-        </service>
-
-        <!-- 处理 push 消息相关的服务 -->
-        <service
-            android:name="io.rong.push.core.MessageHandleService"
-            android:exported="true">
-        </service>
-
-        <!-- push服务 -->
-        <service
-            android:name="io.rong.push.PushService"
-            android:exported="false"
-            android:process="io.rong.push">  <!-- push进程，可以改名 -->
-        </service>
-
-        <!-- push 相关事件接收器 -->
-        <receiver
-            android:name="io.rong.push.PushReceiver"
-            android:process="io.rong.push">   <!-- 此处进程可以改名，名称需要和PushService所在进程统一 -->
-            <!-- 心跳事件 -->
+        <activity android:name="com.function.WelComeActivity">
             <intent-filter>
-                <action android:name="io.rong.push.intent.action.HEART_BEAT" />
+
+                <action android:name="android.intent.action.MAIN" />
+
+
+
+
+
+                <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
-            <!-- 网络变动事件 -->
+        </activity>
+        <activity android:name="com.im.CoversationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.clocle.huxiang.clocle"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
             </intent-filter>
-            <!-- 部分用户事件 -->
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-            </intent-filter>
-        </receiver>
-<!--融云SDKlib结束-->
+        </activity>
+
     </application>
 
 

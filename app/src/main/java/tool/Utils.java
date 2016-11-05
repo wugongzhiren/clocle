@@ -14,6 +14,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
+import android.os.Looper;
 
 public class Utils {
 
@@ -122,5 +123,29 @@ public class Utils {
 		canvas.drawBitmap(bitmap, src, dst, paint);
 
 		return output;
+	}
+
+	/**
+	 * 检查对象非空
+	 *
+	 * @param object
+	 * @param message
+	 * @param <T>
+	 * @return
+	 */
+	public static <T> T checkNotNull(T object, String message) {
+		if (object == null) {
+			throw new NullPointerException(message);
+		}
+		return object;
+	}
+	/**
+	 * 检查是否在主线程 关键检查 弹出异常
+	 */
+	public static void checkUiThread() {
+		if (Looper.getMainLooper() != Looper.myLooper()) {
+			throw new IllegalStateException(
+					"Must be called from the main thread. Was: " + Thread.currentThread());
+		}
 	}
 }

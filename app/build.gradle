@@ -56,20 +56,22 @@ dependencies {
     compile 'me.relex:photodraweeview:1.1.0'
     compile 'com.github.glassLake:PhotoPicker:1.0.2'
     /* compile files('libs/MobCommons-2016.0830.1940.jar')
-                compile files('libs/MobTools-2016.0830.1940.jar')
-                compile files('libs/ShareSDK-Core-2.7.7.jar')
-                compile files('libs/ShareSDK-QQ-2.7.7.jar')
-                compile files('libs/ShareSDK-QZone-2.7.7.jar')
-                compile files('libs/ShareSDK-SinaWeibo-2.7.7.jar')
-                compile files('libs/ShareSDK-TencentWeibo-2.7.7.jar')
-                compile files('libs/ShareSDK-Wechat-2.7.7.jar')
-                compile files('libs/ShareSDK-Wechat-Core-2.7.7.jar')
-                compile files('libs/ShareSDK-Wechat-Favorite-2.7.7.jar')
-                compile files('libs/ShareSDK-Wechat-Moments-2.7.7.jar')*/
+                            compile files('libs/MobTools-2016.0830.1940.jar')
+                            compile files('libs/ShareSDK-Core-2.7.7.jar')
+                            compile files('libs/ShareSDK-QQ-2.7.7.jar')
+                            compile files('libs/ShareSDK-QZone-2.7.7.jar')
+                            compile files('libs/ShareSDK-SinaWeibo-2.7.7.jar')
+                            compile files('libs/ShareSDK-TencentWeibo-2.7.7.jar')
+                            compile files('libs/ShareSDK-Wechat-2.7.7.jar')
+                            compile files('libs/ShareSDK-Wechat-Core-2.7.7.jar')
+                            compile files('libs/ShareSDK-Wechat-Favorite-2.7.7.jar')
+                            compile files('libs/ShareSDK-Wechat-Moments-2.7.7.jar')*/
     compile 'cn.finalteam:galleryfinal:1.4.8.7'
-    compile files('libs/BmobSDK_3.5.1_20160719.jar')
+
+    compile project(':IMKit')
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile files('libs/Rong_IMLib_v2_7_3.jar')
+    compile files('libs/BmobSDK_3.5.2_20161027.jar')
+    compile files('libs/gson-2.6.2.jar')
 }
 
 android {

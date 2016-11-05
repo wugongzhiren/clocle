@@ -6,7 +6,10 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -19,13 +22,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adapter.MyfragmentPagerAdapter;
 import com.bean.Message;
 import com.gesture.MygestureListener;
 
-
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -45,8 +50,12 @@ public class MainActivity extends AppCompatActivity {
     private GestureDetector detector;
     private Boolean needOpenMenu;
     private FragmentTabHost tabHost;
+private ViewPager mainVp;
+    private TabLayout mainTab;
 
     private LayoutInflater inflater;
+    private ArrayList<String> titles;//viewpager的标题
+    private ArrayList<Fragment> fragments ;//装载进viewpager的fragment
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +63,26 @@ public class MainActivity extends AppCompatActivity {
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_main);
+        mainVp= (ViewPager) findViewById(R.id.main_vp);
+        mainTab= (TabLayout) findViewById(R.id.main_tab);
         inflater = getLayoutInflater();
-        Toast.makeText(this, "测试", Toast.LENGTH_SHORT).show();
-       /* gesture=new MygestureListener();
-       detector=new GestureDetector(this,gesture);*/
+        titles=new ArrayList<>();
+        fragments=new ArrayList<>();
+        titles.add("动态");
+        titles.add("消息");
+        titles.add("发现");
+        titles.add("反馈");
+        fragments.add(new Index_fg());
+        fragments.add(new Friend_fg());
+        fragments.add(new Faxian_fg());
+        fragments.add(new fankui_fg());
+        MyfragmentPagerAdapter adapter=new MyfragmentPagerAdapter(getSupportFragmentManager(),titles,fragments);
+        mainVp.setAdapter(adapter);
+        mainTab.setupWithViewPager(mainVp);
+       // mainTab.setTabsFromPagerAdapter(adapter);
+        /*Toast.makeText(this, "测试", Toast.LENGTH_SHORT).show();
+       *//* gesture=new MygestureListener();
+       detector=new GestureDetector(this,gesture);*//*
         // manager = getFragmentManager();
         tabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         tabHost.setup(this, getSupportFragmentManager(),
@@ -108,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 3. 添加TabSpec
 
-        tabHost.addTab(spec4, fankui_fg.class, null);
+        tabHost.addTab(spec4, fankui_fg.class, null);*/
 
        /* // 2. 新建TabSpec
         spec = tabhost.newTabSpec(TAB_CONTACT);

@@ -15,11 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.File;
 
@@ -48,7 +44,6 @@ private TextView toolBarTitle;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.self_manager);
         index_fg_intent=getIntent();
-        Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
         bindViews();
         initToolBar();
     }
@@ -56,7 +51,7 @@ private TextView toolBarTitle;
     private void bindViews() {
        // edit_text = (TextView) findViewById(R.id.edit_text);
         mtoolbar= (android.support.v7.widget.Toolbar)findViewById(R.id.common_toolbar);
-        toolBarTitle= (TextView) findViewById(R.id.center_title);
+       // toolBarTitle= (TextView) findViewById(R.id.center_title);
         change_photo = (ImageView) findViewById(R.id.self_photo);
         Bitmap bm= BitmapFactory.decodeFile(Environment
                 .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/myphoto/myphoto.png");
@@ -250,7 +245,7 @@ setSupportActionBar(mtoolbar);
      * @param bitmap
      */
 
-    private void uploadPic(Bitmap bitmap) {
+   /* private void uploadPic(Bitmap bitmap) {
         String url = "http://192.168.1.110:8080/clocle/servlet/File_Upload";
         // 上传至服务器
         // ... 可以在这里把Bitmap转换成file，然后得到file的url，做文件上传操作
@@ -275,7 +270,7 @@ setSupportActionBar(mtoolbar);
                     public void onResponse(String s, int i) {
 
                     }
-                });
+                });*/
 /*File myphoto=new File(imagePath);
         MultipartBody body = new MultipartBody.Builder("AaB03x")
                 .setType(MultipartBody.FORM)
@@ -367,5 +362,5 @@ setSupportActionBar(mtoolbar);
         }
         return sdDir.toString();
     }*/
-}
+
 

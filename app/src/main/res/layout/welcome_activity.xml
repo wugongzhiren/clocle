@@ -8,5 +8,5 @@
         android:layout_height="match_parent"
         android:id="@+id/img_welcome"
         android:scaleType="centerCrop"
-        android:src="@mipmap/welcomebg" />
+        android:src="@mipmap/welcome" />
 </LinearLayout>

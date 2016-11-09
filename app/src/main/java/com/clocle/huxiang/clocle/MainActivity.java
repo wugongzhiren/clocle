@@ -26,6 +26,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.Base_activity;
 import com.adapter.MyfragmentPagerAdapter;
 import com.bean.Message;
 import com.gesture.MygestureListener;
@@ -33,7 +34,7 @@ import com.gesture.MygestureListener;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Base_activity {
 
 
     private TextView tapdongtai;
@@ -61,7 +62,7 @@ private ViewPager mainVp;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
-
+        hideStatus();
         setContentView(R.layout.activity_main);
         mainVp= (ViewPager) findViewById(R.id.main_vp);
         mainTab= (TabLayout) findViewById(R.id.main_tab);

@@ -5,46 +5,61 @@
     android:layout_height="match_parent"
 
     >
-    <ImageView
-        android:scaleType="centerCrop"
-        android:padding="0dp"
-        android:id="@+id/bg_imageview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include layout="@layout/toolar"/>
+
+
+
 
 <EditText
+    android:layout_marginTop="90dp"
     android:id="@+id/name"
-    android:hint="用户名"
+    android:hint="请输入用户名"
     android:textCursorDrawable="@drawable/cusor_style"
-    android:textColorHint="#C6C0C0"
+    android:textColorHint="#FFD2D2D2"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:paddingLeft="10dp"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_height="36dp"
+    android:background="@drawable/edittextselector"
     />
     <EditText
         android:layout_below="@+id/name"
-        android:textColorHint="#E1D5D5"
+        android:textColorHint="#FFD2D2D2"
+        android:paddingLeft="10dp"
+        android:textCursorDrawable="@drawable/cusor_style"
         android:id="@+id/password"
-        android:hint="密码"
-        android:layout_marginTop="14dp"
+        android:hint="请输入密码"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/edittextselector"
+        android:layout_height="36dp"
         android:inputType="textPassword"/>
     <Button
+        style="?android:attr/borderlessButtonStyle"
         android:layout_below="@+id/password"
         android:id="@+id/login_bt"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="#F7DC0F"
+        android:layout_height="36dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/btselector"
         android:text="登录"
         android:textSize="18sp"
         android:textColor="@color/white"/>
     <Button
+        style="?android:attr/borderlessButtonStyle"
         android:layout_below="@+id/login_bt"
         android:id="@+id/reg_bt"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="#F7DC0F"
+        android:layout_height="36dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/btselector"
         android:text="注册"
         android:textSize="18sp"
         android:textColor="@color/white"/>
@@ -67,4 +82,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/qqlogin"
+
+        android:layout_marginBottom="83dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="84dp"
+        android:id="@+id/qqlogin" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/sinalogin"
+
+        android:layout_marginRight="82dp"
+        android:id="@+id/sinalogin"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="84dp" />
 </RelativeLayout>

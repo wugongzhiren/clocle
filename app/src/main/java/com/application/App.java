@@ -20,11 +20,11 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.concurrent.TimeUnit;
 
 
+import cn.bmob.v3.Bmob;
 import cn.finalteam.galleryfinal.CoreConfig;
 import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
@@ -47,7 +47,7 @@ String testtoken="0GxyEvHDQqKuu9T+21VAScouCHXzYZWucMXTL4Cxm0sdLCBYt4wPAcjEhK+6xf
     @Override
     public void onCreate() {
         super.onCreate();
-
+        Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
         RongIM.init(this);
 RongIM.connect(testtoken, new RongIMClient.ConnectCallback() {
     @Override
@@ -73,14 +73,8 @@ RongIM.connect(testtoken, new RongIMClient.ConnectCallback() {
                 .setBitmapsConfig(Bitmap.Config.ARGB_8888)
                 .build();
         Fresco.initialize(this, config);
-        //okHttp3配置
-        okHttpClient = new OkHttpClient.Builder()
-//                .addInterceptor(new LoggerInterceptor("TAG"))
-                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
-                .readTimeout(10000L, TimeUnit.MILLISECONDS)
-                .build();
-        //其他配置
-        OkHttpUtils.initClient(okHttpClient);
+
+
         //ImageLoad配置
         ImageLoaderConfiguration config1 = ImageLoaderConfiguration.createDefault(this);
         ImageLoader.getInstance().init(config1);

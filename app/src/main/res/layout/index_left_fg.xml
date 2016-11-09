@@ -46,6 +46,7 @@
     </LinearLayout>
 </RelativeLayout>
     <LinearLayout
+        android:orientation="vertical"
         android:background="#FF1CB2E9"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -54,8 +55,15 @@
     <ListView
         android:id="@+id/index_menu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="400dp">
 
     </ListView>
+        <TextView
+            android:id="@+id/login_out"
+            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:text="退出"/>
     </LinearLayout>
 </LinearLayout>

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android">
-    <objectAnimator android:duration="6000"
+    <objectAnimator android:duration="3000"
         android:valueFrom="1f"
-        android:valueTo="1.2f"
+        android:valueTo="1.4f"
         android:valueType="floatType"
         android:propertyName="scaleY"
         android:interpolator="@android:interpolator/decelerate_cubic"
         />
-    <objectAnimator android:duration="6000"
+    <objectAnimator android:duration="3000"
         android:valueFrom="1f"
-        android:valueTo="1.2f"
+        android:valueTo="1.4f"
         android:valueType="floatType"
         android:propertyName="scaleX"
         android:interpolator="@android:interpolator/decelerate_cubic"

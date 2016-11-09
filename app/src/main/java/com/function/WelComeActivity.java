@@ -4,18 +4,26 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.clocle.huxiang.clocle.Bmob_UserBean;
+import com.clocle.huxiang.clocle.MainActivity;
 import com.clocle.huxiang.clocle.R;
+import com.clocle.huxiang.clocle.Reg;
 import com.rx.MyRxObservable;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobUser;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -29,15 +37,20 @@ import rx.schedulers.Schedulers;
  */
 
 public class WelComeActivity extends AppCompatActivity{
-
+private Boolean isLogin = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 
        /* */
 
         setContentView(R.layout.welcome_activity);
+       // getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN| View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//        getActionBar().hide();
         ImageView mImageView= (ImageView) findViewById(R.id.img_welcome);
        /* TextView view= (TextView) findViewById(R.id.text3);
         ObjectAnimator animator = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f, 1f);
@@ -64,16 +77,13 @@ public class WelComeActivity extends AppCompatActivity{
                     @Override
                     public Boolean call(Void aVoid) {
                         //filter过滤：判断是否登录过，如果false就会跳过下面的操作
-                        return false;
-                    }
-                })
-                .filter(new Func1<Void, Boolean>() {
-                    @Override
-                    public Boolean call(Void aVoid) {
-                        //过滤：判断上次登录是否超过时间差
-                        //Long lastTime= (Long) SPUtils.get(getApplicationContext(),Constant.LOGINTIME,0L);
-                       // return System.currentTimeMillis()-lastTime >mTimeDifference;
-                    return true;
+                        Bmob_UserBean bean= BmobUser.getCurrentUser(Bmob_UserBean.class);
+                        if(bean !=null){
+                            isLogin = true;
+
+                        }
+
+                        return isLogin;
                     }
                 })
                 .flatMap(new Func1<Void, Observable<String>>() {
@@ -90,6 +100,17 @@ public class WelComeActivity extends AppCompatActivity{
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
+                        if (isLogin){
+                            Intent intent =new Intent(WelComeActivity.this,MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else {
+                            Intent intent =new Intent(WelComeActivity.this,Reg.class);
+                            startActivity(intent);
+                            finish();
+                        }
+
                         //所有操作完成，统一回调这里，实现Activity跳转功能
                        // MainActivity.launch(WelcomeActivity.this);
                       //  finish();

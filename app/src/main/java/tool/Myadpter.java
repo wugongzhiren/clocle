@@ -14,8 +14,7 @@ import com.bean.Message;
 import com.bean.Messages;
 import com.clocle.huxiang.clocle.R;
 import com.httpThread.Image_Loader;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.BitmapCallback;
+
 
 import java.util.List;
 

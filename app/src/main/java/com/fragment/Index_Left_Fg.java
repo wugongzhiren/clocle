@@ -15,13 +15,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bean.Flea_market;
 import com.bean.Index_list_bean;
+import com.clocle.huxiang.clocle.Bmob_UserBean;
 import com.clocle.huxiang.clocle.R;
+import com.clocle.huxiang.clocle.Reg;
 import com.clocle.huxiang.clocle.Self_manager;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.function.Clocle_help_activity;
+import com.function.FleaMarket;
 
 import java.util.ArrayList;
+
+import cn.bmob.v3.BmobUser;
 
 /**
  * Created by Administrator on 2016/9/13.
@@ -33,6 +39,7 @@ public class Index_Left_Fg extends Fragment implements AdapterView.OnItemClickLi
     private SimpleDraweeView index_photo;//用户头像
     private TextView nickname;//昵称
     private TextView signature;
+    private TextView out;
 
     @Nullable
     @Override
@@ -49,8 +56,31 @@ public class Index_Left_Fg extends Fragment implements AdapterView.OnItemClickLi
         list.add(new Index_list_bean(R.mipmap.t6, "礼品兑换中心"));
         mcontext = getActivity();
         View view = inflater.inflate(R.layout.index_left_fg, container, false);
-       /* //Bmob_UserBean currentuser = BmobUser.getCurrentUser(Bmob_UserBean.class);
-
+        out= (TextView) view.findViewById(R.id.login_out);
+        out.setText("退出登录");
+        out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BmobUser.logOut();   //清除缓存用户对象
+                Intent intent =new Intent(getActivity(), Reg.class);
+                startActivity(intent);
+            }
+        });
+        signature = (TextView) view.findViewById(R.id.signature);//签名
+        Bmob_UserBean currentuser = BmobUser.getCurrentUser(Bmob_UserBean.class);
+        if(currentuser!=null){
+            if (currentuser.getSignature() == null) {
+                     signature.setText("美美的人都有签名奥！");
+                  } else {
+                      signature.setText(currentuser.getSignature());
+                   }
+            nickname = (TextView) view.findViewById(R.id.leftfg_nickname);
+            nickname.setText(currentuser.getUsername());
+            index_photo = (SimpleDraweeView) view.findViewById(R.id.index_photo);
+            index_photo.setImageURI(currentuser.getphotoUrl());
+        }
+       /* //
+Bmob_UserBean currentuser = BmobUser.getCurrentUser(Bmob_UserBean.class);
         signature = (TextView) view.findViewById(R.id.signature);//签名
 
         nickname = (TextView) view.findViewById(R.id.leftfg_nickname);
@@ -118,7 +148,7 @@ public class Index_Left_Fg extends Fragment implements AdapterView.OnItemClickLi
         listview.setAdapter(new Index_list_Adapter());
         listview.setOnItemClickListener(this);
         //index_photo.setImageURI(BmobUser.getCurrentUser(Bmob_UserBean.class).getphotoUrl());
-      //  index_photo.setOnClickListener(this);
+        index_photo.setOnClickListener(this);
     }
 
     @Override
@@ -135,6 +165,8 @@ public class Index_Left_Fg extends Fragment implements AdapterView.OnItemClickLi
                 break;
 
             case 3:
+                Intent intent3 = new Intent(getActivity(), FleaMarket.class);
+                startActivity(intent3);
                 break;
 
             case 4:

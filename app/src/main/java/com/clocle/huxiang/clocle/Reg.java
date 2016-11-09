@@ -41,10 +41,10 @@ public class Reg extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.mipmap.login_bg);
+
+       /* Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.mipmap.login_bg);
         index_photo=BitmapFactory.decodeResource(getResources(),R.mipmap.reg);
-        login_bg_bm=Bg_blur.blur(this,bitmap);
+        login_bg_bm=Bg_blur.blur(this,bitmap);*/
         setContentView(R.layout.reg_layout);
         BmobUser bmobUser = BmobUser.getCurrentUser();
         Bmob_UserBean bmob_userBean=  BmobUser.getCurrentUser(Bmob_UserBean.class);
@@ -58,7 +58,7 @@ public class Reg extends AppCompatActivity implements View.OnClickListener {
         }
         bindView();
          // 不存在设置默认图片
-        imageView.setImageBitmap(login_bg_bm);
+        //imageView.setImageBitmap(login_bg_bm);
        /* SMSSDK.initSDK(this, "14f6eb5d87954", "1d4ec79b64b6f02275d0509b6123729c");
         RegisterPage registerPage = new RegisterPage();
         registerPage.setRegisterCallback(new EventHandler() {
@@ -81,7 +81,7 @@ public class Reg extends AppCompatActivity implements View.OnClickListener {
 
     private void bindView() {
         relativeLayout= (RelativeLayout) findViewById(R.id.reg);
-        imageView= (ImageView) findViewById(R.id.bg_imageview);
+        //imageView= (ImageView) findViewById(R.id.bg_imageview);
         progress= (ProgressBar) findViewById(R.id.reg_progress);
         name = (EditText) findViewById(R.id.name);
         password = (EditText) findViewById(R.id.password);

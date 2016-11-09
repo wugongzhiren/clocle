@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
 
 /**
  * Created by Administrator on 2016/7/23.

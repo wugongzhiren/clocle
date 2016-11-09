@@ -107,9 +107,6 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name="test.Test_activity">
-
-        </activity>
         <activity android:name="test.Test1">
             <!-- <intent-filter>
              <action android:name="android.intent.action.MAIN" />
@@ -134,9 +131,6 @@
 
         </activity>
         <activity android:name="com.webapp.Present_center">
-
-        </activity>
-        <activity android:name="test.TestShareSDK">
 
         </activity>
         <activity android:name="test.Test_Fresco">
@@ -174,10 +168,8 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
 
         </activity>
-        <activity android:name="test.Test_Bmob_Im">
-
-        </activity>
-        <activity android:name="com.function.WelComeActivity">
+        <activity android:name="com.function.WelComeActivity"
+            >
             <intent-filter>
 
                 <action android:name="android.intent.action.MAIN" />

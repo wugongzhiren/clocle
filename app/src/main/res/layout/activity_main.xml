@@ -4,6 +4,7 @@
     android:id="@+id/index_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include layout="@layout/toolar"/>
     <!-- 左侧侧滑菜单的容器-->
 
     <fragment

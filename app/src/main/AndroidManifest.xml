@@ -46,11 +46,9 @@
         <!--个人中心-->
         <activity
             android:name=".Self_manager"
-            android:label="@string/selfmanage"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateHidden">
+            >
 
         </activity>
         <activity android:name="test.Test_imageloader">
@@ -170,17 +168,7 @@
         </activity>
         <activity android:name="com.function.WelComeActivity"
             >
-            <intent-filter>
 
-                <action android:name="android.intent.action.MAIN" />
-
-
-
-
-
-                <category android:name="android.intent.category.LAUNCHER" />
-
-            </intent-filter>
         </activity>
         <activity android:name="com.im.CoversationActivity"
             android:screenOrientation="portrait"
@@ -196,6 +184,13 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+        <activity android:name="com.function.Dynamic_publish">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+            </activity>
 
     </application>
 

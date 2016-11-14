@@ -1,7 +1,6 @@
 package com.function;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,7 +18,6 @@ import com.clocle.huxiang.clocle.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -61,9 +59,8 @@ public class Flea_publish extends Base_activity {
     };
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
         mPhotoList = new ArrayList<>();
         mPhotoList.add(new PhotoInfo());
         setContentView(R.layout.flea_market_publish);

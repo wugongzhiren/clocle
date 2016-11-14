@@ -66,7 +66,7 @@ public class ImageFactory {
         newOpts.inPreferredConfig = Config.RGB_565;
         // Get bitmap info, but notice that bitmap is null now
         Bitmap bitmap = BitmapFactory.decodeFile(imgPath,newOpts);
-
+        //Bitmap bitmap =BitmapFactory.decodeFile(imgPath,newOpts);
         newOpts.inJustDecodeBounds = false;
         int w = newOpts.outWidth;
         int h = newOpts.outHeight;

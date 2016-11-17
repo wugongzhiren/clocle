@@ -65,7 +65,7 @@ public class Publish extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.publish_layout);
-        Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
+        //Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
         Toast.makeText(this, "测试2", Toast.LENGTH_SHORT).show();
         url = new ArrayList<>();
         pickedurl=new ArrayList<>();

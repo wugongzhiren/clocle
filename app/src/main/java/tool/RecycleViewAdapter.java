@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 圈圈帮首页的适配器
  * Created by Administrator on 2016/8/15.
  */
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {

@@ -1,20 +1,29 @@
 package com.function;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.adapter.ChoosePhotoListAdapter;
 import com.adapter.Picked_photo_adapter;
+import com.bean.Dynamic;
 import com.clocle.huxiang.clocle.R;
+import com.common_tool.ImageFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UploadBatchListener;
 import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
@@ -27,6 +36,7 @@ import cn.finalteam.galleryfinal.model.PhotoInfo;
 public class Dynamic_publish extends AppCompatActivity {
     private RelativeLayout relativeLayout;
     private GridView gridView;
+    private EditText dynamic_ed;
     private List<PhotoInfo> mPhotoList;//已经选择图片
     private Picked_photo_adapter picked_photo_adapter;
     private Button button;
@@ -55,13 +65,61 @@ public class Dynamic_publish extends AppCompatActivity {
         setContentView(R.layout.dynamic_publish_layout);
         relativeLayout = (RelativeLayout) findViewById(R.id.rl_choose_photo);
         button= (Button) findViewById(R.id.dynamic_publish);
+        dynamic_ed= (EditText) findViewById(R.id.dynamic_edit);
         //发表
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(Dynamic_publish.this,"完成",Toast.LENGTH_SHORT).show();
+                if(mPhotoList.size()==0){
+                    Toast.makeText(Dynamic_publish.this,"请添加要分享的图片",Toast.LENGTH_SHORT).show();
+                return;
+                }
                 //1.压缩图片保存在临时文件夹
-
+                /*try {
+                    ImageFactory.compressAndGenImage(mPhotoList.get(0).getPhotoPath(),Environment
+                            .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/temp_img/",500,false);
+                    Toast.makeText(Dynamic_publish.this,"完成l",Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }*/
                 //2.上传图片
+               final String[] Urlarr=new String[mPhotoList.size()];
+                for(int i=0;i<Urlarr.length;i++){
+                    Urlarr[i]=mPhotoList.get(i).getPhotoPath();
+                }
+                BmobFile.uploadBatch(Urlarr, new UploadBatchListener() {
+                    @Override
+                    public void onSuccess(List<BmobFile> list, List<String> list1) {
+                        if(list1.size()==Urlarr.length) {
+                            Dynamic dynamic=new Dynamic();
+                            dynamic.setDynamicContent(dynamic_ed.getText().toString());
+                            dynamic.setCommentCount(0);
+                            dynamic.setViews(1);
+                            dynamic.setUser(null);
+                            dynamic.setImgs(list1);
+                            dynamic.save(new SaveListener<String>() {
+                                @Override
+                                public void done(String s, BmobException e) {
+                                    if (e==null){
+                                        Toast.makeText(Dynamic_publish.this,"发布成功",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        }
+
+                    }
+
+                    @Override
+                    public void onProgress(int i, int i1, int i2, int i3) {
+
+                    }
+
+                    @Override
+                    public void onError(int i, String s) {
+
+                    }
+                });
 
                 //3.保存到数据库
             }

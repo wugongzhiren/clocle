@@ -59,7 +59,7 @@ public class ImageFactory {
      * @param pixelH target pixel of height
      * @return
      */
-    public Bitmap ratio(String imgPath, float pixelW, float pixelH) {
+    public static Bitmap ratio(String imgPath, float pixelW, float pixelH) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         // 开始读入图片，此时把options.inJustDecodeBounds 设回true，即只读边不读内容
         newOpts.inJustDecodeBounds = true;
@@ -141,7 +141,7 @@ public class ImageFactory {
      * @param maxSize target will be compressed to be smaller than this size.(kb)
      * @throws IOException
      */
-    public void compressAndGenImage(Bitmap image, String outPath, int maxSize) throws IOException {
+    public static void compressAndGenImage(Bitmap image, String outPath, int maxSize) throws IOException {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         // scale
         int options = 100;
@@ -172,7 +172,7 @@ public class ImageFactory {
      * @param needsDelete Whether delete original file after compress
      * @throws IOException
      */
-    public void compressAndGenImage(String imgPath, String outPath, int maxSize, boolean needsDelete) throws IOException {
+    public static void compressAndGenImage(String imgPath, String outPath, int maxSize, boolean needsDelete) throws IOException {
         compressAndGenImage(getBitmap(imgPath), outPath, maxSize);
 
         // Delete original file

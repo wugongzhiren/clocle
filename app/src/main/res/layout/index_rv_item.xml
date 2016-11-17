@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/tools"
     android:orientation="vertical"
     app:cardUseCompatPadding="true">
 <LinearLayout
@@ -17,13 +18,15 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/index_rv_img"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="200dp"
+            fresco:scaleType="centerCrop"/>
 
         <TextView
+            android:id="@+id/index_rv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:lines="1"
+            android:lines="2"
             android:text="近日大量网友反映，iPhone6S和6s Plus电量还剩20%至一半时自动关机。此前有网友提过iPhone会在天冷时自动重启，但这次一些用户说在室内也这样，猜是新ios10系统和硬件不匹配所致。苹果客服称最近类似情况很多，与新系统无关。" />
 
     </LinearLayout>
@@ -34,13 +37,15 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/index_rv_photo"
             android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"
+            fresco:roundAsCircle="true"/>
         <LinearLayout
             android:layout_toRightOf="@+id/index_rv_photo"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/dynamic_name_tv"
             android:layout_width="wrap_content"
             android:lines="1"
             android:text="糖糖没有果"

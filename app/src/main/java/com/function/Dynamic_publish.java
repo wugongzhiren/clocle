@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.adapter.ChoosePhotoListAdapter;
 import com.adapter.Picked_photo_adapter;
 import com.bean.Dynamic;
+import com.clocle.huxiang.clocle.Bmob_UserBean;
 import com.clocle.huxiang.clocle.R;
 import com.common_tool.ImageFactory;
 
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -96,7 +98,7 @@ public class Dynamic_publish extends AppCompatActivity {
                             dynamic.setDynamicContent(dynamic_ed.getText().toString());
                             dynamic.setCommentCount(0);
                             dynamic.setViews(1);
-                            dynamic.setUser(null);
+                            dynamic.setUser(BmobUser.getCurrentUser(Bmob_UserBean.class));
                             dynamic.setImgs(list1);
                             dynamic.save(new SaveListener<String>() {
                                 @Override

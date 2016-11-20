@@ -49,7 +49,7 @@ String testtoken="0GxyEvHDQqKuu9T+21VAScouCHXzYZWucMXTL4Cxm0sdLCBYt4wPAcjEhK+6xf
         super.onCreate();
         Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
         RongIM.init(this);
-RongIM.connect(testtoken, new RongIMClient.ConnectCallback() {
+/*RongIM.connect(testtoken, new RongIMClient.ConnectCallback() {
     @Override
     public void onTokenIncorrect() {
 
@@ -64,7 +64,7 @@ RongIM.connect(testtoken, new RongIMClient.ConnectCallback() {
     public void onError(RongIMClient.ErrorCode errorCode) {
 
     }
-});
+});*/
         bean = new Bmob_UserBean();
         bean.setObjectId("fa02b47eb3");
         context = getApplicationContext();

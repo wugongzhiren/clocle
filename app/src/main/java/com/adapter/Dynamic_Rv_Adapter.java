@@ -37,8 +37,8 @@ public class Dynamic_Rv_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
        if(holder instanceof DynamicVH){
            ((DynamicVH) holder).nameTV.setText(list.get(position).getUser().getUsername());
-           ((DynamicVH) holder).indexImg.setImageURI(list.get(position).getUser().getphotoUrl());
-           ((DynamicVH) holder).indexPhoto.setImageURI(list.get(position).getImgs().get(0));
+           ((DynamicVH) holder).indexImg.setImageURI(list.get(position).getImgs().get(1));
+           ((DynamicVH) holder).indexPhoto.setImageURI(list.get(position).getUser().getphotoUrl());
            ((DynamicVH) holder).contentTv.setText(list.get(position).getDynamicContent());
        }
     }

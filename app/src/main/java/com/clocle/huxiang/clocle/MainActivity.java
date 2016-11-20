@@ -190,14 +190,6 @@ private ViewPager mainVp;
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 301 && resultCode == 301) {
-            fg1.messages.add(0, new Message("胡翔", "测试", R.mipmap.t8, "9:03"));
-            fg1.myadapter.notifyDataSetChanged();
-        }
 
-    }
 
 }

@@ -62,7 +62,7 @@ public class Clocle_help_activity extends AppCompatActivity {
 
         getDeviceWH();
         setContentView(R.layout.clocle_help_layout);
-        Bmob.initialize(Clocle_help_activity.this, "fbd7c66a38b160c5677a774971be3294");
+       // Bmob.initialize(Clocle_help_activity.this, "fbd7c66a38b160c5677a774971be3294");
         Toast.makeText(this, "测试4", Toast.LENGTH_SHORT).show();
         pageList = new ArrayList<>();
         initView();

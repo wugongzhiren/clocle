@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import cn.bmob.v3.BmobUser;
 
 /**
+ * 侧边栏
  * Created by Administrator on 2016/9/13.
  */
 public class Index_Left_Fg extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {

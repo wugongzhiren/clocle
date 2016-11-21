@@ -101,8 +101,9 @@ public class Index_fg extends android.support.v4.app.Fragment implements View.On
         switch (v.getId()){
             case R.id.dynamic_content:
                 //跳转到详情页面
-                Intent intent =new Intent(getActivity(),Dynamic_Detail.class);
-                startActivity(intent);
+               /* Intent intent =new Intent(getActivity(),Dynamic_Detail.class);
+                intent.
+                startActivity(intent);*/
         }
     }
 }

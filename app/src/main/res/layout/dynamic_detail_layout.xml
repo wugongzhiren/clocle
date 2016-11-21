@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp">
             <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/index_rv_photo"
+                android:id="@+id/index_rv_photo_detail"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 fresco:roundAsCircle="true"/>
@@ -26,34 +26,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:id="@+id/dynamic_name_tv"
+                    android:id="@+id/dynamic_name_tv_detail"
                     android:layout_width="wrap_content"
                     android:lines="1"
                     android:text="糖糖没有果"
                     android:layout_height="match_parent" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="5分钟前"/>
+
             </LinearLayout>
             <LinearLayout
                 android:layout_alignParentRight="true"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:lines="1"
-                    android:text="浏览400次"
-                    android:layout_height="match_parent" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="评论23"/>
+
+
             </LinearLayout>
 
         </RelativeLayout>
     </LinearLayout>
+    <TextView
+        android:id="@+id/detail_content_tv"
+        android:background="#eee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/detail_imgs_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
     <TextView
         android:background="#29e5fd"
         android:layout_width="match_parent"

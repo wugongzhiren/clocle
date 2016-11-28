@@ -18,7 +18,7 @@ public class Bg_blur {
     /**
      * 最大模糊度(在0.0到25.0之间)
      */
-    private static final float BLUR_RADIUS = 25f;
+    private static final float BLUR_RADIUS = 18f;
 
     /**
      * 模糊图片的具体方法

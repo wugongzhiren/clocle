@@ -65,8 +65,8 @@ String testtoken="0GxyEvHDQqKuu9T+21VAScouCHXzYZWucMXTL4Cxm0sdLCBYt4wPAcjEhK+6xf
 
     }
 });*/
-        bean = new Bmob_UserBean();
-        bean.setObjectId("fa02b47eb3");
+     /*   bean = new Bmob_UserBean();
+        bean.setObjectId("fa02b47eb3");*/
         context = getApplicationContext();
         //fresco初始化
         ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
@@ -76,8 +76,8 @@ String testtoken="0GxyEvHDQqKuu9T+21VAScouCHXzYZWucMXTL4Cxm0sdLCBYt4wPAcjEhK+6xf
 
 
         //ImageLoad配置
-        ImageLoaderConfiguration config1 = ImageLoaderConfiguration.createDefault(this);
-        ImageLoader.getInstance().init(config1);
+      /*  ImageLoaderConfiguration config1 = ImageLoaderConfiguration.createDefault(this);
+        ImageLoader.getInstance().init(config1);*/
         initGalleryFinal();
 /*//阿里云旺配置
         final String APP_KEY = "23441577";

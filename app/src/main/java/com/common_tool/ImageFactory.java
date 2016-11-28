@@ -65,11 +65,12 @@ public class ImageFactory {
         newOpts.inJustDecodeBounds = true;
         newOpts.inPreferredConfig = Config.RGB_565;
         // Get bitmap info, but notice that bitmap is null now
-        Bitmap bitmap = BitmapFactory.decodeFile(imgPath,newOpts);
+        //newOpts这时候已经获取到了图片的实际宽高
+        BitmapFactory.decodeFile(imgPath,newOpts);
         //Bitmap bitmap =BitmapFactory.decodeFile(imgPath,newOpts);
         newOpts.inJustDecodeBounds = false;
-        int w = newOpts.outWidth;
-        int h = newOpts.outHeight;
+        int w = newOpts.outWidth;//图片实际宽
+        int h = newOpts.outHeight;//图片实际高
         // 想要缩放的目标尺寸
         float hh = pixelH;// 设置高度为240f时，可以明显看到图片缩小了
         float ww = pixelW;// 设置宽度为120f，可以明显看到图片缩小了
@@ -83,7 +84,7 @@ public class ImageFactory {
         if (be <= 0) be = 1;
         newOpts.inSampleSize = be;//设置缩放比例
         // 开始压缩图片，注意此时已经把options.inJustDecodeBounds 设回false了
-        bitmap = BitmapFactory.decodeFile(imgPath, newOpts);
+        Bitmap bitmap = BitmapFactory.decodeFile(imgPath, newOpts);
         // 压缩好比例大小后再进行质量压缩
 //        return compress(bitmap, maxSize); // 这里再进行质量压缩的意义不大，反而耗资源，删除
         return bitmap;
@@ -218,6 +219,49 @@ public class ImageFactory {
                 file.delete();
             }
         }
+    }
+
+    public static String savePhoto(Bitmap photoBitmap, String path,
+                                   String photoName) {
+        String localPath = null;
+        if (android.os.Environment.getExternalStorageState().equals(
+                android.os.Environment.MEDIA_MOUNTED)) {
+            File dir = new File(path);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            File photoFile = new File(path, photoName + ".png");
+            FileOutputStream fileOutputStream = null;
+            try {
+                fileOutputStream = new FileOutputStream(photoFile);
+                if (photoBitmap != null) {
+                    if (photoBitmap.compress(Bitmap.CompressFormat.PNG, 100,
+                            fileOutputStream)) {
+                        localPath = photoFile.getPath();
+                        fileOutputStream.flush();
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                photoFile.delete();
+                localPath = null;
+                e.printStackTrace();
+            } catch (IOException e) {
+                photoFile.delete();
+                localPath = null;
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (fileOutputStream != null) {
+                        fileOutputStream.close();
+                        fileOutputStream = null;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return localPath;
     }
 
 }

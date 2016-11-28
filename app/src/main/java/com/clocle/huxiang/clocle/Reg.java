@@ -41,14 +41,14 @@ public class Reg extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Bmob.initialize(this, "fbd7c66a38b160c5677a774971be3294");
        /* Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.mipmap.login_bg);
         index_photo=BitmapFactory.decodeResource(getResources(),R.mipmap.reg);
         login_bg_bm=Bg_blur.blur(this,bitmap);*/
         setContentView(R.layout.reg_layout);
-        BmobUser bmobUser = BmobUser.getCurrentUser();
+       // BmobUser bmobUser = BmobUser.getCurrentUser();
         Bmob_UserBean bmob_userBean=  BmobUser.getCurrentUser(Bmob_UserBean.class);
-        if(bmobUser != null){
+        if(bmob_userBean != null){
             // 允许用户使用应用
             Intent intent=new Intent(Reg.this,MainActivity.class);
             startActivity(intent);

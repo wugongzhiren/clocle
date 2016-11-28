@@ -47,7 +47,7 @@ import java.util.List;
  * 首页
  * Created by Administrator on 2016/7/6.
  */
-public class Index_fg extends android.support.v4.app.Fragment implements View.OnClickListener {
+public class Index_fg extends android.support.v4.app.Fragment{
     public   List<Dynamic> messages= new ArrayList<Dynamic>();;//动态的数据
     public  Myadpter myadapter;
     private RecyclerView recyclerView;
@@ -66,8 +66,8 @@ public class Index_fg extends android.support.v4.app.Fragment implements View.On
                 startActivity(intent);
             }
         });
-        linearLayout= (LinearLayout) view.findViewById(R.id.dynamic_content);
-        linearLayout.setOnClickListener(this);
+        /*linearLayout= (LinearLayout) view.findViewById(R.id.dynamic_content);
+        linearLayout.setOnClickListener(this);*/
         recyclerView= (RecyclerView) view.findViewById(R.id.main_rv);
        // StaggeredGridLayoutManager mLayoutManager = new StaggeredGridLayoutManager( 2 , StaggeredGridLayoutManager. VERTICAL ); //两列，纵向排列
 
@@ -96,16 +96,7 @@ public class Index_fg extends android.support.v4.app.Fragment implements View.On
     }
 
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.dynamic_content:
-                //跳转到详情页面
-               /* Intent intent =new Intent(getActivity(),Dynamic_Detail.class);
-                intent.
-                startActivity(intent);*/
-        }
-    }
+
 }
 
 

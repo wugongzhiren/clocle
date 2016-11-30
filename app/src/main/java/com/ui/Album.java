@@ -18,8 +18,7 @@ import com.clocle.huxiang.clocle.R;
 
 import java.io.File;
 
-import cn.finalteam.galleryfinal.FunctionConfig;
-import cn.finalteam.galleryfinal.GalleryFinal;
+
 
 /**
  * 查看相册界面（包括个人和他人）

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bean.Dynamic_Comment;
@@ -21,6 +22,18 @@ public class Dynamic_Comment_Adapter extends RecyclerView.Adapter<RecyclerView.V
     private LayoutInflater inflater;
     private List<Dynamic_Comment> list;
 
+    public interface OnItemClickListener
+    {
+        void onItemClick(View view, int position);
+        void onItemLongClick(View itemview , int position);
+    }
+    public void setOnItemClickLitener(OnItemClickListener mOnItemClickLitener)
+    {
+        this.mOnItemClickLitener = mOnItemClickLitener;
+    }
+
+    private OnItemClickListener mOnItemClickLitener;
+
     public Dynamic_Comment_Adapter(Context context, List<Dynamic_Comment> listcomment) {
         this.list = listcomment;
         this.inflater = LayoutInflater.from(context);
@@ -33,7 +46,17 @@ public class Dynamic_Comment_Adapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        // 如果设置了回调，则设置点击事件
+        if (mOnItemClickLitener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = position;
+                    mOnItemClickLitener.onItemClick(holder.itemView, pos);
+                }
+            });
+        }
         if (holder instanceof Dynamic_Comment_VH) {
             ((Dynamic_Comment_VH) holder).dynamic_comment_nickname.setText(list.get(position).getCommentuser().getUsername());
             ((Dynamic_Comment_VH) holder).dynamic_comment_content.setText(list.get(position).getComment());
@@ -59,6 +82,13 @@ public class Dynamic_Comment_Adapter extends RecyclerView.Adapter<RecyclerView.V
             dynamic_comment_nickname = (TextView) itemView.findViewById(R.id.dynamic_comment_nickname);
             dynamic_comment_re = (TextView) itemView.findViewById(R.id.dynamic_comment_re);
             dynamic_comment_content = (TextView) itemView.findViewById(R.id.dynamic_comment_content);
+            dynamic_comment_content.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //添加回复
+
+                }
+            });
         }
     }
 }

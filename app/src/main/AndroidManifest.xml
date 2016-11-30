@@ -31,7 +31,14 @@
 
         </activity>
         <activity android:name=".Reg">
-
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+            <!--<data
+                android:host="com.clocle.huxiang.clocle"
+                android:pathPrefix="/conversationlist"
+                android:scheme="rong"/>-->
+        </intent-filter>
 
         </activity>
         <activity
@@ -128,14 +135,7 @@
 
         </activity>
         <activity android:name=".Other_Self_infos">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <!--<data
-                    android:host="com.clocle.huxiang.clocle"
-                    android:pathPrefix="/conversationlist"
-                    android:scheme="rong"/>-->
-            </intent-filter>
+
         </activity>
         <activity android:name="com.webapp.Present_center">
 

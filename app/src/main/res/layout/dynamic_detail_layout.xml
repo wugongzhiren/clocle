@@ -18,7 +18,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|enterAlways">
+                app:layout_scrollFlags="scroll">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -61,9 +61,11 @@
                 android:id="@+id/detail_content_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll"
                 android:background="#eee" />
 
             <android.support.v7.widget.RecyclerView
+                app:layout_scrollFlags="scroll"
                 android:id="@+id/detail_imgs_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -71,6 +73,7 @@
             </android.support.v7.widget.RecyclerView>
 
             <TextView
+                app:layout_scrollFlags="scroll"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#29e5fd"
@@ -81,17 +84,27 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/dynamic_detail_comment_rv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         </android.support.v7.widget.RecyclerView>
     </android.support.design.widget.CoordinatorLayout>
 
 <!--发表评论-->
-    <EditText
-        android:id="@+id/dynamic_comment_edit"
+    <RelativeLayout
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="50dp">
+    <EditText
+        android:id="@+id/dynamic_comment_edit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:hint="期待你的神评"/>
+        <Button
+            android:id="@+id/dynamic_comment_publish_bt"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发表"/>
+    </RelativeLayout>
 </FrameLayout>

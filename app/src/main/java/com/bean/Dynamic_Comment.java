@@ -11,6 +11,15 @@ import cn.bmob.v3.BmobObject;
 
 public class Dynamic_Comment extends BmobObject {
     private Bmob_UserBean commentuser;
+
+    public String getDynamicID() {
+        return dynamicID;
+    }
+
+    public void setDynamicID(String dynamicID) {
+        this.dynamicID = dynamicID;
+    }
+
     private String dynamicID;
     private String comment;
     private Integer likes;

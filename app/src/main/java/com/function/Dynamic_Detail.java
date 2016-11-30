@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.adapter.Dynamic_Comment_Adapter;
@@ -12,6 +15,7 @@ import com.adapter.Dynamic_Rv_Adapter;
 import com.adapter.Rv_single_imgs_adapter;
 import com.bean.Dynamic;
 import com.bean.Dynamic_Comment;
+import com.clocle.huxiang.clocle.Bmob_UserBean;
 import com.clocle.huxiang.clocle.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -19,8 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
+import tool.ShowToast;
 
 /**
  * 动态详情页面
@@ -28,18 +35,45 @@ import cn.bmob.v3.listener.FindListener;
  */
 
 public class Dynamic_Detail extends AppCompatActivity{
+    private Button button;
+    private EditText comment;
     private SimpleDraweeView photo;
     private TextView content;
     private TextView nickname;
     private RecyclerView detail_imgs_rv;
     private RecyclerView commentRv;//评论
+    private Dynamic_Comment_Adapter comment_adapter;
     private List<Dynamic_Comment> dynamic_commentList;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Intent intent=getIntent();
+        final Dynamic mdynamic=(Dynamic) intent.getSerializableExtra("dynamic");
         setContentView(R.layout.dynamic_detail_layout);
-
+        //用户评论
+        comment= (EditText) findViewById(R.id.dynamic_comment_edit);
+        //发表评论
+        button= (Button) findViewById(R.id.dynamic_comment_publish_bt);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String usercomment=comment.getText().toString();//获取评论内容
+                final Dynamic_Comment commentBean=new Dynamic_Comment();
+                commentBean.setComment(usercomment);
+                commentBean.setCommentuser(BmobUser.getCurrentUser(Bmob_UserBean.class));
+                commentBean.setDynamicID(mdynamic.getObjectId());
+                commentBean.save(new SaveListener<String>() {
+                    @Override
+                    public void done(String s, BmobException e) {
+                        if(e==null){
+                            ShowToast.showToast(Dynamic_Detail.this,"评论成功");
+                            dynamic_commentList.add(commentBean);
+                            comment_adapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+            }
+        });
         dynamic_commentList=new ArrayList<>();
         //头像
         photo= (SimpleDraweeView) findViewById(R.id.index_rv_photo_detail);
@@ -56,8 +90,7 @@ public class Dynamic_Detail extends AppCompatActivity{
         commentRv.setLayoutManager(new LinearLayoutManager(this));
 
 
-        Intent intent=getIntent();
-        Dynamic mdynamic=(Dynamic) intent.getSerializableExtra("dynamic");
+
 
         //加载评论列表
         BmobQuery<Dynamic_Comment> query=new BmobQuery<>();
@@ -68,8 +101,22 @@ public class Dynamic_Detail extends AppCompatActivity{
             @Override
             public void done(List<Dynamic_Comment> list, BmobException e) {
                 if(e==null){
+                    dynamic_commentList.clear();
                     dynamic_commentList.addAll(list);
-                    commentRv.setAdapter(new Dynamic_Comment_Adapter(Dynamic_Detail.this,dynamic_commentList));
+                    comment_adapter=new Dynamic_Comment_Adapter(Dynamic_Detail.this,dynamic_commentList);
+                    comment_adapter.setOnItemClickLitener(new Dynamic_Comment_Adapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View itemview, int position) {
+                            comment.requestFocus();
+                            comment.setHint("回复"+dynamic_commentList.get(position).getCommentuser().getUsername());
+                        }
+
+                        @Override
+                        public void onItemLongClick(View view, int position) {
+
+                        }
+                    });
+                    commentRv.setAdapter(comment_adapter);
                 }
             }
         });

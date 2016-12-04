@@ -9,7 +9,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.clocle.huxiang.clocle.R;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -22,28 +22,44 @@ import java.util.ArrayList;
 import me.relex.photodraweeview.PhotoDraweeView;
 
 /**
+ * 图片预览界面
  * Created by Administrator on 2016/9/11.
  */
 public class Preview_photo extends Activity {
     private ViewPager viewPager;
+    private TextView index_tv;
     private ArrayList<String> urlList;
     private PhotoDraweeView photoDraweeView;
     private PhotoDraweeView[] photoDraweeViews;
-
+public int imgPosition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.preview_photo_layout);
+        index_tv= (TextView) findViewById(R.id.preview_index);
         Intent intent=getIntent();
        urlList= intent.getStringArrayListExtra("urlList");
-Toast.makeText(this,"开shi1",Toast.LENGTH_SHORT).show();
-       /* urlList = new ArrayList<>();
-        //在这里添加list数据
-        urlList.add("http://192.168.1.110:8080/clocle/help_img/1472351623618.png");
-        urlList.add("http://192.168.1.110:8080/clocle/help_img/1472351624069.png");*/
-        //
+        imgPosition=intent.getIntExtra("position",0);
+        index_tv.setText(imgPosition+1+"/"+urlList.size());
         photoDraweeViews = new PhotoDraweeView[urlList.size()];
         viewPager = (ViewPager) findViewById(R.id.preview_photo);
+        //viewpager滑动监听
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                index_tv.setText(position+1+"/"+urlList.size());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         viewPager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {
@@ -84,7 +100,7 @@ Toast.makeText(this,"开shi1",Toast.LENGTH_SHORT).show();
                 return view == object;
             }
         });
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(imgPosition);
     }
 
 }

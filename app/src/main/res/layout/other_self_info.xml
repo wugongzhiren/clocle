@@ -34,13 +34,13 @@
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.5">
 
-                <ImageView
+                <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/photo"
                     android:layout_marginTop="70dp"
                     android:layout_centerHorizontal="true"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@mipmap/t8"/>
+                    />
                 <TextView
                     android:id="@+id/nickname"
                     android:layout_below="@+id/photo"

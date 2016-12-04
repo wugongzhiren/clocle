@@ -3,64 +3,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content">
+
+
+<LinearLayout
+    android:id="@+id/l1"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+    <Button
+        android:text="圈圈帮"
         android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="快递服务" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:height="30dp"
-            android:text="零食服务" />
-    </LinearLayout>
-
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+    <Button
+        android:text="学生价"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+    <Button
+        android:text="圈圈二手"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+    <Button
+        android:text="一见钟情"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" />
+</LinearLayout>
     <LinearLayout
+
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
+        android:layout_height="wrap_content">
         <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:text="表白墙"
             android:layout_weight="1"
-            android:text="漂流瓶" />
-
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
         <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:text="漂流瓶"
             android:layout_weight="1"
-            android:height="30dp"
-            android:text="校园达人" />
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:text="社团"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <Button
+            android:text="快递零食"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
     </LinearLayout>
-
-    <LinearLayout
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="一见钟情" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:height="30dp"
-            android:text="这里有学霸" />
-    </LinearLayout>
+    </android.support.v7.widget.RecyclerView>
+
 </LinearLayout>

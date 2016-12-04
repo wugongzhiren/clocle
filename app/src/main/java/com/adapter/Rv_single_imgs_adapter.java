@@ -20,6 +20,14 @@ import java.util.List;
 public class Rv_single_imgs_adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public List<String> imgs;
     public Context mcontext;
+    public interface OnItemOnclickListener{
+        void onItemClick(View view ,int pos);
+    }
+    private OnItemOnclickListener onItemOnclickListener;
+
+    public void setOnItemOnclickListener(OnItemOnclickListener onItemOnclickListener) {
+        this.onItemOnclickListener = onItemOnclickListener;
+    }
 
     public Rv_single_imgs_adapter(List<String> imgs, Context mcontext) {
         this.imgs = imgs;
@@ -35,7 +43,15 @@ public class Rv_single_imgs_adapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        if(onItemOnclickListener!=null){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemOnclickListener.onItemClick(holder.itemView,position);
+                }
+            });
+        }
         Log.i("tag", "singonBindViewHolder在这显示");
         if (holder instanceof Rv_single_imgs_holder) {
             ((Rv_single_imgs_holder) holder).img.setImageURI(Uri.parse(imgs.get(position)));

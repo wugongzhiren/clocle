@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bean.Dynamic;
+import com.clocle.huxiang.clocle.Other_Self_infos;
 import com.clocle.huxiang.clocle.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.function.Dynamic_Detail;
@@ -25,6 +26,8 @@ public class Dynamic_Rv_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private LayoutInflater inflater;
     private Context mcontext;
 
+
+
     public Dynamic_Rv_Adapter(Context context, List<Dynamic> dynamicList) {
         this.list = dynamicList;
         inflater = LayoutInflater.from(context);
@@ -38,12 +41,21 @@ public class Dynamic_Rv_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         holder.itemView.setTag(list.get(position));
        if(holder instanceof DynamicVH){
            ((DynamicVH) holder).nameTV.setText(list.get(position).getUser().getUsername());
            ((DynamicVH) holder).indexImg.setImageURI(list.get(position).getImgs().get(0));
            ((DynamicVH) holder).indexPhoto.setImageURI(list.get(position).getUser().getphotoUrl());
+           ((DynamicVH) holder).indexPhoto.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   //跳转到查看他人资料页
+                   Intent intent=new Intent(mcontext, Other_Self_infos.class);
+                   intent.putExtra("userbean",list.get(position).getUser());
+                   mcontext.startActivity(intent);
+               }
+           });
            ((DynamicVH) holder).contentTv.setText(list.get(position).getDynamicContent());
        }
     }

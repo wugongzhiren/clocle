@@ -18,6 +18,7 @@ import com.bean.Dynamic_Comment;
 import com.clocle.huxiang.clocle.Bmob_UserBean;
 import com.clocle.huxiang.clocle.R;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.view.Preview_photo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,8 @@ public class Dynamic_Detail extends AppCompatActivity{
     private RecyclerView commentRv;//评论
     private Dynamic_Comment_Adapter comment_adapter;
     private List<Dynamic_Comment> dynamic_commentList;
+    private Boolean isResponse=false;//是否发表回复
+    private Rv_single_imgs_adapter single_imgs_adapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +60,14 @@ public class Dynamic_Detail extends AppCompatActivity{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String usercomment=comment.getText().toString();//获取评论内容
+                String usercomment ="";
+                if(!isResponse) {
+                    usercomment = comment.getText().toString();//获取评论内容
+                }
+                else {
+                    usercomment=comment.getHint().toString()+comment.getText().toString();
+                }
+
                 final Dynamic_Comment commentBean=new Dynamic_Comment();
                 commentBean.setComment(usercomment);
                 commentBean.setCommentuser(BmobUser.getCurrentUser(Bmob_UserBean.class));
@@ -104,9 +114,16 @@ public class Dynamic_Detail extends AppCompatActivity{
                     dynamic_commentList.clear();
                     dynamic_commentList.addAll(list);
                     comment_adapter=new Dynamic_Comment_Adapter(Dynamic_Detail.this,dynamic_commentList);
+                    //回复评论
                     comment_adapter.setOnItemClickLitener(new Dynamic_Comment_Adapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(View itemview, int position) {
+                            //判断是否回复自己
+                            if(BmobUser.getCurrentUser(Bmob_UserBean.class).getObjectId()==dynamic_commentList.get(position).getCommentuser().getObjectId()){
+                                ShowToast.showToast(Dynamic_Detail.this,"不能回复自己的评论");
+                                return;
+                            }
+                            isResponse=true;
                             comment.requestFocus();
                             comment.setHint("回复"+dynamic_commentList.get(position).getCommentuser().getUsername());
                         }
@@ -124,7 +141,17 @@ public class Dynamic_Detail extends AppCompatActivity{
         photo.setImageURI(mdynamic.getUser().getphotoUrl());
         content.setText(mdynamic.getDynamicContent());
         nickname.setText(mdynamic.getUser().getUsername());
-        detail_imgs_rv.setAdapter(new Rv_single_imgs_adapter(mdynamic.getImgs(),this));
+        single_imgs_adapter=new Rv_single_imgs_adapter(mdynamic.getImgs(),this);
+        single_imgs_adapter.setOnItemOnclickListener(new Rv_single_imgs_adapter.OnItemOnclickListener() {
+            @Override
+            public void onItemClick(View view, int pos) {
+                Intent intent =new Intent(Dynamic_Detail.this, Preview_photo.class);
+                intent.putStringArrayListExtra("urlList",((ArrayList)mdynamic.getImgs()));
+                intent.putExtra("position",pos);
+                startActivity(intent);
+            }
+        });
+        detail_imgs_rv.setAdapter(single_imgs_adapter);
 
     }
 }

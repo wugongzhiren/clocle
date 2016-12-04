@@ -3,8 +3,12 @@ package com.clocle.huxiang.clocle;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -20,55 +24,55 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.Base_activity;
+import com.common_tool.ImageFactory;
 import com.constant.Constant;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 import tool.Bg_blur;
+import tool.ImageLoadFresco;
 import tool.Viewpager_adapter;
 
 /**
  * Created by Administrator on 2016/8/21.
  */
 public class Other_Self_infos extends Base_activity {
-    private ViewPager mviewpager;
-    private List<View> views;
-    private List<String> tabnameList;
-    private View tabview1;
-    private View tabview2;
-    private View tabview3;
-    private LayoutInflater inflater;
-private TabLayout mtablayout;
-    private RecyclerView recycleview1;
+private SimpleDraweeView userphoto;
+private Bmob_UserBean bean;
+    private RecyclerView recycleview;
     private ImageView other_self_bg;
+    private Handler handle=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bitmap bitmap = (Bitmap)msg.obj;
+            if(bitmap!=null){
+                String filepath=ImageFactory.savePhoto(bitmap, Environment
+                        .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/temp_img/","userphoto");
+                Bitmap userphotoBm=BitmapFactory.decodeFile(filepath);
+                //Bg_blur.blur(Other_Self_infos.this,bitmap)
+                //Bg_blur.blur(Other_Self_infos.this,bitmap);
+                other_self_bg.setImageBitmap(Bg_blur.blur(Other_Self_infos.this,userphotoBm));
+                //other_self_bg.setImageBitmap(userphotoBm);
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hideStatus();
-         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.mipmap.t6);
+        //得到用户信息
+        bean=(Bmob_UserBean) getIntent().getSerializableExtra("userbean");
+         //Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.mipmap.t6);
         //index_photo=BitmapFactory.decodeResource(getResources(),R.mipmap.reg);
-        Bitmap bm=Bg_blur.blur(this,bitmap);
-      /*  getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            window.setNavigationBarColor(Color.TRANSPARENT);
-        }*/
-
+       // Bitmap bm=Bg_blur.blur(this,bitmap);
         setContentView(R.layout.other_self_info);
+        initView();
         other_self_bg= (ImageView) findViewById(R.id.other_self_bg);
-        other_self_bg.setImageBitmap(bm);
-        inflater = getLayoutInflater();
-        views = new ArrayList<>();
-        tabnameList = new ArrayList<>();
+        //other_self_bg.setImageBitmap(bm);
        // initviews();
 
 
@@ -82,6 +86,17 @@ private TabLayout mtablayout;
         // mCollapsingToolbarLayout.s
         //mCollapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);//设置还没收缩时状态下字体颜色
         // mCollapsingToolbarLayout.setCollapsedTitleTextColor(Color.GREEN);//设置收缩后Toolbar上字体的颜色
+    }
+
+    private void initView() {
+        //用户头像
+        userphoto= (SimpleDraweeView) findViewById(R.id.photo);
+        userphoto.setImageURI(bean.getphotoUrl());
+        ImageLoadFresco.getFrescoCacheBitmap(handle, Uri.parse(bean.getphotoUrl()),this);
+    }
+
+    private void getUserDataFromServer(){
+        //从服务器加载数据
     }
 
 

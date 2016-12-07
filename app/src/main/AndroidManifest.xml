@@ -60,10 +60,6 @@
             >
 
         </activity>
-        <activity android:name="test.Test_imageloader">
-
-
-        </activity>
         <!--<activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -202,11 +198,14 @@
         <activity android:name="com.ui.Album">
 
         </activity>
+<activity android:name="com.ui.UpdateSelfInfo">
 
+</activity>
     </application>
 
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

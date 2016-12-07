@@ -2,39 +2,31 @@ package com.clocle.huxiang.clocle;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.Base_activity;
+import com.adapter.Dynamic_Rv_Adapter;
+import com.bean.Dynamic;
 import com.common_tool.ImageFactory;
-import com.constant.Constant;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import tool.Bg_blur;
 import tool.ImageLoadFresco;
-import tool.Viewpager_adapter;
 
 /**
  * Created by Administrator on 2016/8/21.
@@ -42,8 +34,13 @@ import tool.Viewpager_adapter;
 public class Other_Self_infos extends Base_activity {
 private SimpleDraweeView userphoto;
 private Bmob_UserBean bean;
+    private TextView nicknameTv;
     private RecyclerView recycleview;
     private ImageView other_self_bg;
+    private SimpleDraweeView view1;
+    private SimpleDraweeView view2;
+    private SimpleDraweeView view3;
+    private SimpleDraweeView view4;
     private Handler handle=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -91,12 +88,32 @@ private Bmob_UserBean bean;
     private void initView() {
         //用户头像
         userphoto= (SimpleDraweeView) findViewById(R.id.photo);
+        nicknameTv= (TextView) findViewById(R.id.nickname);
+        view1=(SimpleDraweeView)findViewById(R.id.other_info_img1);
+        view2=(SimpleDraweeView)findViewById(R.id.other_info_img2);
+        view3=(SimpleDraweeView)findViewById(R.id.other_info_img3);
+        view4=(SimpleDraweeView)findViewById(R.id.other_info_img4);
         userphoto.setImageURI(bean.getphotoUrl());
         ImageLoadFresco.getFrescoCacheBitmap(handle, Uri.parse(bean.getphotoUrl()),this);
+        //昵称
+        nicknameTv.setText(bean.getUsername());
+
     }
 
     private void getUserDataFromServer(){
         //从服务器加载数据
+        recycleview= (RecyclerView) findViewById(R.id.other_info_rv);
+        BmobQuery<Dynamic> query=new BmobQuery<>();
+        query.include("user");
+
+        query.order("-createdAt").findObjects(new FindListener<Dynamic>() {
+            @Override
+            public void done(List<Dynamic> list, BmobException e) {
+                if(e==null){
+                    recycleview.setAdapter(new Dynamic_Rv_Adapter(Other_Self_infos.this,list));
+                }
+            }
+        });
     }
 
 

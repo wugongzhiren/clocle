@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.Base_activity;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.ui.UpdateSelfInfo;
 
 import java.io.File;
 
@@ -47,11 +48,19 @@ public class Self_manager extends Base_activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        hideStatus();
+        //hideStatus();
         setContentView(R.layout.self_manager);
         initViews();
-        photo.setImageURI("http://ww2.sinaimg.cn/large/c85e4a5cgw1f62hzfvzwwj20hs0qogpo.jpg");
+        photo.setImageURI(Bmob_UserBean.getCurrentUser(Bmob_UserBean.class).getphotoUrl());
+        photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+Intent intent =new Intent(Self_manager.this, UpdateSelfInfo.class);
+                intent.putExtra("user",BmobUser.getCurrentUser(Bmob_UserBean.class));
+                startActivity(intent);
+            }
+        });
     }
 
     private void initViews() {

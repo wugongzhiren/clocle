@@ -1,5 +1,7 @@
 package com.clocle.huxiang.clocle;
 
+import java.util.ArrayList;
+
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 
@@ -12,6 +14,15 @@ public class Bmob_UserBean extends BmobUser {
     private String birthdate;
     private String signature;
     private Integer score;
+    private ArrayList<String> albumUrl;//相册图片路径
+
+    public ArrayList<String> getAlbumUrl() {
+        return albumUrl;
+    }
+
+    public void setAlbumUrl(ArrayList<String> albumUrl) {
+        this.albumUrl = albumUrl;
+    }
 
     public String getSex() {
         return sex;

@@ -1,3 +1,4 @@
+/*
 package test;
 
 import android.app.Activity;
@@ -50,9 +51,11 @@ import tool.SerializableMap;
 import tool.ViewHolder;
 
 
+*/
 /**
  * Created by Administrator on 2016/8/8.
- */
+ *//*
+
 public class Test_imageloader extends Activity implements View.OnClickListener {
     private GridView mGridView;
     private List<String> mImgs;
@@ -94,10 +97,12 @@ intent=getIntent();
         initEvents();
     }
 
-    /**
+    */
+/**
      * 将选择的图片放入intent中
      * @param v
-     */
+     *//*
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -112,6 +117,7 @@ intent=getIntent();
                 intent.putStringArrayListExtra("url",imgsurl);
                 setResult(401,intent);
                 this.finish();
+*/
 /*switch (imgsurl.size()){
     case 1:
         intent.putExtra("img1",imgsurl.get(0));
@@ -133,13 +139,16 @@ intent=getIntent();
         break;
     defaultphoto:
         Toast.makeText(this,"只能选择3张图片哦！！",Toast.LENGTH_SHORT).show();
-        break;*/
+        break;*//*
+
 }
-                    /*myMap.setMap(map);
+                    */
+/*myMap.setMap(map);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("imgmap", myMap);
                     intent.putExtras(bundle);
-                startActivity(intent);*/
+                startActivity(intent);*//*
+
                     //setResult(401, intent);
                     //Test_imageloader.this.finish();
 
@@ -178,9 +187,11 @@ intent=getIntent();
         });
     }
 
-    /**
+    */
+/**
      * 内容区域变亮
-     */
+     *//*
+
     private void lightOn() {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = 1.0f;
@@ -222,9 +233,11 @@ intent=getIntent();
 
     }
 
-    /**
+    */
+/**
      * 利用contentProvider扫描手机中的所有图片
-     */
+     *//*
+
     private void initData() {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             Toast.makeText(this, "当前存储卡不可用", Toast.LENGTH_SHORT).show();
@@ -297,3 +310,4 @@ intent=getIntent();
 
 
 }
+*/

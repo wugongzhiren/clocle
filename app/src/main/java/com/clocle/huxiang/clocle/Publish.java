@@ -36,7 +36,6 @@ import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadBatchListener;
-import test.Test_imageloader;
 import tool.Progress_dialog;
 import tool.Utils;
 
@@ -551,8 +550,7 @@ if(list1.size()==urlArr.length){
             mimageview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Publish.this, Test_imageloader.class);
-                    startActivityForResult(intent, 401);
+
                 }
             });
 

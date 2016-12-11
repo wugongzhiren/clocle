@@ -37,12 +37,13 @@ public class Popwindow extends PopupWindow {
     private Button confirm;
     private Button cancel;
     private EditText text;
- private Context mcontext;
+    private Context mcontext;
+private int flag;
 
-
-
-    public Popwindow(Context context) {
-        this.mcontext=context;
+    public Popwindow(Context context,int flag) {
+        super(context);
+        this.flag=flag;
+        this.mcontext = context;
         calWidthAndHeight(context);
         mConvertView = LayoutInflater.from(context).inflate(R.layout.pop_layout1, null);
         setContentView(mConvertView);
@@ -77,15 +78,15 @@ public class Popwindow extends PopupWindow {
             @Override
             public void onClick(View v) {
                 //更新用户昵称
-                Bmob_UserBean newUser=new Bmob_UserBean();
+                Bmob_UserBean newUser = new Bmob_UserBean();
                 Bmob_UserBean userBean = BmobUser.getCurrentUser(Bmob_UserBean.class);
                 newUser.setUsername(text.getText().toString());
                 newUser.update(userBean.getObjectId(), new UpdateListener() {
                     @Override
                     public void done(BmobException e) {
-                        if(e==null)
-                        {
-                            ShowToast.showToast(mcontext,"昵称更换成功");
+                        if (e == null) {
+                            ShowToast.showToast(mcontext, "昵称更换成功");
+                            dismiss();
                         }
 
                     }
@@ -95,9 +96,15 @@ public class Popwindow extends PopupWindow {
     }
 
     private void initViews() {
-        confirm= (Button) mConvertView.findViewById(R.id.confirm);
-        cancel= (Button) mConvertView.findViewById(R.id.cancel);
-        text= (EditText) mConvertView.findViewById(R.id.text);
+        confirm = (Button) mConvertView.findViewById(R.id.confirm);
+        cancel = (Button) mConvertView.findViewById(R.id.cancel);
+        text = (EditText) mConvertView.findViewById(R.id.text);
+        if(flag==1){
+            text.setHint("美美的人都有签名");
+        }
+        if(flag==0){
+            text.setHint("玩转圈圈从好昵称开始");
+        }
     }
 
     /**

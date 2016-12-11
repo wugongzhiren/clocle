@@ -57,7 +57,7 @@ public class Self_manager extends Base_activity {
             public void onClick(View v) {
 
 Intent intent =new Intent(Self_manager.this, UpdateSelfInfo.class);
-                intent.putExtra("user",BmobUser.getCurrentUser(Bmob_UserBean.class));
+                //intent.putExtra("user",BmobUser.getCurrentUser(Bmob_UserBean.class));
                 startActivity(intent);
             }
         });

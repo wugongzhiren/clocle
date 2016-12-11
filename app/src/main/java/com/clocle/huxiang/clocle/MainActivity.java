@@ -3,32 +3,18 @@ package com.clocle.huxiang.clocle;
 
 import android.app.FragmentManager;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SlidingPaneLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TabHost;
-import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.Base_activity;
 import com.adapter.MyfragmentPagerAdapter;
-import com.bean.Message;
 import com.gesture.MygestureListener;
 
 import java.util.ArrayList;
@@ -45,7 +31,7 @@ public class MainActivity extends Base_activity {
     public Index_fg fg1;
     private Faxian_fg fg2;
     private Friend_fg fg3;
-    private fankui_fg fg4;
+    private My_fg fg4;
     private SlidingPaneLayout paneLayout;
     private MygestureListener gesture;
     private GestureDetector detector;
@@ -69,14 +55,14 @@ private ViewPager mainVp;
         inflater = getLayoutInflater();
         titles=new ArrayList<>();
         fragments=new ArrayList<>();
-        titles.add("动态");
+        titles.add("分享");
         titles.add("消息");
         titles.add("发现");
-        titles.add("反馈");
+        titles.add("我的");
         fragments.add(new Index_fg());
         fragments.add(new Friend_fg());
         fragments.add(new Faxian_fg());
-        fragments.add(new fankui_fg());
+        fragments.add(new My_fg());
         MyfragmentPagerAdapter adapter=new MyfragmentPagerAdapter(getSupportFragmentManager(),titles,fragments);
         mainVp.setAdapter(adapter);
         mainTab.setupWithViewPager(mainVp);
@@ -134,7 +120,7 @@ private ViewPager mainVp;
 
         // 3. 添加TabSpec
 
-        tabHost.addTab(spec4, fankui_fg.class, null);*/
+        tabHost.addTab(spec4, My_fg.class, null);*/
 
        /* // 2. 新建TabSpec
         spec = tabhost.newTabSpec(TAB_CONTACT);

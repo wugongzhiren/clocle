@@ -1,12 +1,17 @@
 package com.ui;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,11 +22,18 @@ import android.widget.PopupWindow;
 import com.clocle.huxiang.clocle.Bmob_UserBean;
 import com.clocle.huxiang.clocle.R;
 import com.common_tool.ImageFactory;
+import com.common_tool.PermissionManage;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.File;
 
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
 import tool.Popwindow;
+import tool.ShowToast;
 
 
 /**
@@ -38,35 +50,55 @@ public class UpdateSelfInfo extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bmob_UserBean bean= (Bmob_UserBean) getIntent().getSerializableExtra("user");
+       // Bmob_UserBean bean= (Bmob_UserBean) getIntent().getSerializableExtra("user");
 setContentView(R.layout.updateselfinfo);
+        LinearLayout linearLayout= (LinearLayout) findViewById(R.id.update_self_line);
         photo= (SimpleDraweeView) findViewById(R.id.updateselfinfo_photo);
         nickname= (LinearLayout) findViewById(R.id.nicknameLine);
-        nickname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+        signature= (LinearLayout) findViewById(R.id.signatureLine);
+        photo.setImageURI(Bmob_UserBean.getCurrentUser(Bmob_UserBean.class).getphotoUrl());
+        photo.setOnClickListener(this);
+        nickname.setOnClickListener(this);
+        signature.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.nicknameLine:
                 //打开修改昵称的popwindow
-                mpopwindow = new Popwindow(UpdateSelfInfo.this);
+                mpopwindow = new Popwindow(UpdateSelfInfo.this,0);
+                mpopwindow.setAnimationStyle(R.style.mypopwindow_anim);
+                mpopwindow.showAsDropDown(nickname,0,0);
+                //mpopwindow.showAtLocation(linearLayout,0,0);
+                lightOff();
                 mpopwindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
                     public void onDismiss() {
                         lightOn();
                     }
                 });
-            }
-        });
-        signature= (LinearLayout) findViewById(R.id.signatureLine);
-        photo.setImageURI(bean.getphotoUrl());
-        photo.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
+                // mpopwindow.update();
+        break;
+            case R.id.signatureLine:
+                //打开修改昵称的popwindow
+                mpopwindow = new Popwindow(UpdateSelfInfo.this,1);
+                mpopwindow.setAnimationStyle(R.style.mypopwindow_anim);
+                mpopwindow.showAsDropDown(signature,0,0);
+                //mpopwindow.showAtLocation(linearLayout,0,0);
+                lightOff();
+                mpopwindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        lightOn();
+                    }
+                });
+                break;
             case R.id.updateselfinfo_photo:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("设置头像");
-                String[] items = {"选择本地照片", "拍照"};
+                builder.setTitle("更新头像");
+                String[] items = {"选择照片", "拍照"};
                 builder.setNegativeButton("取消", null);
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
@@ -79,18 +111,31 @@ setContentView(R.layout.updateselfinfo);
                                   startActivityForResult(openAlbumIntent, 0);
                                 break;
                             case 1: // 拍照
-                                Intent openCameraIntent = new Intent(
-                                        MediaStore.ACTION_IMAGE_CAPTURE);
-                                tempUri = Uri.fromFile(new File(Environment
-                                        .getExternalStorageDirectory(), "myphoto.jpg"));
-                                // 指定照片保存路径（SD卡），myphoto.jpg为一个临时文件，每次拍照后这个图片都会被替换
-                                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
-                                startActivityForResult(openCameraIntent, 1);
-                                break;
+                                //判断是否授权
+                                if(PermissionManage.checkPermisson(UpdateSelfInfo.this,Manifest.permission.CAMERA)){
+                                    Intent openCameraIntent = new Intent(
+                                            MediaStore.ACTION_IMAGE_CAPTURE);
+                                    tempUri = Uri.fromFile(new File(Environment
+                                            .getExternalStorageDirectory(), "myphoto.jpg"));
+                                    // 指定照片保存路径（SD卡），myphoto.jpg为一个临时文件，每次拍照后这个图片都会被替换
+                                    openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
+                                    startActivityForResult(openCameraIntent, 1);
+                                    break;
+                                }
+                                else {
+                                    //去请求权限
+                                    PermissionManage.requestPermission(UpdateSelfInfo.this,Manifest.permission.CAMERA);
+                                    break;
+                                    //Toast.makeText(PermissionActivity.this, "no this permission", Toast.LENGTH_SHORT).show();
+                                }
+
                         }
                     }
                 });
                 builder.create().show();
+                break;
+            default:
+                break;
         }
     }
 
@@ -149,7 +194,7 @@ setContentView(R.layout.updateselfinfo);
                     .getExternalStorageDirectory().getAbsolutePath().toString() + "/clocle/myphoto/", "myphoto");
             photo.setImageURI("file://"+Uri.parse(imagePath));
             //头像上传更新
- /*           File file = new File(imagePath);
+            File file = new File(imagePath);
 
             final BmobFile bmobFile = new BmobFile(file);
             bmobFile.uploadblock(new UploadFileListener() {
@@ -181,7 +226,7 @@ setContentView(R.layout.updateselfinfo);
                 public void onProgress(Integer value) {
                     // 返回的上传进度（百分比）
                 }
-            });*/
+            });
 
 
 
@@ -230,5 +275,29 @@ setContentView(R.layout.updateselfinfo);
         lp.alpha = .3f;
         getWindow().setAttributes(lp);
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 100: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Intent openCameraIntent = new Intent(
+                            MediaStore.ACTION_IMAGE_CAPTURE);
+                    tempUri = Uri.fromFile(new File(Environment
+                            .getExternalStorageDirectory(), "myphoto.jpg"));
+                    // 指定照片保存路径（SD卡），myphoto.jpg为一个临时文件，每次拍照后这个图片都会被替换
+                    openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
+                    startActivityForResult(openCameraIntent, 1);
+                } else {
+                    PermissionManage.requestPermission(UpdateSelfInfo.this,Manifest.permission.CAMERA);
+                }
+
+            }
+        }
     }
 }

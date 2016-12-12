@@ -201,6 +201,9 @@
 <activity android:name="com.ui.UpdateSelfInfo">
 
 </activity>
+        <activity android:name="com.ui.AddPhoto">
+
+        </activity>
     </application>
 
 

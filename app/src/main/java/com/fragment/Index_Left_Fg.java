@@ -24,6 +24,7 @@ import com.clocle.huxiang.clocle.Self_manager;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.function.Clocle_help_activity;
 import com.function.FleaMarket;
+import com.ui.Album;
 
 import java.util.ArrayList;
 
@@ -51,7 +52,7 @@ public class Index_Left_Fg extends Fragment implements AdapterView.OnItemClickLi
         list.add(new Index_list_bean(R.mipmap.t6, "圈圈新鲜事"));
         list.add(new Index_list_bean(R.mipmap.t6, "圈圈帮"));
         list.add(new Index_list_bean(R.mipmap.t6, "圈圈跳蚤市场"));
-        list.add(new Index_list_bean(R.mipmap.t6, "圈圈交友"));
+        list.add(new Index_list_bean(R.mipmap.t6, "我的相册"));
         list.add(new Index_list_bean(R.mipmap.t6, "圈圈校园直播"));
         list.add(new Index_list_bean(R.mipmap.t6, "圈圈校园期刊"));
         list.add(new Index_list_bean(R.mipmap.t6, "礼品兑换中心"));
@@ -154,23 +155,27 @@ Bmob_UserBean currentuser = BmobUser.getCurrentUser(Bmob_UserBean.class);
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent;
         switch (position) {
+
             case 0:
                 break;
             case 1:
                 break;
 
             case 2:
-                Intent intent = new Intent(getActivity(), Clocle_help_activity.class);
+                intent = new Intent(getActivity(), Clocle_help_activity.class);
                 startActivity(intent);
                 break;
 
             case 3:
-                Intent intent3 = new Intent(getActivity(), FleaMarket.class);
-                startActivity(intent3);
+                intent = new Intent(getActivity(), FleaMarket.class);
+                startActivity(intent);
                 break;
 
             case 4:
+                intent=new Intent(getActivity(),Album.class);
+                startActivity(intent);
                 break;
 
 

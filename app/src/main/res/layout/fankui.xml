@@ -32,21 +32,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </RelativeLayout>
-    <ScrollView
+   <!-- <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true"
-        android:scrollbars="none" >
+        android:scrollbars="none" >-->
 
-        <com.view.MyGridView
+        <GridView
             android:id="@+id/gridview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:horizontalSpacing="0dp"
-            android:listSelector="@null"
+
             android:numColumns="3"
             android:scrollbars="none"
             android:stretchMode="columnWidth"
             android:verticalSpacing="0dp" />
-    </ScrollView>
+
 </LinearLayout>

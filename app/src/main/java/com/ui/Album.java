@@ -17,7 +17,12 @@ import com.adapter.Album_Rv_ItemAdapter;
 import com.clocle.huxiang.clocle.R;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
+import cn.finalteam.galleryfinal.FunctionConfig;
+import cn.finalteam.galleryfinal.GalleryFinal;
+import cn.finalteam.galleryfinal.model.PhotoInfo;
 
 
 /**
@@ -29,6 +34,22 @@ public class Album extends Base_activity {
     private RecyclerView albumRv;
     private Button button;
     protected static Uri tempUri;
+    private ArrayList<PhotoInfo> selectedImgs;
+    private GalleryFinal.OnHanlderResultCallback mOnHanlderResultCallback=new GalleryFinal.OnHanlderResultCallback() {
+        @Override
+        public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
+            selectedImgs=new ArrayList<>();
+            Intent intent=new Intent(Album.this,AddPhoto.class);
+            selectedImgs.addAll(resultList);
+            intent.putExtra("selectImgs",selectedImgs);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onHanlderFailure(int requestCode, String errorMsg) {
+
+        }
+    };
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +59,21 @@ public class Album extends Base_activity {
 
         albumRv= (RecyclerView) findViewById(R.id.album_rv);
         albumRv.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-        albumRv.setAdapter(new Album_Rv_ItemAdapter(null ,this));
+       // albumRv.setAdapter(new Album_Rv_ItemAdapter(null ,this));
+        albumRv.setAdapter(null);
+        //打开图片选择器
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FunctionConfig config = new FunctionConfig.Builder()
+                        .setMutiSelectMaxSize(9)
+                        .setSelected(selectedImgs)
+                        .setEnablePreview(true)
+                        .setEnableCamera(true)
+                        .build();
+                GalleryFinal.openGalleryMuti(1001, config, mOnHanlderResultCallback);
+            }
+        });
     }
 
 

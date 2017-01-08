@@ -78,6 +78,9 @@ public class Dynamic_publish extends AppCompatActivity {
                     @Override
                     public void onCompleted() {
                         //TODO
+                        picked_photo_adapter = new Picked_photo_adapter(Dynamic_publish.this, mPhotoList);
+                        //picked_photo_adapter.notifyDataSetChanged();
+                        gridView.setAdapter(picked_photo_adapter);
                     }
 
                     @Override
@@ -96,13 +99,11 @@ public class Dynamic_publish extends AppCompatActivity {
 
 
 
-                    Bitmap bm=ImageFactory.ratio(mPhotoList.get(0).getPhotoPath(),480,800);
+                   // Bitmap bm=ImageFactory.ratio(mPhotoList.get(0).getPhotoPath(),480,800);
 
 
 
-                picked_photo_adapter = new Picked_photo_adapter(Dynamic_publish.this, mPhotoList);
-                //picked_photo_adapter.notifyDataSetChanged();
-                gridView.setAdapter(picked_photo_adapter);
+
             }
         }
 

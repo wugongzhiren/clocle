@@ -18,7 +18,7 @@ public class DynamicHWSimpleDrawView extends SimpleDraweeView {
     private int screenwidth;
     private int screenwidthDP;
     private Context mcontext;
-    public DynamicHWSimpleDrawView(Context context,AttributeSet attrs) {
+    public DynamicHWSimpleDrawView(Context context, AttributeSet attrs) {
         //super(context);
         super(context, attrs);
         this.mcontext=context;
@@ -30,14 +30,15 @@ public class DynamicHWSimpleDrawView extends SimpleDraweeView {
     }
 
     public DynamicHWSimpleDrawView(Context context) {
+
         this(context,null);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int width = getMySize(screenwidthDP/3-6, widthMeasureSpec);
-        int height = getMySize(screenwidthDP/3-6, heightMeasureSpec);
+        int width = getMySize(screenwidthDP/3, widthMeasureSpec);
+        int height = getMySize(screenwidthDP/3, heightMeasureSpec);
         setMeasuredDimension(DensityUtil.dip2px(mcontext,width), DensityUtil.dip2px(mcontext,height));
     }
 
@@ -57,8 +58,9 @@ public class DynamicHWSimpleDrawView extends SimpleDraweeView {
                 mySize = defaultSize;
                 break;
             }
+            //精确模式
             case MeasureSpec.EXACTLY: {
-                mySize = defaultSize;
+                mySize = size;
                 break;
             }
         }

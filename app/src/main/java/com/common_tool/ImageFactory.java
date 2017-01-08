@@ -7,9 +7,18 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.clocle.huxiang.clocle.R;
+import com.facebook.drawee.drawable.ScalingUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 /**
  * 压缩图片
@@ -264,4 +273,20 @@ public class ImageFactory {
         return localPath;
     }
 
+    /**
+     * 单图片工厂，返回已经加载了图片的simpledraweview
+     * @param context
+     * @param url
+     * @return
+     */
+    public static SimpleDraweeView getSimpleDraweeView(Context context, String url) {
+       //SimpleDraweeView imageView = (SimpleDraweeView) LayoutInflater.from(context).inflate(
+         //      R.layout.single_img, null);
+        SimpleDraweeView imageView=new SimpleDraweeView(context);
+        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        //imageView.setScaleType();
+        imageView.setImageURI(Uri.parse(url));
+        return imageView;
+    }
 }

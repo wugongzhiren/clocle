@@ -5,28 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="筛选：" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="悬赏" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="         求悬赏" />
-
-    </LinearLayout>
 
     <FrameLayout
 
@@ -53,10 +31,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|bottom"
             android:layout_margin="60dp"
-            android:src="@mipmap/t9"
-            app:backgroundTint="#ff87ffeb"
-            app:elevation="6dp"
-            app:pressedTranslationZ="12dp"
+            android:src="@mipmap/publish"
+            app:backgroundTint="#ffffff"
+            app:elevation="0dp"
+            app:pressedTranslationZ="1dp"
             app:rippleColor="#33728dff" />
     </FrameLayout>
 </LinearLayout>

@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
-import com.nineoldandroids.view.ViewHelper;
+
 
 /**
  * Created by Administrator on 2016/7/2.
@@ -143,7 +143,7 @@ public class SlidingMenu extends HorizontalScrollView {
     public void onScrollChanged(int l, int t, int oldl, int oldt) {
 
         super.onScrollChanged(l, t, oldl, oldt);
-        float scale = l * 1.0f / menuwidth;//l的初始值为menuwidth的长度
+  /*      float scale = l * 1.0f / menuwidth;//l的初始值为menuwidth的长度
         float rightscale = 0.7f + 0.3f * scale;
         float leftscale = 1.0f - scale * 0.3f;
         float leftAlpha = 0.6f + 0.4f * (1 - scale);
@@ -155,7 +155,7 @@ public class SlidingMenu extends HorizontalScrollView {
         ViewHelper.setPivotX(mContent, 0);
         ViewHelper.setPivotY(mContent, mContent.getHeight() / 2);
         ViewHelper.setScaleX(mContent, rightscale);
-        ViewHelper.setScaleY(mContent, rightscale);
+        ViewHelper.setScaleY(mContent, rightscale);*/
     }
 
     @Override

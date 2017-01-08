@@ -31,14 +31,7 @@
 
         </activity>
         <activity android:name=".Reg">
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-            <!--<data
-                android:host="com.clocle.huxiang.clocle"
-                android:pathPrefix="/conversationlist"
-                android:scheme="rong"/>-->
-        </intent-filter>
+
 
         </activity>
         <activity
@@ -80,7 +73,14 @@
 
         </activity>
         <activity android:name=".Publish">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <!--<data
+                    android:host="com.clocle.huxiang.clocle"
+                    android:pathPrefix="/conversationlist"
+                    android:scheme="rong"/>-->
+            </intent-filter>
         </activity>
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -146,19 +146,7 @@
         <activity android:name="test.Test_PhotoView">
 
         </activity>
-        <activity android:name="test.Test_pohotopicker">
 
-        </activity>
-        <activity
-            android:name="me.iwf.photopicker.PhotoPickerActivity"
-            android:theme="@style/customTheme" />
-
-        <activity
-            android:name="me.iwf.photopicker.PhotoPagerActivity"
-            android:theme="@style/customTheme" />
-        <activity android:name="com.view.Preview_photo">
-
-        </activity>
         <activity android:name="com.Base_activity" />
         <activity android:name="com.function.FleaMarket">
 

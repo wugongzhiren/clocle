@@ -33,7 +33,7 @@
     app:tabSelectedTextColor="#453939"
     app:tabTextColor="#0a94f7"
     app:tabMode="fixed"
-    android:layout_height="@dimen/__picker_iwf_actionBarSize">
+    android:layout_height="40dp">
 
 </android.support.design.widget.TabLayout>
         <!--&lt;!&ndash;fragment的容器 &ndash;&gt;

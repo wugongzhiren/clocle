@@ -11,7 +11,7 @@ import android.view.WindowManager;
 /**
  * Created by Administrator on 2016/10/11.
  */
-public class Base_activity extends AppCompatActivity {
+public class Base_activity extends AppCompatActivity implements View.OnClickListener {
     public Context mcontext=this;
     /**
      * 初始化状态栏相关，
@@ -56,5 +56,10 @@ public class Base_activity extends AppCompatActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

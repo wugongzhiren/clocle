@@ -240,7 +240,7 @@ public class ImageFactory {
                 dir.mkdirs();
             }
 
-            File photoFile = new File(path, photoName + ".png");
+            File photoFile = new File(path, photoName);
             FileOutputStream fileOutputStream = null;
             try {
                 fileOutputStream = new FileOutputStream(photoFile);

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.bean.MyPhotoInfo;
 import com.clocle.huxiang.clocle.Publish;
 import com.clocle.huxiang.clocle.R;
 import com.common_tool.ImageFactory;

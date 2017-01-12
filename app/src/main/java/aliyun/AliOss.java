@@ -14,9 +14,11 @@ import com.alibaba.sdk.android.oss.common.OSSLog;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
+import com.alibaba.sdk.android.oss.model.ObjectMetadata;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.application.App;
+import com.constant.Constant;
 
 /**
  * 阿里云oss封装
@@ -25,8 +27,10 @@ import com.application.App;
 
 public class AliOss {
 private OSS oss;
-    public  void init(Context context){
-        String endpoint = "oss-cn-shanghai.aliyuncs.com";
+    private String endpoint = "oss-cn-shanghai.aliyuncs.com";
+    private String bucketName="clocle";
+    public AliOss(Context context){
+
 
 // 明文设置secret的方式建议只在测试时使用，更多鉴权模式请参考后面的`访问控制`章节
         OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider("LTAIyaWByvISPPPv", "EM007U4vfjwviDGSjKwnPPePUF0AH8");
@@ -41,11 +45,11 @@ private OSS oss;
     }
 
     /**
-     * 单张文件上传
+     * 单张文件异步上传
      */
-    public void UploadToOss(String filepath){
+    public void UploadToOssAsyn(String filepath,String fileName){
         // 构造上传请求
-        PutObjectRequest put = new PutObjectRequest("clocle", "<objectKey>", filepath);
+        PutObjectRequest put = new PutObjectRequest(bucketName, fileName, filepath);
 
 // 异步上传时可以设置进度回调
         put.setProgressCallback(new OSSProgressCallback<PutObjectRequest>() {
@@ -82,4 +86,37 @@ private OSS oss;
 
 // task.waitUntilFinished(); // 可以等待直到任务完成
     }
+
+    /**
+     * 同步图片上传
+     * 三失败返回失败code，
+     * 成功返回OSS外链路径
+     */
+    public String UploadToOssSync(String filename,String filePath){
+    // 构造上传请求
+    PutObjectRequest put = new PutObjectRequest(bucketName, filename, filePath);
+// 文件元信息的设置是可选的
+//ObjectMetadata metadata = new ObjectMetadata();
+        //metadata.set("Ossfilepath","http://"+endpoint+filename);//oss上文件路径
+// metadata.setContentType("application/octet-stream"); // 设置content-type
+// metadata.setContentMD5(BinaryUtil.calculateBase64Md5(uploadFilePath)); // 校验MD5
+// put.setMetadata(metadata);
+    try {
+        PutObjectResult putResult = oss.putObject(put);
+return "http://"+endpoint+filename;
+    } catch (ClientException e) {
+        // 本地异常如网络异常等
+        e.printStackTrace();
+        return Constant.FAIL;
+    } catch (ServiceException e) {
+        // 服务异常
+        Log.e("RequestId", e.getRequestId());
+        Log.e("ErrorCode", e.getErrorCode());
+        Log.e("HostId", e.getHostId());
+        Log.e("RawMessage", e.getRawMessage());
+        return Constant.FAIL;
+    }
+
+
+}
 }
